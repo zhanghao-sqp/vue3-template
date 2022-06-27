@@ -6,29 +6,22 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     BaseTable: typeof import('./src/components/common/table/BaseTable.vue')['default']
+    Download: typeof import('./src/components/common/download/index.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
-    ElColumn: typeof import('element-plus/es')['ElColumn']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
-    ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
-    ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElOption: typeof import('element-plus/es')['ElOption']
     ElSelect: typeof import('element-plus/es')['ElSelect']
-    ElTable: typeof import('element-plus/es')['ElTable']
-    ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
+    Example: typeof import('./src/components/common/rich-text-editor/example.vue')['default']
     ExportExcel: typeof import('./src/components/common/download/ExportExcel.vue')['default']
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
-    IEpApple: typeof import('~icons/ep/apple')['default']
-    IEpView: typeof import('~icons/ep/view')['default']
     KeywordSearch: typeof import('./src/components/common/search/KeywordSearch.vue')['default']
-    Loading: typeof import('element-plus/es')['ElLoadingDirective']
-    QuillEditor: typeof import('./src/components/quill-editor/index.vue')['default']
     RichTextEditor: typeof import('./src/components/common/rich-text-editor/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    UseExample: typeof import('./src/components/common/table/useExample.vue')['default']
   }
 }
 

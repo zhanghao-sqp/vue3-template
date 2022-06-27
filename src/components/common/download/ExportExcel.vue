@@ -14,7 +14,9 @@
 		</slot>
 	</vue3-json-excel>
 	<span v-if="dialog">
-		<el-button type="primary" :size="size" @click="dialogVisible = true">导出</el-button>
+		<el-button type="primary" :size="size" @click="dialogVisible = true"
+			>导出</el-button
+		>
 		<el-dialog
 			custom-class="custom-export-dialog"
 			v-model="dialogVisible"
@@ -32,6 +34,7 @@
 				<el-form-item label="文件类型" label-width="80px">
 					<el-select disabled placeholder=".xls" value="1">
 						<el-option label=".xls" value="1"></el-option>
+						<el-option label=".crv" value="2"></el-option>
 					</el-select>
 				</el-form-item>
 			</el-form>
@@ -56,10 +59,10 @@ interface Option {
 const { option, dialog } = withDefaults(
 	defineProps<{
 		option: Option
-    dialog?: boolean
-    size?: string
+		dialog?: boolean
+		size?: string
 	}>(),
-	{ dialog: false, size: 'default'}
+	{ dialog: false, size: 'default' }
 )
 const { jsonData, excelFields } = option
 const form = reactive({
@@ -70,22 +73,24 @@ const footer = ref<string>('')
 let excel = ref(null)
 const dialogVisible = ref(false)
 const download = () => {
-  (<any>excel.value).$el.click()
-  dialogVisible.value = false
+	;(<any>excel.value).$el.click()
+	dialogVisible.value = false
 }
-
 </script>
 
 <style lang="scss">
 @import '@var';
+
 .hidden {
 	display: inline-block;
 	width: 0;
 	visibility: hidden;
 }
+
 .custom-export-dialog {
 	width: 350px;
 	margin-top: 30vh;
+
 	.el-form {
 		width: 290px;
 	}

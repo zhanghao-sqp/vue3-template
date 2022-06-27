@@ -8,7 +8,7 @@ export class Debounced {
 	public use = (
 		func: Function,
 		delay: number,
-		immediate: boolean = false
+		immediate: boolean = true
 	): Function => {
 		let timer: number | undefined
 		return (...args: any) => {
@@ -38,7 +38,7 @@ export class Throttle {
 	public use(
 		func: Function,
 		delay: number,
-		immediate: boolean = false
+		immediate: boolean = true
 	): Function {
 		let flag = true
 		const self = this

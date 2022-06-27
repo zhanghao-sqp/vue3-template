@@ -6,9 +6,13 @@ export default class Observer {
 	// 是否持续观察
 	protected sustain: boolean
 
-	constructor(observers: Element[], callback: Function, sustain: boolean = false) {
-    this.observers = observers
-    this.sustain = sustain
+	constructor(
+		observers: Element[],
+		callback: Function,
+		sustain: boolean = false
+	) {
+		this.observers = observers
+		this.sustain = sustain
 		this.observe = new IntersectionObserver(
 			(entries: IntersectionObserverEntry[]) => {
 				entries.forEach(entry => {
@@ -18,7 +22,7 @@ export default class Observer {
 					if (entry.isIntersecting) {
 						callback(target)
 						// 取消观察
-            if (!this.sustain) this.observe.unobserve(target)
+						if (!this.sustain) this.observe.unobserve(target)
 					}
 				})
 			}

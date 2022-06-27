@@ -5,7 +5,7 @@
 		contentType="html"
 		:options="editorOption"
 		:content="content"
-		@blur="onEditorChange"
+		@update:content="updateContent"
 	></QuillEditor>
 </template>
 
@@ -14,8 +14,10 @@ import { getCurrentInstance, ComponentInternalInstance } from 'vue'
 import { QuillEditor, Quill, Delta } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
-const { content = '' } = defineProps<{ content: string }>()
-const emits = defineEmits(['getContent'])
+withDefaults(defineProps<{ content: string | undefined }>(), {
+	content: ''
+})
+const emits = defineEmits(['get-content'])
 
 // 工具菜单栏配置
 const toolbar = Object.freeze([
@@ -48,9 +50,9 @@ const editorOption = {
 
 // 传递文本内容
 const proxy: ComponentInternalInstance | null = getCurrentInstance()
-const onEditorChange = (data: Delta) => {
+const updateContent = (data: Delta) => {
 	// console.log(proxy?.refs['editor'])
-	emits('getContent', (proxy?.refs['editor'] as Quill).getHTML())
+	emits('get-content', (proxy?.refs['editor'] as Quill).getHTML())
 }
 </script>
 
