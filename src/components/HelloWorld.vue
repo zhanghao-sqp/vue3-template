@@ -6,19 +6,10 @@
 	</el-icon>
 	<img src="@/assets/image/logo.png" alt="" />
 	<img :src="imgSrc" alt="" />
-	<el-date-picker
-		v-model="value1"
-		type="date"
-		placeholder="请选择日期"
-		:default-value="new Date(2010, 0, 1)"
-		@change="changeDate"
-	/>
+	<el-date-picker v-model="value1" type="date" placeholder="请选择日期" :default-value="new Date(2010, 0, 1)"
+		@change="changeDate" />
 	<div style="width: 100%; height: 80vh; background: #333"></div>
-	<div ref="div" style="text-align: center; font-size: 30px; color: orange">
-		555
-	</div>
 	<BaseTable ref="studentTable" :data="tableData"></BaseTable>
-	<el-button type="primary" @click="download">导出</el-button>
 	<Editor @getContent="getContent" :content="content ? content : ''"></Editor>
 </template>
 
@@ -81,6 +72,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 @import '@var';
+
 .h {
 	color: $main-color;
 	background: url('@assets/image/logo.png');
