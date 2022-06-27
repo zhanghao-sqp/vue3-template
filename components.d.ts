@@ -6,22 +6,15 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     BaseTable: typeof import('./src/components/common/table/BaseTable.vue')['default']
-    Download: typeof import('./src/components/common/download/index.vue')['default']
-    ElButton: typeof import('element-plus/es')['ElButton']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
-    ElDialog: typeof import('element-plus/es')['ElDialog']
-    ElForm: typeof import('element-plus/es')['ElForm']
-    ElFormItem: typeof import('element-plus/es')['ElFormItem']
-    ElInput: typeof import('element-plus/es')['ElInput']
-    ElOption: typeof import('element-plus/es')['ElOption']
-    ElSelect: typeof import('element-plus/es')['ElSelect']
-    Example: typeof import('./src/components/common/rich-text-editor/example.vue')['default']
     ExportExcel: typeof import('./src/components/common/download/ExportExcel.vue')['default']
     KeywordSearch: typeof import('./src/components/common/search/KeywordSearch.vue')['default']
     RichTextEditor: typeof import('./src/components/common/rich-text-editor/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    UseExample: typeof import('./src/components/common/table/useExample.vue')['default']
+    UseBaseTable: typeof import('./src/components/common/example/useBaseTable.vue')['default']
+    UseExportExcel: typeof import('./src/components/common/example/useExportExcel.vue')['default']
+    UseRichTextEditor: typeof import('./src/components/common/example/useRichTextEditor.vue')['default']
   }
 }
 

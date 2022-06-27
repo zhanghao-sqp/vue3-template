@@ -15,16 +15,16 @@
 		"baseUrl": "./",
 		"paths": {
 			"@/*": ["src/*"],
-      "@view": ["src/view/*"],
-      "@components": ["src/components/*"],
-      "@assets": ["src/assets/*"],
-      "@common": ["src/common/*"],
-      "@style": ["src/common/style/*"],
-      "@hooks": ["src/hooks/*"],
-      "@api": ["src/api/*"],
-      "@router": ["src/router/*"],
-      "@store": ["src/store/*"],
-      "@utils": ["src/utils/*"],
+			"@view": ["src/view/*"],
+			"@components": ["src/components/*"],
+			"@assets": ["src/assets/*"],
+			"@common": ["src/common/*"],
+			"@style": ["src/common/style/*"],
+			"@hooks": ["src/hooks/*"],
+			"@api": ["src/api/*"],
+			"@router": ["src/router/*"],
+			"@store": ["src/store/*"],
+			"@utils": ["src/utils/*"]
 		}
 	},
 
