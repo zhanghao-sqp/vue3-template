@@ -1,5 +1,5 @@
 <template>
-	<Editor @get-content="getContent" :content="content ? content : ''"></Editor>
+	<Editor width="60%" @get-content="getContent" :content="content ? content : ''"></Editor>
 </template>
 
 <script setup lang="ts">

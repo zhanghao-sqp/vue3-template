@@ -1,5 +1,5 @@
 <template>
-	<BaseTable style="width: 80%" :data="tableData" :column="column">
+	<BaseTable style="width: 60%" :data="tableData" :column="column">
 		<template #operation="{ row }">
 			<el-button type="warning" @click="clickBtn(row.name)">点击</el-button>
 		</template>

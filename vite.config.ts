@@ -34,7 +34,7 @@ export default ({ mode }: ConfigEnv) => {
 			preprocessorOptions: {
 				scss: {
 					// 修改element-plus默认样式
-					additionalData: `@use '@common/css/global/elementPlus.scss' as *;`
+					additionalData: `@use '@common/css/global/element-plus.scss' as *;`
 				}
 			}
 		},

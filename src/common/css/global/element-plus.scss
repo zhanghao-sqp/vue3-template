@@ -1,0 +1,30 @@
+@use './variable.scss' as *;
+@use './rewrite-element.scss';
+// @use './element-dark.scss';
+
+@forward 'element-plus/theme-chalk/src/common/var.scss'
+	with(
+		$colors: (
+			'primary': (
+				'base': $main-color
+			),
+			'success': (
+				'base': green
+			),
+			'warning': (
+				'base': orange
+			),
+			'danger': (
+				'base': red
+			),
+			'error': (
+				'base': red
+			),
+			'info': (
+				'base': #333
+			)
+		),
+		$main: (
+			'padding': 0
+		)
+	);

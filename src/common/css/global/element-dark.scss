@@ -1,0 +1,8 @@
+@use './variable.scss' as *;
+@forward 'element-plus/theme-chalk/src/dark/var.scss' with (
+	$colors: (
+		'primary': (
+			'base': $main-color
+		)
+	)
+);
