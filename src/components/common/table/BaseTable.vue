@@ -50,7 +50,7 @@
 			</template>
 			<!-- 插槽 -->
 			<template v-if="item.defineColumn" #default="scoped">
-				<slot :name="item.prop || 'operation'" :row="scoped.row"></slot>
+				<slot :name="item.prop || 'operation'" :row="scoped.row" />
 			</template>
 		</el-table-column>
 	</el-table>
