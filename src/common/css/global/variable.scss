@@ -1,1 +1,7 @@
-$main-color: #d85635; // 主题色
+$main-color: rgb(19, 161, 171); // 主题色
+$main-bg-color: rgba($main-color, 0.5); // 半透明背景
+$opacity-color: rgba($main-color, 0.2);
+$opacity-most-color: rgba($main-color, 0.1);
+$opacity-hover-color: rgba($main-color, 0.25);
+$text-light-color: #4d4d4d;
+$text-dark-color: #fff;

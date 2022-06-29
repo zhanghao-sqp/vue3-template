@@ -1,6 +1,7 @@
 @use './variable.scss' as *;
 @use './rewrite-element.scss';
-// @use './element-dark.scss';
+@use 'nprogress/nprogress.css';
+@use 'element-plus/theme-chalk/dark/css-vars.css';
 
 @forward 'element-plus/theme-chalk/src/common/var.scss'
 	with(
@@ -26,5 +27,34 @@
 		),
 		$main: (
 			'padding': 0
-		)
+		),
+		$message: (
+			'min-width': 150px
+		),
+		// $button-padding-horizontal: (
+		// 	"default": 80px
+		// ),
+		// $button-border-radius: (
+		// 	'large': 10px,
+		// 	'default': 8px,
+		// 	'small': 6px
+		// ),
+		$input-padding-horizontal: (
+			'large': 12px,
+			'default': 10px,
+			'small': 8px
+		),
+		$select-dropdown: (
+			'padding': 3px 0,
+			'empty-padding': 20px 0,
+			'bg-color': $opacity-color
+		),
+		$select-option: (
+			'text-color': $text-light-color,
+			'hover-background': $opacity-hover-color,
+			'selected-text-color': $main-color
+		),
 	);
+
+@use './element-dark.scss';
+@use 'element-plus/theme-chalk/src/dark/var.scss' as *;
