@@ -1,7 +1,7 @@
 @use './variable.scss' as *;
-@use './rewrite-element.scss';
+@use './rewrite.scss';
 @use 'nprogress/nprogress.css';
-@use 'element-plus/theme-chalk/dark/css-vars.css';
+// @use 'element-plus/theme-chalk/dark/css-vars.css';
 
 @forward 'element-plus/theme-chalk/src/common/var.scss'
 	with(
@@ -56,5 +56,5 @@
 		),
 	);
 
-@use './element-dark.scss';
-@use 'element-plus/theme-chalk/src/dark/var.scss' as *;
+// @use './element-dark.scss';
+// @use 'element-plus/theme-chalk/src/dark/var.scss' as *;

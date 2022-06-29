@@ -3,7 +3,6 @@
 		<QuillEditor class="editor" ref="editor" contentType="html" :options="editorOption" :content="content"
 			@update:content="updateContent"></QuillEditor>
 	</div>
-
 </template>
 
 <script setup lang="ts">
@@ -12,38 +11,35 @@ import { QuillEditor, Quill, Delta } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
 withDefaults(defineProps<{ content: string | undefined, width: string | undefined }>(), {
-	content: '', string: '100%'
+	content: '', width: '100%'
 })
 const emits = defineEmits(['get-content'])
 
-// 工具菜单栏配置
-const toolbar = Object.freeze([
-	['bold', 'italic', 'underline', 'strike'], // 加粗 斜体 下划线 删除线
-	['blockquote', 'code-block'], // 引用  代码块
-	[{ header: 1 }, { header: 2 }], // 1、2 级标题
-	[{ list: 'ordered' }, { list: 'bullet' }], // 有序、无序列表
-	[{ script: 'sub' }, { script: 'super' }], // 上标/下标
-	[{ indent: '-1' }, { indent: '+1' }], // 缩进
-	[{ direction: 'rtl' }], // 文本方向
-	[{ size: ['small', false, 'large', 'huge'] }], // 字体大小
-	[{ header: [1, 2, 3, 4, 5, 6, false] }], // 标题
-	[{ color: [] }, { background: [] }], // 字体颜色、字体背景颜色
-	[{ font: [] }], // 字体种类
-	[{ align: [] }], // 对齐方式
-	['clean'], // 清除文本格式
-	['link', 'image', 'video'] // 链接、图片、视频
-])
-
 // 编辑器配置
-const editorOption = {
+const editorOption = Object.freeze({
 	modules: {
-		toolbar
+		toolbar: [ // 工具菜单栏配置
+			['bold', 'italic', 'underline', 'strike'], // 加粗 斜体 下划线 删除线
+			['blockquote', 'code-block'], // 引用  代码块
+			[{ header: 1 }, { header: 2 }], // 1、2 级标题
+			[{ list: 'ordered' }, { list: 'bullet' }], // 有序、无序列表
+			[{ script: 'sub' }, { script: 'super' }], // 上标/下标
+			[{ indent: '-1' }, { indent: '+1' }], // 缩进
+			[{ direction: 'rtl' }], // 文本方向
+			[{ size: ['small', false, 'large', 'huge'] }], // 字体大小
+			[{ header: [1, 2, 3, 4, 5, 6, false] }], // 标题
+			[{ color: [] }, { background: [] }], // 字体颜色、字体背景颜色
+			[{ font: [] }], // 字体种类
+			[{ align: [] }], // 对齐方式
+			['clean'], // 清除文本格式
+			['link', 'image', 'video'] // 链接、图片、视频
+		]
 	},
 	placeholder: '请在此编辑内容...', //提示
 	readyOnly: false, //是否只读
 	theme: 'snow', //主题 snow/bubble
 	syntax: true //语法检测
-}
+})
 
 // 传递文本内容
 const proxy: ComponentInternalInstance | null = getCurrentInstance()
@@ -146,7 +142,12 @@ const updateContent = (data: Delta) => {
 	content: '等宽字体';
 }
 
-.ql-snow.ql-toolbar button.ql-active, .ql-snow .ql-toolbar button.ql-active, .ql-snow.ql-toolbar .ql-picker-label.ql-active, .ql-snow .ql-toolbar .ql-picker-label.ql-active, .ql-snow.ql-toolbar .ql-picker-item.ql-selected, .ql-snow .ql-toolbar .ql-picker-item.ql-selected {
+.ql-snow.ql-toolbar button.ql-active,
+.ql-snow .ql-toolbar button.ql-active,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active,
+.ql-snow .ql-toolbar .ql-picker-label.ql-active,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected,
+.ql-snow .ql-toolbar .ql-picker-item.ql-selected {
 	color: $main-color;
 	background-color: #fff;
 }
