@@ -1,6 +1,6 @@
 <template>
   <el-switch
-    size="large"
+    :size="size"
     inline-prompt
     active-text="夜间"
     inactive-text="日间"

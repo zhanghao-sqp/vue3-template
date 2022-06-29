@@ -5,7 +5,7 @@
 	<UseExportExcel />
 	<el-input style="width: 100px" v-model="value"></el-input>
 	<transition name="el-zoom-in-top">
-		<el-select v-show="value=='Option1'" v-model="value" placeholder="Select">
+		<el-select v-show="value == 'Option1'" v-model="value" placeholder="Select">
 			<el-option
 				v-for="item in options"
 				:key="item.value"
