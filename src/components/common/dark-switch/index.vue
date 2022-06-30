@@ -2,8 +2,8 @@
   <el-switch
     :size="size"
     inline-prompt
-    active-text="夜间"
-    inactive-text="日间"
+    active-text="深色"
+    inactive-text="浅色"
     v-model="val"
     @change="toggleDark()"
   >

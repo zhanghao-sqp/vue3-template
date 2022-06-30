@@ -1,5 +1,5 @@
 <template>
-	<ExportExcel size="default" :option="option" dialog></ExportExcel>
+	<ExportExcel size="default" :option="option"></ExportExcel>
 </template>
 
 <script setup lang="ts">

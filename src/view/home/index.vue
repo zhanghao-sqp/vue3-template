@@ -37,10 +37,13 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 const value = ref('导出')
+console.log('🚀 ~ value', value)
 const getTime = () => {
 	const date = new Date()
 	return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
 }
+console.log('🚀 ~ getTime', getTime())
+
 
 const options = [
 	{

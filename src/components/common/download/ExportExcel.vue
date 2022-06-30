@@ -19,15 +19,19 @@
 		append-to-body
 		center
 	>
-		<el-form :model="form">
-			<el-form-item label="文件名称" label-width="80px">
-				<el-input v-model="form.name" width="100px" />
+		<el-form :model="form" :rules="rules">
+			<el-form-item label="文件名称" prop="name" label-width="80px">
+				<el-input v-model="form.name" />
 			</el-form-item>
-			<el-form-item label="表头" label-width="80px">
-				<el-input v-model="form.header" width="100px" />
+			<el-form-item label="表格标题" label-width="80px">
+				<el-input v-model="form.header" :disabled="!form.showHeader">
+					<template #prepend>
+						<el-switch v-model="form.showHeader"></el-switch>
+					</template>
+				</el-input>
 			</el-form-item>
 			<el-form-item label="文件类型" label-width="80px">
-				<el-select disabled :value="form.fileType">
+				<el-select disabled placeholder=".xls" :value="form.fileType">
 					<el-option label=".xls" value=".xls"></el-option>
 					<el-option label=".crv" value=".csv"></el-option>
 				</el-select>
@@ -43,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { Vue3JsonExcel } from 'vue3-json-excel'
 
 interface Option {
@@ -61,8 +65,21 @@ const { jsonData, excelFields } = option
 const form = reactive({
 	name: '表格数据',
 	header: '',
+	showHeader: false,
 	fileType: '.xls'
 })
+const rules = {
+	name: [{ required: true, message: '文件名称不能为空', trigger: 'blur' }]
+}
+watch(
+	form,
+	() => {
+		if (!form.showHeader) {
+			form.header = ''
+		}
+	},
+	{ deep: true }
+)
 const footer = ref<string>('')
 let excel = ref(null)
 const dialogVisible = ref(false)
@@ -85,6 +102,9 @@ const download = () => {
 
 	.el-form {
 		width: 290px;
+		.el-input-group__prepend {
+			padding: 0 !important;
+		}
 	}
 }
 </style>
