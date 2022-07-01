@@ -1,5 +1,8 @@
 <template>
 	<BaseTable style="width: 60%" :data="tableData" :column="column">
+		<template #age="{ row }">
+			<span>我今年{{row.age}}</span>
+		</template>
 		<template #operation="{ row }">
 			<el-button type="warning" @click="clickBtn(row.name)">点击</el-button>
 		</template>
@@ -21,7 +24,7 @@ const { tableData } = reactive({
 const column = reactive([
 	{ label: 'id', prop: 'id' },
 	{ label: '姓名', prop: 'name' },
-	{ label: '年龄', prop: 'age' },
+	{ label: '年龄', prop: 'age', defineColumn: true },
 	{
 		label: '渲染值',
 		prop: 'render',

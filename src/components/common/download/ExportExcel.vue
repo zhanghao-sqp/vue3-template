@@ -91,8 +91,9 @@ const download = () => {
 
 <style lang="scss">
 .excel {
-	display: inline-block;
+	display: block;
 	width: 0;
+	height: 0;
 	visibility: hidden;
 }
 

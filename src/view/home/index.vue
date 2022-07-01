@@ -32,6 +32,7 @@
 		/>
 	</el-select>
 	<UseRichTextEditor />
+	<OlMap style="width: 90%;height: 700px;"></OlMap>
 </template>
 
 <script setup lang="ts">
@@ -44,6 +45,8 @@ const getTime = () => {
 }
 console.log('🚀 ~ getTime', getTime())
 
+const a = ['🤣','😃','🤪']
+console.log('🚀 ~ a', a)
 
 const options = [
 	{

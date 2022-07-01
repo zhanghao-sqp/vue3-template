@@ -21,6 +21,7 @@ declare module '@vue/runtime-core' {
     ExportExcel: typeof import('./src/components/common/download/ExportExcel.vue')['default']
     KeywordSearch: typeof import('./src/components/common/search/KeywordSearch.vue')['default']
     Loading: typeof import('element-plus/es')['ElLoadingDirective']
+    OlMap: typeof import('./src/components/business/ol-map/index.vue')['default']
     RichTextEditor: typeof import('./src/components/common/rich-text-editor/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

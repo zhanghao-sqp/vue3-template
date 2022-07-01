@@ -76,7 +76,7 @@ interface Props {
 }
 interface ColumnOption {
 	label: string
-	prop: string | null | undefined
+	prop?: string | null | undefined
 	align?: string
 	width?: number
 	render?: Function

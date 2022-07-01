@@ -10,9 +10,10 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 // icon相关
 import Icons from 'unplugin-icons/vite'
 import IconsResolver from 'unplugin-icons/resolver'
+// 打包相关
+import ViteCompression from 'vite-plugin-compression'
 
 export default ({ mode }: ConfigEnv) => {
-
 	const env = loadEnv(mode, process.cwd())
 	const resolvePath = (dir: string) => resolve(__dirname, dir)
 
@@ -69,6 +70,14 @@ export default ({ mode }: ConfigEnv) => {
 			// 图标
 			Icons({
 				autoInstall: true
+			}),
+			// 压缩
+			ViteCompression({
+				verbose: true, // 输出压缩成功
+				disable: false, // 是否禁用
+				threshold: 1, // 体积大于阈值会被压缩，单位是b
+				algorithm: 'gzip', // 压缩算法
+				ext: '.gz' // 生成的压缩包后缀
 			})
 		],
 		resolve: {
@@ -94,6 +103,13 @@ export default ({ mode }: ConfigEnv) => {
 				compress: {
 					drop_console: true,
 					drop_debugger: true
+				}
+			},
+			rollupOptions: {
+				output: {
+					chunkFileNames: 'js/[name]-[hash].js',
+					entryFileNames: 'js/[name]-[hash].js',
+					assetFileNames: '[ext]/[name]-[hash].[ext]'
 				}
 			}
 		}
