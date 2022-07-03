@@ -7,7 +7,6 @@
 		:fields="excelFields"
 		:name="form.name + form.fileType"
 		:header="form.header"
-		:footer="footer"
 	/>
 	<el-button type="primary" :size="size" @click="dialogVisible = true"
 		>导出</el-button
@@ -80,7 +79,6 @@ watch(
 	},
 	{ deep: true }
 )
-const footer = ref<string>('')
 let excel = ref(null)
 const dialogVisible = ref(false)
 const download = () => {

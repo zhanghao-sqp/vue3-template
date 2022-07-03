@@ -1,6 +1,8 @@
 import { defineConfig, ConfigEnv, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
+import { formatDate } from './src/utils/common/common'
+
 // 自动导入
 import AutoImport from 'unplugin-auto-import/vite'
 import ComponentsPlugin from 'unplugin-vue-components/vite'
@@ -14,20 +16,24 @@ import IconsResolver from 'unplugin-icons/resolver'
 import ViteCompression from 'vite-plugin-compression'
 
 export default ({ mode }: ConfigEnv) => {
+	const time = formatDate(new Date(), 'yyyy-MM-dd')
 	const env = loadEnv(mode, process.cwd())
+  console.log('🚀 ~ env', env)
+	console.log('🚀 ~ formatDate', time)
 	const resolvePath = (dir: string) => resolve(__dirname, dir)
-
 	return defineConfig({
 		base: './',
+		envDir: './env',
 		server: {
 			host: '0.0.0.0',
 			port: 8080,
-			open: true,
+			open: false,
+			cors: true,
 			proxy: {
 				'/api': {
 					target: env.VITE_BASE_URL,
-					changeOrigin: true
-					// rewrite: path => path.replace(/\/api/, '')
+					changeOrigin: true,
+					rewrite: path => path.replace(/\/api/, '')
 				}
 			}
 		},
@@ -35,7 +41,7 @@ export default ({ mode }: ConfigEnv) => {
 			preprocessorOptions: {
 				scss: {
 					// 修改element-plus默认样式
-					additionalData: `@use '@common/css/global/element-plus.scss' as *;`
+					additionalData: `@use '@common/style/global/element-plus.scss' as *;`
 				}
 			}
 		},
@@ -87,8 +93,8 @@ export default ({ mode }: ConfigEnv) => {
 				'@components': resolvePath('src/components'),
 				'@assets': resolvePath('src/assets'),
 				'@common': resolvePath('src/common'),
-				'@style': resolvePath('src/common/css'),
-				'@var': resolvePath('src/common/css/global/variable.scss'),
+				'@style': resolvePath('src/common/style'),
+				'@var': resolvePath('src/common/style/global/variable.scss'),
 				'@hooks': resolvePath('src/hooks'),
 				'@api': resolvePath('src/api'),
 				'@router': resolvePath('src/router'),
@@ -107,9 +113,9 @@ export default ({ mode }: ConfigEnv) => {
 			},
 			rollupOptions: {
 				output: {
-					chunkFileNames: 'js/[name]-[hash].js',
-					entryFileNames: 'js/[name]-[hash].js',
-					assetFileNames: '[ext]/[name]-[hash].[ext]'
+					chunkFileNames: `js/[name]-[hash]-${time}.js`,
+					entryFileNames: `js/[name]-[hash]-${time}.js`,
+					assetFileNames: `[ext]/[name]-[hash]-${time}.[ext]`
 				}
 			}
 		}
