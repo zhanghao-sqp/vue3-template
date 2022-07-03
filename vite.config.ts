@@ -1,7 +1,7 @@
 import { defineConfig, ConfigEnv, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
-import { formatDate } from './src/utils/common/common'
+// import { formatDate } from './src/utils/common/common'
 
 // 自动导入
 import AutoImport from 'unplugin-auto-import/vite'
@@ -16,7 +16,8 @@ import IconsResolver from 'unplugin-icons/resolver'
 import ViteCompression from 'vite-plugin-compression'
 
 export default ({ mode }: ConfigEnv) => {
-	const time = formatDate(new Date(), 'yyyy-MM-dd')
+	// const time = formatDate(new Date(), 'yyyy-MM-dd')
+	const time = '2020-04-01'
 	const env = loadEnv(mode, process.cwd())
   console.log('🚀 ~ env', env)
 	console.log('🚀 ~ formatDate', time)

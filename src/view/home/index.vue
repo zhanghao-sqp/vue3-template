@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import UseExportExcel from '@/components/common/example/useExportExcel.vue';
-console.log(123)
+import { parseDate } from '@/utils/common/common'
+console.dir(parseDate('2020-01-01 08:00:00', 'yyyy-MM-dd'))
 </script>
 
 <style scoped lang="scss"></style>
