@@ -1,9 +1,9 @@
 <template>
 	<span>home</span>
 	<router-link to="/login">去登录页</router-link>
-	<UseDarkSwitch></UseDarkSwitch>
+	<!-- <UseDarkSwitch></UseDarkSwitch>
 	<UseExportExcel></UseExportExcel>
-	<OlMap style="width: 90%; height: 800px; margin: 0 auto;"></OlMap>
+	<OlMap style="width: 90%; height: 800px; margin: 0 auto;"></OlMap> -->
 </template>
 
 <script setup lang="ts">
