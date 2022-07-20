@@ -54,7 +54,7 @@ const set16ToRgb = str => {
 	var reg = /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/
 	if (!reg.test(str)) {
 		// return
-    return str.split('(')[1].split(')')[0]
+		return str.split('(')[1].split(')')[0]
 	}
 	let newStr = str.toLowerCase().replace(/\#/g, '')
 	let len = newStr.length
@@ -71,11 +71,16 @@ const set16ToRgb = str => {
 		arr.push(parseInt('0x' + s))
 	}
 	// return 'rgb(' + arr.join(',') + ')'
-  return arr.join(',')
+	return arr.join(',')
 }
 
-export const start = (zIndex = -1, color = '#000', opacity = 0.5) => {
-  color = set16ToRgb(color)
+export const start = (
+	color = '#000',
+	pointWidth = 1,
+	opacity = 0.7,
+	zIndex = -1
+) => {
+	color = set16ToRgb(color)
 	//canvas元素相关
 	//创建canvas元素，并设置canvas元素的id
 	canvas = document.createElement('canvas')
@@ -121,7 +126,10 @@ export const start = (zIndex = -1, color = '#000', opacity = 0.5) => {
 			i.ya = i.ya * (i.y > H || i.y < 0 ? -1 : 1)
 			//fillRect前两个参数为矩形左上角的x，y坐标，后两个分别为宽度和高度
 			//绘制点
-			context.fillRect(i.x - 0.5, i.y - 0.5, 1, 1)
+			context.beginPath()
+			context.arc(i.x - 0.5, i.y - 0.5, pointWidth, 0, Math.PI * 2, true)
+			context.fillStyle = 'rgba(' + color + ', 0.7)'
+			context.fill()
 			//遍历w中所有元素
 			for (let n = 0; n < w.length; n++) {
 				x = w[n]
@@ -169,5 +177,7 @@ export const close = () => {
 	window.removeEventListener('resize', getWindowWH)
 	window.removeEventListener('mousemove', mousemoveFunc)
 	window.removeEventListener('mouseout', mouseoutFunc)
-	document.body.removeChild(document.querySelector('#focusPointCanvas'))
+	if (document.querySelector('#focusPointCanvas')) {
+		document.querySelector('#focusPointCanvas').remove()
+	}
 }
