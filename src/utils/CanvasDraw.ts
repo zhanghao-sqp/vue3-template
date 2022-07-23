@@ -194,6 +194,26 @@ type Point = {
 	xa: number | null
 	ya: number | null
 }
+class Npoint implements Point {
+	public x: number | null
+	public y: number | null
+	public xa: number | null
+	public ya: number | null
+	public max: number | null
+	constructor(
+		x: number | null,
+		y: number | null,
+		xa: number | null,
+		ya: number | null,
+		max: number | null,
+	) {
+		this.x = x
+		this.y = y
+		this.xa = xa
+		this.ya = ya
+		this.max = max
+	}
+}
 export class CanvasFocusPoint {
 	public color: string
 	public pointWidth: number
@@ -254,9 +274,11 @@ export class CanvasFocusPoint {
 				window.innerHeight ||
 				document.documentElement.clientHeight ||
 				document.body.clientHeight)
-		this.points = Array(Math.floor((this.W * this.H) / 12000)).fill({
-			x: null, y: null, max: null, xa: null, ya: null
-		})
+		this.points = Array(Math.floor((this.W * this.H) / 12000))
+		for (let i = 0; i < this.points.length; i++) {
+			this.points[i] = new Npoint(null, null, null, null, null)
+		}
+
 		this.mouse.max = this.points.length * 100
 		this.putPoint(this.points)
 	}
@@ -308,7 +330,14 @@ export class CanvasFocusPoint {
 				//fillRect前两个参数为矩形左上角的x，y坐标，后两个分别为宽度和高度
 				//绘制点
 				context.beginPath()
-				context.arc(i.x! - 0.5, i.y! - 0.5, this.pointWidth, 0, Math.PI * 2, true)
+				context.arc(
+					i.x! - 0.5,
+					i.y! - 0.5,
+					this.pointWidth,
+					0,
+					Math.PI * 2,
+					true
+				)
 				context.fillStyle = 'rgba(' + this.color + ', 0.7)'
 				context.fill()
 				//遍历totalPoints中所有元素
@@ -353,13 +382,12 @@ export class CanvasFocusPoint {
 		}, 100)
 	}
 	close() {
-		window.cancelAnimationFrame(this.animationId!)
-		window.removeEventListener('resize', this.getWindowWH)
-		window.removeEventListener('mousemove', this.mousemoveFunc)
-		window.removeEventListener('mouseout', this.mouseoutFunc)
 		if (document.querySelector('#focusPointCanvas')) {
+			window.cancelAnimationFrame(this.animationId!)
 			document.querySelector('#focusPointCanvas')!.remove()
+			window.removeEventListener('resize', this.getWindowWH)
+			window.removeEventListener('mousemove', this.mousemoveFunc)
+			window.removeEventListener('mouseout', this.mouseoutFunc)
 		}
 	}
 }
-
