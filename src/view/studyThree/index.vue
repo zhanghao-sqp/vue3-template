@@ -1,5 +1,5 @@
 <template>
-	<div ref="statsRef" style="position: absolute; top: 20px; right: 100px"></div>
+	<div ref="statsRef" style="position: absolute; top: 100px; right: 100px"></div>
 	<el-button @click="move" :disabled="moveFlag">动起来</el-button>
 	<el-button @click="stop" :disabled="!moveFlag">停下</el-button>
 	<label>速度</label>
@@ -66,6 +66,7 @@ import {
 // import { OrbitControls } from '@three-ts/orbit-controls';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Stats from 'stats.js'
+import * as dat from 'dat.gui'
 
 
 const threeRef = ref()
@@ -115,7 +116,8 @@ const init = () => {
 	//点光源
 	const spotLight = new SpotLight(0xffffff)
 	spotLight.castShadow = true
-	spotLight.position.set(0, 800, 0) //点光源位置
+	spotLight.visible = true
+	spotLight.position.set(50, 100, 0) //点光源位置
 	scene.add(spotLight) //点光源添加到场景中
 	//环境光
 	const ambient = new AmbientLight(0x444444)
@@ -125,7 +127,8 @@ const init = () => {
 	const planeGeometry = new CircleGeometry(60, 40)
 	const planeMaterial = new MeshLambertMaterial({ color: 0x888888, side: 2 })
 	const plane = new Mesh(planeGeometry, planeMaterial)
-	plane.receiveShadow = false
+	// plane.castShadow = true
+	plane.receiveShadow = true
 	plane.rotation.x = -0.5 * Math.PI
 	plane.position.x = 0
 	plane.position.y = 0
@@ -141,7 +144,7 @@ const init = () => {
 	// 球体
 	const sphereGeometry = new SphereGeometry(10, 60, 60)
 	const sphereMaterial = new MeshLambertMaterial({
-		color: 0xcc8455
+		color: 0xcc8455, fog: true, wireframe: false
 	})
 	console.log(sphereGeometry)
 	const sphere = new Mesh(sphereGeometry, sphereMaterial)
@@ -262,12 +265,37 @@ const init = () => {
 		stats.end()
 	}
 	render()
+
 	// 使用鼠标操作三维场景
 	const controls = new OrbitControls(camera, renderer.domElement)
 	//监听控制器的鼠标事件，执行渲染内容
 	controls.addEventListener('change', () => {
 		renderer.render(scene, camera)
 	})
+
+	const gui = new dat.GUI()
+	const control = {
+		addCube: () => {
+			const cubeGeometry = new BoxGeometry(10, 10, 10)
+			cubeGeometry.name = 'newCube'
+			const cubeMaterial = new MeshLambertMaterial({
+				color: 0xff0000,
+			})
+			const cube = new Mesh(cubeGeometry, cubeMaterial)
+			cube.name = 'newCube'
+			cube.position.x = Math.random() * 100 - 50
+			cube.position.y = Math.random() * 100
+			cube.position.z = Math.random() * 100 - 50
+			cube.castShadow = true
+			scene.add(cube)
+		},
+		removeCube: () => {
+			const cubes = scene.children.filter(child => child.name === 'newCube')
+			scene.remove(cubes[cubes.length - 1])
+		}
+	}
+	gui.add(control, 'addCube')
+	gui.add(control, 'removeCube')
 }
 onMounted(() => {
 	init()
