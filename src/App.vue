@@ -10,6 +10,10 @@ import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 
 <style lang="scss">
 @import '@var';
+::selection {
+	color: $main-color;
+	background-color: #bbb;
+}
 // 滚动条样式
 ::-webkit-scrollbar {
 	width: 5px;

@@ -1,5 +1,9 @@
 <template>
-	<div ref="statsRef" style="position: absolute; top: 100px; right: 100px"></div>
+	<div
+		ref="statsRef"
+		style="position: absolute; top: 100px; right: 100px"
+	></div>
+	<el-icon type="primary"><i-ep-View /></el-icon>
 	<el-button @click="move" :disabled="moveFlag">动起来</el-button>
 	<el-button @click="stop" :disabled="!moveFlag">停下</el-button>
 	<label>速度</label>
@@ -8,6 +12,7 @@
 		:format-tooltip="(v:number)=>v"
 		:show-tooltip="false"
 	/>
+	<el-button type="primary" @click="getGeometry">查看元素</el-button>
 	<br />
 	<!-- <label>cameraX</label>
 	<el-slider
@@ -50,6 +55,8 @@ import {
 	MeshLambertMaterial,
 	Mesh,
 	SpotLight,
+	Color,
+	ExtrudeGeometry,
 	PlaneGeometry,
 	CircleGeometry,
 	AmbientLight,
@@ -62,8 +69,18 @@ import {
 	Sprite,
 	Group,
 	BufferGeometry,
+	TorusGeometry,
+	TorusBufferGeometry,
+	MeshMatcapMaterial,
+	Vector3,
+LineCurve,
+LineCurve3,
+Vector2,
+LineBasicMaterial,
+Line
 } from 'three'
-// import { OrbitControls } from '@three-ts/orbit-controls';
+import { TextBufferGeometry, TextGeometry } from 'three/examples/jsm/geometries/textGeometry'
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Stats from 'stats.js'
 import * as dat from 'dat.gui'
@@ -102,15 +119,16 @@ const cameraPositionChange = () => {
 }
 const rainGroup = new Group()
 
+const scene = new Scene()
 // 初始化场景
 const init = () => {
-	const scene = new Scene()
 	camera.position.x = cameraPosition.x
 	camera.position.y = cameraPosition.y
 	camera.position.z = cameraPosition.z
 	camera.lookAt(scene.position)
 
 	const axes = new AxesHelper(50)
+	axes.setColors(new Color('#ffffff'), new Color('#ffffff'), new Color('#ffffff'))
 	scene.add(axes)
 
 	//点光源
@@ -130,12 +148,12 @@ const init = () => {
 	// plane.castShadow = true
 	plane.receiveShadow = true
 	plane.rotation.x = -0.5 * Math.PI
-	plane.position.x = 0
 	plane.position.y = 0
 	plane.position.z = 0
 	scene.add(plane)
 	// 几何体
 	const geometry = new BoxGeometry(10, 20, 30)
+	// console.log(geometry.attributes.position)
 	const material = new MeshLambertMaterial({ color: 0x0f8189, fog: true })
 	const cube = new Mesh(geometry, material)
 	cube.position.y = 30
@@ -144,15 +162,21 @@ const init = () => {
 	// 球体
 	const sphereGeometry = new SphereGeometry(10, 60, 60)
 	const sphereMaterial = new MeshLambertMaterial({
-		color: 0xcc8455, fog: true, wireframe: false
+		color: 0xcc8455,
+		fog: true,
+		wireframe: false
 	})
-	console.log(sphereGeometry)
+	// console.log(sphereGeometry)
 	const sphere = new Mesh(sphereGeometry, sphereMaterial)
+	sphere.name = 'qiuti'
 	sphere.position.x = 20
 	sphere.position.y = 20
 	sphere.position.z = 0
 	sphere.castShadow = true
 	scene.add(sphere)
+	scene.updateMatrixWorld(true)
+	console.log('世界坐标', sphere.getWorldPosition(new Vector3()))
+	console.log('本地坐标', sphere.position)
 	// 圆
 	const circleGeometry = new CircleGeometry(5, 32)
 	const circleMaterial = new MeshBasicMaterial({
@@ -212,7 +236,7 @@ const init = () => {
 	// 	// 控制精灵大小，比如可视化中精灵大小表征数据大小
 	// 	sprite.scale.set(5, 5, 1); //// 只需要设置x、y两个分量就可以
 	// 加载雨滴理贴图
-	
+
 	const textureTree = new TextureLoader().load('rain.png')
 	// 批量创建表示雨滴的精灵模型
 	for (let i = 0; i < 1000; i++) {
@@ -223,7 +247,7 @@ const init = () => {
 		const sprite = new Sprite(spriteMaterial)
 		rainGroup.add(sprite)
 		// 控制精灵大小,
-		sprite.scale.set(.7, .7, .7) //// 只需要设置x、y两个分量就可以
+		sprite.scale.set(0.7, 0.7, 0.7) //// 只需要设置x、y两个分量就可以
 		const k1 = Math.random() - 0.5
 		const k2 = Math.random() - 0.5
 		const k3 = Math.random() - 0.5
@@ -231,6 +255,35 @@ const init = () => {
 		sprite.position.set(120 * k1, 200 * k3, 120 * k2)
 	}
 	scene.add(rainGroup)
+
+	// 环状三维体
+	for (let i = 0; i < 1000; i++) {
+		const torusBufferGeometry = new TorusBufferGeometry(1, 0.5, 50, 50)
+		const material = new MeshLambertMaterial({ color: 0xa40d0d })
+		const mesh = new Mesh(torusBufferGeometry, material)
+		mesh.name = 'cell'
+		mesh.castShadow = true
+		mesh.position.x = (Math.random() - 0.5) * 80
+		mesh.position.y = (Math.random()) * 20
+		mesh.position.z = (Math.random() - 0.5) * 80
+		mesh.rotation.x = Math.random() * Math.PI
+		mesh.rotation.y = Math.random() * Math.PI
+		let random = Math.random()
+		mesh.scale.set(random, random, random)
+		scene.add(mesh)
+	}
+	const lineGeometry = new ExtrudeGeometry(); //声明一个几何体对象Geometry
+	const p1 = new Vector3(50, 0, 0); //顶点1坐标
+	const p2 = new Vector3(0, 70, 0); //顶点2坐标
+	// 三维直线LineCurve3
+	const lineCurve = new LineCurve3(p1, p2);
+	const pointArr = lineCurve.getPoints(100); //获取直线上的点数组
+	lineGeometry.setFromPoints(pointArr);
+	console.log(lineGeometry.getAttribute('')) //获取几何体的长度
+	const lineMaterial = new LineBasicMaterial({ color: 0x333333 });
+	const line = new Line(lineGeometry, lineMaterial);
+	scene.add(line);
+
 
 	const renderer = new WebGLRenderer()
 	renderer.setSize(window.innerWidth * 0.8, window.innerHeight * 0.8)
@@ -252,12 +305,20 @@ const init = () => {
 
 		rainGroup.children.forEach(sprite => {
 			// 雨滴的y坐标每次减1
-			sprite.position.y -= speed.value / 10;
+			sprite.position.y -= speed.value / 10
 			if (sprite.position.y < 0) {
 				// 如果雨滴落到地面，重置y，从新下落
-				sprite.position.y = 100;
+				sprite.position.y = 100
 			}
-		});
+		})
+		scene.traverse(obj => {
+			if (obj.name === 'cell') {
+				obj.rotation.x += speed.value / 100
+				obj.rotation.y += speed.value / 100
+				obj.rotation.z += speed.value / 100
+			}
+		}
+		)
 		cube.rotation.z += speed.value / 100
 		sphere.rotateZ(speed.value / 100)
 		circle.rotation.x -= speed.value / 200
@@ -273,13 +334,18 @@ const init = () => {
 		renderer.render(scene, camera)
 	})
 
+	const newCubeGroup = new Group()
+	newCubeGroup.name = 'newCubeGroup'
+	scene.add(newCubeGroup)
+
 	const gui = new dat.GUI()
+
 	const control = {
 		addCube: () => {
 			const cubeGeometry = new BoxGeometry(10, 10, 10)
 			cubeGeometry.name = 'newCube'
 			const cubeMaterial = new MeshLambertMaterial({
-				color: 0xff0000,
+				color: 0xff0000
 			})
 			const cube = new Mesh(cubeGeometry, cubeMaterial)
 			cube.name = 'newCube'
@@ -287,15 +353,34 @@ const init = () => {
 			cube.position.y = Math.random() * 100
 			cube.position.z = Math.random() * 100 - 50
 			cube.castShadow = true
-			scene.add(cube)
+			newCubeGroup.add(cube)
 		},
 		removeCube: () => {
-			const cubes = scene.children.filter(child => child.name === 'newCube')
-			scene.remove(cubes[cubes.length - 1])
+			console.log('🚀 ~ scene.children', scene.children)
+			const groups: Group = scene.children.find(
+				child => child.name === 'newCubeGroup'
+			) as Group
+			scene.remove(groups)
+			// groups.remove(groups.children[groups.children.length - 1])
 		}
 	}
 	gui.add(control, 'addCube')
 	gui.add(control, 'removeCube')
+}
+const getGeometry = () => {
+	// console.log(scene.children)
+	const sphere = scene.children.find(v => v.name === 'qiuti')
+	// const copySphere = sphere!.clone()
+	// copySphere.position.x = 100
+	// copySphere.position.y = 100
+	// copySphere.position.z = 100
+	// scene.add(copySphere)
+	sphere?.scale.set(0.5, 0.5, 0.5)
+	console.log(sphere?.rotation.z)
+	scene.traverse(obj => {
+		console.log(obj)
+	})
+	// console.log(scene.getObjectByName('newCube')) // 返回第一个匹配的对象
 }
 onMounted(() => {
 	init()
