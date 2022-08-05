@@ -4,6 +4,15 @@
 	<!-- <UseDarkSwitch></UseDarkSwitch>
 	<UseExportExcel></UseExportExcel>
 	<OlMap style="width: 90%; height: 800px; margin: 0 auto;"></OlMap> -->
+	<div id="parallax" style="position: relative;">
+		<div style="position: absolute; left: 0; top: 18px;">
+			<img src="../../../public/picture.jpg" alt="" />
+		</div>
+		<div style="position: absolute; left: 500px; top: 50px;">
+			<img src="../../../public/rain.png" alt="" />
+		</div>
+		
+	</div>
 </template>
 
 <script setup lang="ts">
