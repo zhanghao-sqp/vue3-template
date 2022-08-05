@@ -1,6 +1,7 @@
 import { defineConfig, ConfigEnv, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
+import VueSetupExtend from 'vite-plugin-vue-setup-extend'
 
 // 自动导入
 import AutoImport from 'unplugin-auto-import/vite'
@@ -22,7 +23,7 @@ export default ({ mode }: ConfigEnv) => {
 		envDir: './env',
 		server: {
 			host: '0.0.0.0',
-			port: 8080,
+			port: 8888,
 			open: false,
 			hmr: true,
 			cors: true,
@@ -44,6 +45,7 @@ export default ({ mode }: ConfigEnv) => {
 		},
 		plugins: [
 			vue(),
+			VueSetupExtend(),
 			ElementPlusPlugin({ useSource: true }),
 			// 自动导入组件及样式
 			AutoImport({

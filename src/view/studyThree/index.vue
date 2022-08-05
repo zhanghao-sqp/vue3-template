@@ -43,7 +43,7 @@
 	<div ref="threeRef"></div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="three">
 import { ref, onMounted, reactive } from 'vue'
 import {
 	Scene,
@@ -77,7 +77,8 @@ LineCurve,
 LineCurve3,
 Vector2,
 LineBasicMaterial,
-Line
+Line,
+BufferAttribute
 } from 'three'
 import { TextBufferGeometry, TextGeometry } from 'three/examples/jsm/geometries/textGeometry'
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
@@ -198,6 +199,8 @@ const init = () => {
 	point.position.y = 20
 	point.position.z = 0
 	scene.add(point)
+
+	// 方式一：使用顶点坐标和索引创建几何体
 	// 立方体顶点位置坐标
 	const vertices = [
 			-1,-1,-1,    1,-1,-1,    1, 1,-1,    -1, 1,-1,
@@ -214,7 +217,8 @@ const init = () => {
 	]
 	const polyhedron = new PolyhedronGeometry(vertices, indices, 5)
 	const polyhedronMaterial = new MeshBasicMaterial({
-		color: 0x425a2e
+		color: 0x409eff,
+		side: 2
 	})
 	const polyhedronMesh = new Mesh(polyhedron, polyhedronMaterial)
 	polyhedronMesh.position.x = -20
@@ -222,6 +226,33 @@ const init = () => {
 	polyhedronMesh.position.z = 0
 	scene.add(polyhedronMesh)
 
+
+	// 方式二:使用顶点坐标创建几何体
+	const polyhedronGeometry = new BufferGeometry()
+	const vertices2 = new Float32Array([
+		-1,-1,-1,    1,-1,-1,    1, 1,-1,    -1, 1,-1,
+		-1,-1, 1,    1,-1, 1,    1, 1, 1,    -1, 1, 1,
+	])
+	const bufferAttribute = new BufferAttribute(vertices2, 3, false)
+	polyhedronGeometry.setAttribute('position', bufferAttribute)
+	// 设置顶点颜色
+	const colors = new Float32Array([
+		1,0,0,    1,0,0,    1,0,0,    1,0,0,
+		0,1,0,    0,1,0,    0,1,0,    0,1,0,
+		0,0,1,    0,0,1,    0,0,1,    0,0,1,
+		1,1,0,    1,1,0,    1,1,0,    1,1,0,
+		0,1,1,    0,1,1,    0,1,1,    0,1,1,
+	])
+	const bufferAttribute2 = new BufferAttribute(colors, 3, true)
+	polyhedronGeometry.setAttribute('color', bufferAttribute2)
+	const polyhedron2 = new Mesh(polyhedronGeometry, new MeshBasicMaterial({
+		vertexColors: true,
+		side: 2
+	}))
+	polyhedron2.position.x = 20
+	polyhedron2.position.y = -20
+	polyhedron2.position.z = 0
+	scene.add(polyhedron2)
 	// 	// 精灵模型Sprite
 	// 	const texture = new TextureLoader().load("rain.png");
 	// // 创建精灵材质对象SpriteMaterial
@@ -337,7 +368,9 @@ const init = () => {
 	const newCubeGroup = new Group()
 	newCubeGroup.name = 'newCubeGroup'
 	scene.add(newCubeGroup)
-
+	// if (document.querySelector('.dg')) {
+	// 	document.querySelector('.dg')?.remove()
+	// }
 	const gui = new dat.GUI()
 
 	const control = {
