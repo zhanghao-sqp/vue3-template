@@ -11,7 +11,9 @@
 		<div style="position: absolute; left: 500px; top: 50px;">
 			<img src="../../../public/rain.png" alt="" />
 		</div>
-		
+		<div style="padding-top: 1500px;">
+			<div v-appear="appearFn" style="height: 200px; background-color: red;"></div>
+		</div>
 	</div>
 </template>
 
@@ -27,6 +29,10 @@ const { count } = storeToRefs(useCount())
 useCount().increment()
 console.log(count)
 const canvasFocusPoint = new CanvasFocusPoint('#ff0000', 2, 1)
+
+const appearFn = () => {
+	alert('出现了')
+}
 onMounted(() => {
 	canvasFocusPoint.start()
 })

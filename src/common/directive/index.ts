@@ -1,5 +1,5 @@
 import { App } from 'vue'
-
+import Observer from '@/utils/Observer'
 export default {
 	install: (app: App<Element>) => {
 		// 注册一个全局自定义指令 `v-focus`
@@ -85,6 +85,14 @@ export default {
 			// beforeUnmount(el) {
 			//   el.removeEventListener('scroll')
 			// }
+		})
+
+		// v-appear = "fn"
+		app.directive('appear', {
+			mounted(el, binding) {
+				const observer = new Observer([el], binding.value)
+				observer.start()
+			}
 		})
 	}
 }
