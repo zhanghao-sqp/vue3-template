@@ -9,11 +9,14 @@
 <script setup lang="ts">
 // import { parseDate } from '@/utils/common/common'
 // console.dir(parseDate('2020-01-01 08:00:00', 'yyyy-MM-dd'))
+import { storeToRefs } from 'pinia';
 import useCount from '@/store/index'
 import { CanvasFocusPoint } from '@/utils/canvasDraw'
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+
+const { count } = storeToRefs(useCount())
 useCount().increment()
-console.log(useCount().count)
+console.log(count)
 const canvasFocusPoint = new CanvasFocusPoint('#ff0000', 2, 1)
 onMounted(() => {
 	canvasFocusPoint.start()
