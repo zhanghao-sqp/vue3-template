@@ -6,13 +6,10 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     BaseTable: typeof import('./src/components/common/table/BaseTable.vue')['default']
+    BigFileUpload: typeof import('./src/components/common/big-file-upload/index.vue')['default']
     DarkSwitch: typeof import('./src/components/common/dark-switch/index.vue')['default']
-    ElButton: typeof import('element-plus/es')['ElButton']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
-    ElIcon: typeof import('element-plus/es')['ElIcon']
-    ElSlider: typeof import('element-plus/es')['ElSlider']
     ExportExcel: typeof import('./src/components/common/download/ExportExcel.vue')['default']
-    IEpView: typeof import('~icons/ep/view')['default']
     KeywordSearch: typeof import('./src/components/common/search/KeywordSearch.vue')['default']
     RichTextEditor: typeof import('./src/components/common/rich-text-editor/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
