@@ -62,18 +62,18 @@ export const post = (
 }
 
 // post请求url中带有参数
-export const paramsPost = (
-	url: string,
-	data?: any,
-	...config: AxiosRequestConfig[]
-) => {
-	let paramStr = ''
-	for (let key in data) {
-		if (data.hasOwnProperty(key)) {
-			paramStr += `&${key}=${encodeURIComponent(data[key])}`
-		}
-	}
-	paramStr.length > 1 && (paramStr = paramStr.substring(1))
-	paramStr.length > 1 && (url += `?${paramStr}`)
-	return instance.post(url, data, ...config)
-}
+// export const paramsPost = (
+// 	url: string,
+// 	data?: any,
+// 	...config: AxiosRequestConfig[]
+// ) => {
+// 	let paramStr = ''
+// 	for (let key in data) {
+// 		if (data.hasOwnProperty(key)) {
+// 			paramStr += `&${key}=${encodeURIComponent(data[key])}`
+// 		}
+// 	}
+// 	paramStr.length > 1 && (paramStr = paramStr.substring(1))
+// 	paramStr.length > 1 && (url += `?${paramStr}`)
+// 	return instance.post(url, data, ...config)
+// }

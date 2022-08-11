@@ -1,7 +1,7 @@
-import { get, post, paramsPost } from '@/http/axios'
+import { get, post } from '@/http/axios'
 
 export const login = (params: any) => {
-  return paramsPost('/login', params)
+  return post('/login', params)
 }
 
 export const logout = () => {

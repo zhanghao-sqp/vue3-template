@@ -4,15 +4,16 @@
 	<!-- <UseDarkSwitch></UseDarkSwitch>
 	<UseExportExcel></UseExportExcel>
 	<OlMap style="width: 90%; height: 800px; margin: 0 auto;"></OlMap> -->
-	<div id="parallax" style="position: relative;">
-		<div style="position: absolute; left: 0; top: 18px;">
+	<div id="parallax">
+		<!-- <div style="position: absolute; left: 0; top: 18px;">
 			<img src="../../../public/picture.jpg" alt="" />
 		</div>
 		<div style="position: absolute; left: 500px; top: 50px;">
 			<img src="../../../public/rain.png" alt="" />
-		</div>
+		</div> -->
+		<div v-droppable="true" style="width: 300px; height: 200px; background-color: cornflowerblue; left: 100px;top: 300px; position: absolute;"></div>
 		<div style="padding-top: 1500px;">
-			<div v-appear="appearFn" style="height: 200px; background-color: red;"></div>
+			<div v-appear:[flag]="appearFn" style="height: 200px; background-color: red;"></div>
 		</div>
 	</div>
 </template>
@@ -23,13 +24,17 @@
 import { storeToRefs } from 'pinia';
 import useCount from '@/store/index'
 import { CanvasFocusPoint } from '@/utils/canvasDraw'
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, reactive } from 'vue'
 
 const { count } = storeToRefs(useCount())
 useCount().increment()
 console.log(count)
 const canvasFocusPoint = new CanvasFocusPoint('#ff0000', 2, 1)
 
+const flag = ref(true)
+setTimeout(() => {
+	flag.value = false
+}, 3000)
 const appearFn = () => {
 	alert('出现了')
 }
