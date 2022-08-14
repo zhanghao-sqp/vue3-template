@@ -1,6 +1,7 @@
 @use './variable.scss' as *;
 @use '../custom/rewrite.scss';
 @use 'nprogress/nprogress.css';
+@use './reset.css';
 // @use 'element-plus/theme-chalk/dark/css-vars.css';
 
 @forward 'element-plus/theme-chalk/src/common/var.scss'

@@ -14,7 +14,7 @@
 	/>
 	<el-button type="primary" @click="getGeometry">查看元素</el-button>
 	<br />
-	<!-- <label>cameraX</label>
+	<label>cameraX</label>
 	<el-slider
 		v-model="cameraPosition.x"
 		:min="-100"
@@ -39,12 +39,12 @@
 		:max="1000"
 		:format-tooltip="(v:number)=>v"
 		@input="cameraPositionChange"
-	/> -->
+	/>
 	<div ref="threeRef"></div>
 </template>
 
-<script setup lang="ts" name="three">
-import { ref, onMounted, reactive } from 'vue'
+<script lang="ts" name="three" setup>
+import { ref, onMounted, reactive, defineComponent } from 'vue'
 import {
 	Scene,
 	PerspectiveCamera,
@@ -73,19 +73,21 @@ import {
 	TorusBufferGeometry,
 	MeshMatcapMaterial,
 	Vector3,
-LineCurve,
-LineCurve3,
-Vector2,
-LineBasicMaterial,
-Line,
-BufferAttribute
+	LineCurve,
+	LineCurve3,
+	Vector2,
+	LineBasicMaterial,
+	Line,
+	BufferAttribute
 } from 'three'
-import { TextBufferGeometry, TextGeometry } from 'three/examples/jsm/geometries/textGeometry'
+import {
+	TextBufferGeometry,
+	TextGeometry
+} from 'three/examples/jsm/geometries/textGeometry'
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Stats from 'stats.js'
 import * as dat from 'dat.gui'
-
 
 const threeRef = ref()
 const statsRef = ref()
@@ -121,15 +123,25 @@ const cameraPositionChange = () => {
 const rainGroup = new Group()
 
 const scene = new Scene()
+
 // 初始化场景
 const init = () => {
+	window.addEventListener('resize', () => {
+		camera.aspect = window.innerWidth / window.innerHeight
+		camera.updateProjectionMatrix()
+		renderer.setSize(window.innerWidth * 0.8, window.innerHeight)
+	})
 	camera.position.x = cameraPosition.x
 	camera.position.y = cameraPosition.y
 	camera.position.z = cameraPosition.z
 	camera.lookAt(scene.position)
 
 	const axes = new AxesHelper(50)
-	axes.setColors(new Color('#ffffff'), new Color('#ffffff'), new Color('#ffffff'))
+	axes.setColors(
+		new Color('#ffffff'),
+		new Color('#ffffff'),
+		new Color('#ffffff')
+	)
 	scene.add(axes)
 
 	//点光源
@@ -142,8 +154,8 @@ const init = () => {
 	const ambient = new AmbientLight(0x444444)
 	scene.add(ambient)
 	// 平面
-	// const planeGeometry = new PlaneGeometry(60, 40)
-	const planeGeometry = new CircleGeometry(60, 40)
+	const planeGeometry = new PlaneGeometry(120, 120)
+	// const planeGeometry = new CircleGeometry(60, 40)
 	const planeMaterial = new MeshLambertMaterial({ color: 0x888888, side: 2 })
 	const plane = new Mesh(planeGeometry, planeMaterial)
 	// plane.castShadow = true
@@ -226,29 +238,29 @@ const init = () => {
 	polyhedronMesh.position.z = 0
 	scene.add(polyhedronMesh)
 
-
 	// 方式二:使用顶点坐标创建几何体
 	const polyhedronGeometry = new BufferGeometry()
 	const vertices2 = new Float32Array([
-		-1,-1,-1,    1,-1,-1,    1, 1,-1,    -1, 1,-1,
-		-1,-1, 1,    1,-1, 1,    1, 1, 1,    -1, 1, 1,
+		-1, -1, -1, 1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, 1, 1, -1, 1, 1, 1, 1,
+		-1, 1, 1
 	])
 	const bufferAttribute = new BufferAttribute(vertices2, 3, false)
 	polyhedronGeometry.setAttribute('position', bufferAttribute)
 	// 设置顶点颜色
 	const colors = new Float32Array([
-		1,0,0,    1,0,0,    1,0,0,    1,0,0,
-		0,1,0,    0,1,0,    0,1,0,    0,1,0,
-		0,0,1,    0,0,1,    0,0,1,    0,0,1,
-		1,1,0,    1,1,0,    1,1,0,    1,1,0,
-		0,1,1,    0,1,1,    0,1,1,    0,1,1,
+		1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0,
+		0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1,
+		1, 0, 1, 1, 0, 1, 1, 0, 1, 1
 	])
 	const bufferAttribute2 = new BufferAttribute(colors, 3, true)
 	polyhedronGeometry.setAttribute('color', bufferAttribute2)
-	const polyhedron2 = new Mesh(polyhedronGeometry, new MeshBasicMaterial({
-		vertexColors: true,
-		side: 2
-	}))
+	const polyhedron2 = new Mesh(
+		polyhedronGeometry,
+		new MeshBasicMaterial({
+			vertexColors: true,
+			side: 2
+		})
+	)
 	polyhedron2.position.x = 20
 	polyhedron2.position.y = -20
 	polyhedron2.position.z = 0
@@ -280,10 +292,10 @@ const init = () => {
 		// 控制精灵大小,
 		sprite.scale.set(0.7, 0.7, 0.7) //// 只需要设置x、y两个分量就可以
 		const k1 = Math.random() - 0.5
-		const k2 = Math.random() - 0.5
+		const k2 = Math.random()
 		const k3 = Math.random() - 0.5
 		// 设置精灵模型位置，在整个空间上上随机分布
-		sprite.position.set(120 * k1, 200 * k3, 120 * k2)
+		sprite.position.set(120 * k1, 100 * k2, 120 * k3)
 	}
 	scene.add(rainGroup)
 
@@ -295,7 +307,7 @@ const init = () => {
 		mesh.name = 'cell'
 		mesh.castShadow = true
 		mesh.position.x = (Math.random() - 0.5) * 80
-		mesh.position.y = (Math.random()) * 20
+		mesh.position.y = Math.random() * 20
 		mesh.position.z = (Math.random() - 0.5) * 80
 		mesh.rotation.x = Math.random() * Math.PI
 		mesh.rotation.y = Math.random() * Math.PI
@@ -303,21 +315,20 @@ const init = () => {
 		mesh.scale.set(random, random, random)
 		scene.add(mesh)
 	}
-	const lineGeometry = new ExtrudeGeometry(); //声明一个几何体对象Geometry
-	const p1 = new Vector3(50, 0, 0); //顶点1坐标
-	const p2 = new Vector3(0, 70, 0); //顶点2坐标
+	const lineGeometry = new ExtrudeGeometry() //声明一个几何体对象Geometry
+	const p1 = new Vector3(50, 0, 0) //顶点1坐标
+	const p2 = new Vector3(0, 70, 0) //顶点2坐标
 	// 三维直线LineCurve3
-	const lineCurve = new LineCurve3(p1, p2);
-	const pointArr = lineCurve.getPoints(100); //获取直线上的点数组
-	lineGeometry.setFromPoints(pointArr);
+	const lineCurve = new LineCurve3(p1, p2)
+	const pointArr = lineCurve.getPoints(100) //获取直线上的点数组
+	lineGeometry.setFromPoints(pointArr)
 	console.log(lineGeometry.getAttribute('')) //获取几何体的长度
-	const lineMaterial = new LineBasicMaterial({ color: 0x333333 });
-	const line = new Line(lineGeometry, lineMaterial);
-	scene.add(line);
-
+	const lineMaterial = new LineBasicMaterial({ color: 0x333333 })
+	const line = new Line(lineGeometry, lineMaterial)
+	scene.add(line)
 
 	const renderer = new WebGLRenderer()
-	renderer.setSize(window.innerWidth * 0.8, window.innerHeight * 0.8)
+	renderer.setSize(window.innerWidth * 0.8, window.innerHeight)
 	renderer.setClearColor(0x000000, 1) //设置背景颜色
 	renderer.shadowMap.enabled = true //开启阴影
 	threeRef.value.appendChild(renderer.domElement)
@@ -348,8 +359,7 @@ const init = () => {
 				obj.rotation.y += speed.value / 100
 				obj.rotation.z += speed.value / 100
 			}
-		}
-		)
+		})
 		cube.rotation.z += speed.value / 100
 		sphere.rotateZ(speed.value / 100)
 		circle.rotation.x -= speed.value / 200

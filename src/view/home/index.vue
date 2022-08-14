@@ -1,5 +1,5 @@
 <template>
-	<span>home</span>
+	<span>count：{{ count }}</span>
 	<router-link to="/login">去登录页</router-link>
 	<!-- <UseDarkSwitch></UseDarkSwitch>
 	<UseExportExcel></UseExportExcel>
@@ -11,35 +11,53 @@
 		<div style="position: absolute; left: 500px; top: 50px;">
 			<img src="../../../public/rain.png" alt="" />
 		</div> -->
-		<div v-droppable="true" style="width: 300px; height: 200px; background-color: cornflowerblue; left: 100px;top: 300px; position: absolute;"></div>
-		<div style="padding-top: 1500px;">
-			<div v-appear:[flag]="appearFn" style="height: 200px; background-color: red;"></div>
+		<div
+			v-focus
+			v-droppable
+			v-throttle="{fn: (e: Event)=>appearFn(1, e), event: 'mousemove' }"
+			style="
+				width: 300px;
+				height: 200px;
+				background-color: cornflowerblue;
+				left: 100px;
+				top: 300px;
+				position: absolute;
+			"
+		>
+			<input type="text">
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-// import { parseDate } from '@/utils/common/common'
-// console.dir(parseDate('2020-01-01 08:00:00', 'yyyy-MM-dd'))
 import { storeToRefs } from 'pinia';
 import useCount from '@/store/index'
+import WS from '@/http/WS'
 import { CanvasFocusPoint } from '@/utils/canvasDraw'
 import { ref, onMounted, onBeforeUnmount, reactive } from 'vue'
 
-const { count } = storeToRefs(useCount())
-useCount().increment()
+const ws = new WS('ws://121.40.165.18:8800', {
+	onmessage: (e: any) => {
+		console.log('ws message', e)
+	},
+})
+const store = useCount()
+const { count } = storeToRefs(store) // 直接解构会失去响应式，配合storeToRefs使用
+store.increment()
 console.log(count)
 const canvasFocusPoint = new CanvasFocusPoint('#ff0000', 2, 1)
 
 const flag = ref(true)
 setTimeout(() => {
+	store.increment()
 	flag.value = false
 }, 3000)
-const appearFn = () => {
-	alert('出现了')
+const appearFn = (num: number, e: Event) => {
+	count.value += num
 }
 onMounted(() => {
 	canvasFocusPoint.start()
+
 })
 onBeforeUnmount(() => {
 	canvasFocusPoint.close()
