@@ -11,6 +11,26 @@ export default {
 			}
 		})
 
+		// v-disabled
+		app.directive('disabled', {
+			created(el, { value }) {
+				if (value === true || value === undefined) {
+					el.style.cursor = 'not-allowed'
+					el.style.pointerEvents = 'none'
+					el.style.opacity = '0.7'
+				}
+			},
+			updated(el, { value }) {
+				if (value === true || value === undefined) {
+					el.style.pointerEvents = 'none'
+					el.style.opacity = '0.5'
+				} else {
+					el.style.pointerEvents = 'auto'
+					el.style.opacity = 1
+				}
+			}
+		})
+
 		// v-debounce="{fn, event, delay}"
 		app.directive('debounce', {
 			created(el, { value }) {
