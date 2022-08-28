@@ -23,6 +23,7 @@
 		"three": "^0.142.0",
 		"vue": "^3.2.25",
 		"vue-router": "^4.0.16",
+		"vue-upload-component": "^3.1.2",
 		"vue3-json-excel": "^1.0.10-alpha"
 	},
 	"devDependencies": {

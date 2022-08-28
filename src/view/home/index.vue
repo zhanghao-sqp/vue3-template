@@ -11,6 +11,7 @@
 		<div style="position: absolute; left: 500px; top: 50px;">
 			<img src="../../../public/rain.png" alt="" />
 		</div> -->
+		<UploadTable></UploadTable>
 		<div
 			v-focus
 			v-droppable
@@ -32,15 +33,15 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import useCount from '@/store/index'
-import WS from '@/http/WS'
+// import WS from '@/http/WS'
 import { CanvasFocusPoint } from '@/utils/canvasDraw'
 import { ref, onMounted, onBeforeUnmount, reactive } from 'vue'
 
-const ws = new WS('ws://121.40.165.18:8800', {
-	onmessage: (e: any) => {
-		console.log('ws message', e)
-	},
-})
+// const ws = new WS('ws://121.40.165.18:8800', {
+// 	onmessage: (e: any) => {
+// 		console.log('ws message', e)
+// 	},
+// })
 const store = useCount()
 const { count } = storeToRefs(store) // 直接解构会失去响应式，配合storeToRefs使用
 store.increment()
