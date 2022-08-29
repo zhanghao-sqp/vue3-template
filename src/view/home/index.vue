@@ -1,5 +1,6 @@
 <template>
 	<span>count：{{ count }}</span>
+	<el-button type="primary" @click="resetCount">重置count</el-button>
 	<router-link to="/login">去登录页</router-link>
 	<!-- <UseDarkSwitch></UseDarkSwitch>
 	<UseExportExcel></UseExportExcel>
@@ -11,8 +12,8 @@
 		<div style="position: absolute; left: 500px; top: 50px;">
 			<img src="../../../public/rain.png" alt="" />
 		</div> -->
-		<UploadTable></UploadTable>
-		<div
+		<span style="margin-left: 200px;"></span><UploadTable></UploadTable>
+		<!-- <div
 			v-focus
 			v-droppable
 			v-throttle="{fn: (e: Event)=>appearFn(1, e), event: 'mousemove' }"
@@ -26,7 +27,7 @@
 			"
 		>
 			<input type="text">
-		</div>
+		</div> -->
 	</div>
 </template>
 
@@ -45,12 +46,16 @@ import { ref, onMounted, onBeforeUnmount, reactive } from 'vue'
 const store = useCount()
 const { count } = storeToRefs(store) // 直接解构会失去响应式，配合storeToRefs使用
 store.increment()
-console.log(count)
+const resetCount = () => {
+	store.$reset()
+}
+
 const canvasFocusPoint = new CanvasFocusPoint('#ff0000', 2, 1)
 
 const flag = ref(true)
 setTimeout(() => {
 	store.increment()
+	count.value++
 	flag.value = false
 }, 3000)
 const appearFn = (num: number, e: Event) => {
