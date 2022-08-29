@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="upload-table-container">
 		<file-upload
 			ref="upload"
 			post-action="/upload/post"
@@ -15,7 +15,7 @@
 			type="button"
 			class="btn btn-success"
 			v-if="!upload || !(upload as any).active"
-			@click.prevent=";(upload as any).active = true"
+			@click.prevent="(upload as any).active = true"
 		>
 			Start Upload
 		</button>
@@ -23,14 +23,58 @@
 			type="button"
 			class="btn btn-danger"
 			v-else
-			@click.prevent=";(upload as any).active = false"
+			@click.prevent="(upload as any).active = false"
 		>
 			<i class="fa fa-stop" aria-hidden="true"></i>
 			Stop Upload
 		</button>
 		<BaseTable :data="files" :column="tableColumn">
 			<template #progress="{ row }">
-				<span>{{ row }}</span>
+				<div class="upload-state">
+					<el-tag
+						v-show="!row.active && row.progress === '0.00' && !row.success"
+						size="small"
+						type="info"
+					>
+						未上传
+					</el-tag>
+					<el-tag
+						v-show="!row.active && row.progress === '100.00' && !row.success"
+						size="small"
+						type="danger"
+					>
+						上传失败
+					</el-tag>
+					<el-tag
+						v-show="!row.active && row.progress === '100.00' && row.success"
+						size="small"
+						type="success"
+					>
+						上传成功
+					</el-tag>
+					<el-tag
+            v-show="row.active && row.progress !== '100.00'"
+            size="small"
+          >
+						正在上传
+					</el-tag>
+					<el-tag
+						v-show="
+							!row.active &&
+							row.progress !== '0.00' &&
+							row.progress !== '100.00'
+						"
+						size="small"
+						type="warning"
+					>
+						暂停上传
+					</el-tag>
+					<el-progress
+						v-show="row.active && row.progress !== '100.00'"
+						:percentage="isNaN(row.progress) ? 0 : parseInt(row.progress)"
+						:format="(pct: number): string => pct + '%'"
+					/>
+				</div>
 			</template>
 		</BaseTable>
 	</div>
@@ -130,9 +174,22 @@ const getIconByFileType = (mimeType: string) => {
 }
 </script>
 
-<style>
-.example-simple label.btn {
-	margin-bottom: 0;
-	margin-right: 1rem;
+<style lang="scss" scoped>
+.upload-table-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  .upload-state {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    :deep(.el-progress--line) {
+      width: 60%;
+    }
+  }
 }
+
+
 </style>

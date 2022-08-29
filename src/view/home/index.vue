@@ -13,6 +13,14 @@
 			<img src="../../../public/rain.png" alt="" />
 		</div> -->
 		<span style="margin-left: 200px;"></span><UploadTable></UploadTable>
+		<el-date-picker
+      v-model="value"
+      type="week"
+      placeholder="Pick a day"
+      format="dddd"
+      value-format="dddd"
+    >
+    </el-date-picker>
 		<!-- <div
 			v-focus
 			v-droppable
@@ -43,6 +51,7 @@ import { ref, onMounted, onBeforeUnmount, reactive } from 'vue'
 // 		console.log('ws message', e)
 // 	},
 // })
+const value = ref('2021-10-29')
 const store = useCount()
 const { count } = storeToRefs(store) // 直接解构会失去响应式，配合storeToRefs使用
 store.increment()

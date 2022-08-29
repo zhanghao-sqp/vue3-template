@@ -6,7 +6,7 @@
 		:border="border"
 		:size="size"
 		:fit="fit"
-		:height="height"
+		:height="tableHeight"
 		:show-header="showHeader"
 		:header-row-class-name="
 			showHeaderColor ? 'define-header' : 'default-header'
@@ -57,7 +57,7 @@
 </template>
 
 <script setup lang="ts">
-import { getCurrentInstance, ComponentInternalInstance } from 'vue'
+import { getCurrentInstance, ComponentInternalInstance, ref, onBeforeMount } from 'vue'
 
 interface Props {
 	data: object[] // 表格数据
@@ -91,7 +91,6 @@ withDefaults(defineProps<Props>(), {
 	showHeader: true,
 	showHeaderColor: true,
 	border: true,
-	height: '100%',
 	fit: true,
 	emptyText: '无数据',
 	tooltipEffect: 'dark',
@@ -104,6 +103,12 @@ const emits = defineEmits([
 	'row-click', // 点击表格行
 	'selection-change' // 选择的行
 ])
+
+const tableHeight = ref<string | number | null>(null)
+onBeforeMount(() => {
+	const { height } = getCurrentInstance()!.props
+	tableHeight.value = height === undefined ? null : (height as string | number)
+})
 
 const cellClick = (
 	row: object,
