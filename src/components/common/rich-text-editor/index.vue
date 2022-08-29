@@ -1,7 +1,13 @@
 <template>
 	<div :style="{ width }">
-		<QuillEditor class="editor" ref="editor" contentType="html" :options="editorOption" :content="content"
-			@update:content="updateContent"></QuillEditor>
+		<QuillEditor
+			class="editor"
+			ref="editor"
+			contentType="html"
+			:options="editorOption"
+			:content="content"
+			@update:content="updateContent"
+		></QuillEditor>
 	</div>
 </template>
 
@@ -10,15 +16,20 @@ import { getCurrentInstance, ComponentInternalInstance } from 'vue'
 import { QuillEditor, Quill, Delta } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
-withDefaults(defineProps<{ content: string | undefined, width: string | undefined }>(), {
-	content: '', width: '100%'
-})
+withDefaults(
+	defineProps<{ content: string | undefined; width: string | undefined }>(),
+	{
+		content: '',
+		width: '100%'
+	}
+)
 const emits = defineEmits(['get-content'])
 
 // 编辑器配置
 const editorOption = Object.freeze({
 	modules: {
-		toolbar: [ // 工具菜单栏配置
+		toolbar: [
+			// 工具菜单栏配置
 			['bold', 'italic', 'underline', 'strike'], // 加粗 斜体 下划线 删除线
 			['blockquote', 'code-block'], // 引用  代码块
 			[{ header: 1 }, { header: 2 }], // 1、2 级标题
@@ -32,7 +43,7 @@ const editorOption = Object.freeze({
 			[{ font: [] }], // 字体种类
 			[{ align: [] }], // 对齐方式
 			['clean'], // 清除文本格式
-			['link', 'image', 'video'] // 链接、图片、视频
+			['link', 'image' /*'video'*/] // 链接、图片、视频
 		]
 	},
 	placeholder: '请在此编辑内容...', //提示
@@ -43,9 +54,10 @@ const editorOption = Object.freeze({
 
 // 传递文本内容
 const proxy: ComponentInternalInstance | null = getCurrentInstance()
-const updateContent = (data: Delta) => {
+const updateContent = (data: string) => {
 	// console.log(proxy?.refs['editor'])
-	emits('get-content', (proxy?.refs['editor'] as Quill).getHTML())
+	// emits('get-content', (proxy?.refs['editor'] as Quill).getHTML())
+	emits('get-content', data)
 }
 </script>
 

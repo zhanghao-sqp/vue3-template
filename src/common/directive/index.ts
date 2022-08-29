@@ -15,7 +15,6 @@ export default {
 		app.directive('disabled', {
 			created(el, { value }) {
 				if (value === true || value === undefined) {
-					el.style.cursor = 'not-allowed'
 					el.style.pointerEvents = 'none'
 					el.style.opacity = '0.7'
 				}
@@ -148,7 +147,7 @@ export default {
 					el.style.position = 'absolute'
 					el.style.cursor = 'move'
 					el.style.zIndex = '999'
-					el.style.boxShadow = `0 0 10px 4px #ccc`
+					el.style.boxShadow = `0 0 5px 2px rgba(0,0,0,0.5)`
 					// 获取当前的x轴距离
 					let offsetX = el.getBoundingClientRect().left
 					// 获取当前的y轴距离
@@ -188,5 +187,45 @@ export default {
 			}
 		})
 		
+		// v-download:filename="url"
+		app.directive('download', {
+			created(el, binding) {
+				el.$download = () => {
+					const a = document.createElement('a')
+					a.href = binding.value
+					a.download = binding.arg || 'download'
+					a.click()
+					a.remove()
+				}
+				el.addEventListener('click', el.$download)
+			},
+			beforeUnmount(el) {
+				el.$download && el.removeEventListener('click', el.$download)
+			}
+		})
+
+		// v-remote-download:filename="fn"
+		app.directive('remote-download', {
+			created(el, { arg, value }) {
+				el.$remoteDownload = async () => {
+					try {
+						const blob = await value()
+						if (!(blob instanceof Blob)) return
+						const link = document.createElement('a')
+						link.href = window.URL.createObjectURL(blob)
+						link.download = arg || 'download'
+						link.click()
+						window.URL.revokeObjectURL(link.href)
+						link.remove()
+					} catch (error) {
+						throw error
+					}
+				}
+				el.addEventListener('click', el.$remoteDownload)
+			},
+			beforeUnmount(el) {
+				el.$remoteDownload && el.removeEventListener('click', el.$remoteDownload)
+			}
+		})
 	}
 }
