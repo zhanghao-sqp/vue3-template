@@ -29,13 +29,14 @@ export enum FileMime {
   'dmg' = 'application/octet-stream',
   'dms' = 'application/octet-stream',
   'doc' = 'application/msword',
+  'docx' = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
   'dtd' = 'application/xml-dtd',
   'dv' = 'video/x-dv',
   'dvi' = 'application/x-dvi',
   'dxr' = 'application/x-director',
   'eps' = 'application/postscript',
   'etx' = 'text/x-setext',
-  'exe' = 'application/octet-stream',
+  'exe' = 'application/x-msdownload',
   'ez' = 'application/andrew-inset',
   'flv' = 'video/x-flv',
   'gif' = 'image/gif',
@@ -169,6 +170,7 @@ export enum FileMime {
   'xht' = 'application/xhtml+xml',
   'xhtml' = 'application/xhtml+xml',
   'xls' = 'application/vnd.ms-excel',
+  'xlsx' = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   'xml' = 'application/xml',
   'xpm' = 'image/x-xpixmap',
   'xsl' = 'application/xml',
@@ -176,5 +178,5 @@ export enum FileMime {
   'xul' = 'application/vnd.mozilla.xul+xml',
   'xwd' = 'image/x-xwindowdump',
   'xyz' = 'chemical/x-xyz',
-  'zip' = 'application/zip'
+  'zip' = 'application/x-zip-compressed'
 }

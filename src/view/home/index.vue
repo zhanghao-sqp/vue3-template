@@ -12,15 +12,7 @@
 		<div style="position: absolute; left: 500px; top: 50px;">
 			<img src="../../../public/rain.png" alt="" />
 		</div> -->
-		<span style="margin-left: 200px;"></span><UploadTable></UploadTable>
-		<el-date-picker
-      v-model="value"
-      type="week"
-      placeholder="Pick a day"
-      format="dddd"
-      value-format="dddd"
-    >
-    </el-date-picker>
+		<UploadTable :fileTypes="['zip','docx','png']"></UploadTable>
 		<!-- <div
 			v-focus
 			v-droppable

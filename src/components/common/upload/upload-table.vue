@@ -69,13 +69,13 @@
 					>
 						<i-ep-VideoPause color="orange" />
 					</span>
-					<span
+					<!-- <span
 						v-if="getFileStatus(row) === '上传失败'"
 						title="重新上传"
 						@click="(upload as any).update(row, { active: true })"
 					>
 						<i-ep-UploadFilled color="orange" />
-					</span>
+					</span> -->
 					<span v-if="getFileStatus(row) === '上传成功'">-</span>
 				</div>
 			</template>
@@ -91,17 +91,23 @@ import { FilesStatus, FileStatus } from '@/enums/state'
 import { FileMime } from '@/enums/fileMime'
 import { useMessage } from '@/hooks/element-plus/useActions'
 
-const { accept, size, multiple } = withDefaults(defineProps<{
-	accept?: string | undefined
+const { fileTypes, size, multiple } = withDefaults(defineProps<{
+	fileTypes?: string[] | undefined
 	multiple?: boolean
 	size?: number
 }>(), {
-	accept: undefined,
+	fileTypes: undefined,
 	multiple: true,
 	size: 1024 * 1024 * 1024
 })
 
 const upload = ref<ComponentInternalInstance>()
+const accept = computed(() => {
+	if (!fileTypes) return undefined
+	return fileTypes.map(type => {
+		return FileMime[(type as keyof typeof FileMime)]
+	}).join(',')
+})
 const files = ref<VueUploadItem[]>([])
 const tableColumn = [
 	{
@@ -127,6 +133,7 @@ const tableColumn = [
 		defineColumn: true
 	}
 ]
+
 
 const filesStatus = computed(() => {
 	if (!files.value.length) return FilesStatus[0] // 未添加文件
@@ -162,10 +169,13 @@ const inputFilter = (newFile: any, oldFile: any, prevent: any) => {
 			return prevent()
 		}
 		// 限制类型
-		if (1 !== 1) {
-			useMessage('error', '文件类型不支持')
-			return prevent()
-		}
+		const mimeTypes = fileTypes ? fileTypes.map(type => FileMime[(type as keyof typeof FileMime)]) : undefined
+		console.log(mimeTypes)
+		console.log(newFile.type)
+		// if (mimeTypes && !mimeTypes.includes(newFile.type)) {
+		// 	useMessage('error', '文件类型不支持')
+		// 	return prevent()
+		// }
 		// 创建 blob 字段 用于图片预览
 		newFile.blob = ''
 		let URL = window.URL || window.webkitURL
@@ -220,7 +230,11 @@ const getIconByFileType = (mimeType: string) => {
 	.upload-file-operation {
 		width: 100%;
 		display: flex;
-		justify-content: flex-end;
+		flex-direction: row-reverse;
+		justify-content: flex-start;
+		.el-button {
+			margin-left: 0.5rem;
+		}
 	}
 	.upload-file-name {
 		width: 100%;
@@ -246,7 +260,7 @@ const getIconByFileType = (mimeType: string) => {
 		display: flex;
 		justify-content: center;
 		span {
-			padding: 0 5px;
+			padding: 0 0.25rem;
 			cursor: pointer;
 		}
 	}
