@@ -82,7 +82,7 @@ watch(
 let excel = ref(null)
 const dialogVisible = ref(false)
 const download = () => {
-	;(<any>excel.value).$el.click()
+	(excel.value as any).$el.click()
 	dialogVisible.value = false
 }
 </script>

@@ -1,14 +1,18 @@
-enum State {
-  '状态1' = 1,
-  '状态2',
-  "状态3"
+enum FilesStatus {
+	'未添加文件',
+	'未开始上传',
+	'正在上传',
+	'已取消上传',
+	'上传完成'
 }
-enum Pass {
-  '待确认',
-  '已确认',
-  '已驳回'
+enum FileStatus {
+	'未上传',
+	'正在上传',
+  '已取消上传',
+  '上传成功',
+	'上传失败'
 }
 
 export {
-  State, Pass
+  FilesStatus, FileStatus
 }
