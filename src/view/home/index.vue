@@ -1,7 +1,7 @@
 <template>
 	<span>count：{{ count }}</span>
 	<el-button type="primary" @click="resetCount">重置count</el-button>
-	<router-link to="/login">去登录页1234</router-link>
+	<router-link to="/login">去登录页666</router-link>
 	<!-- <UseDarkSwitch></UseDarkSwitch>
 	<UseExportExcel></UseExportExcel>
 	<OlMap style="width: 90%; height: 800px; margin: 0 auto;"></OlMap> -->
