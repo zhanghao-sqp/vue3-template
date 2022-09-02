@@ -1,7 +1,7 @@
 <template>
 	<span>count：{{ count }}</span>
 	<el-button type="primary" @click="resetCount">重置count</el-button>
-	<router-link to="/login">去登录12gyyyyy</router-link>
+	<router-link to="/login">去登录777</router-link>
 	<div>123</div>
 	<!-- <UseDarkSwitch></UseDarkSwitch>
 	<UseExportExcel></UseExportExcel>
