@@ -1,7 +1,7 @@
 <template>
 	<span>count：{{ count }}</span>
 	<el-button type="primary" @click="resetCount">重置count</el-button>
-	<router-link to="/login">去登录页</router-link>
+	<router-link to="/login">去登录12</router-link>
 	<!-- <UseDarkSwitch></UseDarkSwitch>
 	<UseExportExcel></UseExportExcel>
 	<OlMap style="width: 90%; height: 800px; margin: 0 auto;"></OlMap> -->
@@ -12,7 +12,7 @@
 		<div style="position: absolute; left: 500px; top: 50px;">
 			<img src="../../../public/rain.png" alt="" />
 		</div> -->
-		<UploadTable :fileTypes="['zip','docx','png']"></UploadTable>
+		<UploadTable :fileTypes="['zip','docx','png','doc']"></UploadTable>
 		<!-- <div
 			v-focus
 			v-droppable
@@ -51,7 +51,7 @@ const resetCount = () => {
 	store.$reset()
 }
 
-const canvasFocusPoint = new CanvasFocusPoint('#ff0000', 2, 1)
+const canvasFocusPoint = new CanvasFocusPoint('#ff0000', 1, 1)
 
 const flag = ref(true)
 setTimeout(() => {

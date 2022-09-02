@@ -29,7 +29,7 @@
 				<i-ep-VideoPause />&nbsp;取消上传
 			</el-button>
 		</div>
-		<BaseTable :data="files" :column="tableColumn">
+		<BaseTable :data="files" :column="tableColumn" emptyText="请添加上传文件">
 			<template #name="{ row }">
 				<div class="upload-file-name">
 					<img
@@ -47,7 +47,7 @@
 						{{ getFileStatus(row) }}
 					</el-tag>
 					<el-progress
-						v-show="getFileStatus(row) === '正在上传' || getFileStatus(row) === '已取消上传'"
+						v-show="getFileStatus(row) === '正在上传'"
 						:percentage="isNaN(row.progress) ? 0 : parseInt(row.progress)"
 						:format="(pct: number): string => pct + '%'"
 					/>
@@ -234,6 +234,9 @@ const getIconByFileType = (mimeType: string) => {
 		justify-content: flex-start;
 		.el-button {
 			margin-left: 0.5rem;
+		}
+		.el-button:first-child {
+			margin-right: 1px;
 		}
 	}
 	.upload-file-name {

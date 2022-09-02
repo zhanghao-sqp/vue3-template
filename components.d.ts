@@ -18,7 +18,6 @@ declare module '@vue/runtime-core' {
     ExportExcel: typeof import('./src/components/common/download/ExportExcel.vue')['default']
     IEpCirclePlus: typeof import('~icons/ep/circle-plus')['default']
     IEpDelete: typeof import('~icons/ep/delete')['default']
-    IEpUploadFilled: typeof import('~icons/ep/upload-filled')['default']
     IEpVideoPause: typeof import('~icons/ep/video-pause')['default']
     KeywordSearch: typeof import('./src/components/common/search/KeywordSearch.vue')['default']
     Loading: typeof import('element-plus/es')['ElLoadingDirective']
