@@ -1,9 +1,8 @@
 <template>
 	<span>count：{{ count }}</span>
 	<el-button type="primary" @click="resetCount">重置count</el-button>
-	<router-link to="/login">去登录777</router-link>
-	<div>123</div>
-	<router-link to="/login">去登录页666</router-link>
+	<span style="padding: 0 20px;">{{hour}}:{{minute}}:{{second}},周{{week}}</span>
+	<router-link to="/login">去登录页</router-link>
 	<!-- <UseDarkSwitch></UseDarkSwitch>
 	<UseExportExcel></UseExportExcel>
 	<OlMap style="width: 90%; height: 800px; margin: 0 auto;"></OlMap> -->
@@ -14,8 +13,11 @@
 		<div style="position: absolute; left: 500px; top: 50px;">
 			<img src="../../../public/rain.png" alt="" />
 		</div> -->
-		<UploadTable :fileTypes="['zip','docx','png','doc']"></UploadTable>
-		<!-- <div
+		<UploadTable
+			:fileTypes="['zip','docx','png','doc']"
+			url="/api/upload"
+		/>
+		<div
 			v-focus
 			v-droppable
 			v-throttle="{fn: (e: Event)=>appearFn(1, e), event: 'mousemove' }"
@@ -29,48 +31,40 @@
 			"
 		>
 			<input type="text">
-		</div> -->
+		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import useCount from '@/store/index'
+import store from '@/store'
 // import WS from '@/http/WS'
-import { CanvasFocusPoint } from '@/utils/canvasDraw'
-import { ref, onMounted, onBeforeUnmount, reactive } from 'vue'
+import { ref } from 'vue'
 
+import { useTime, useFoucsPoint } from '@/hooks';
+useFoucsPoint()
+const { month, day, hour, minute, second, week } = useTime();
 // const ws = new WS('ws://121.40.165.18:8800', {
 // 	onmessage: (e: any) => {
 // 		console.log('ws message', e)
 // 	},
 // })
-const value = ref('2021-10-29')
-const store = useCount()
-const { count } = storeToRefs(store) // 直接解构会失去响应式，配合storeToRefs使用
-store.increment()
+const countStore = store.useCountStore()
+const { count } = storeToRefs(countStore) // 直接解构会失去响应式，配合storeToRefs使用
+countStore.increment()
 const resetCount = () => {
-	store.$reset()
+	countStore.$reset()
 }
-
-const canvasFocusPoint = new CanvasFocusPoint('#ff0000', 1, 1)
 
 const flag = ref(true)
 setTimeout(() => {
-	store.increment()
+	countStore.increment()
 	count.value++
 	flag.value = false
 }, 3000)
 const appearFn = (num: number, e: Event) => {
 	count.value += num
 }
-onMounted(() => {
-	canvasFocusPoint.start()
-
-})
-onBeforeUnmount(() => {
-	canvasFocusPoint.close()
-})
 </script>
 
 <style scoped lang="scss"></style>

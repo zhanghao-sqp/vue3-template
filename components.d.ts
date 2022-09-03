@@ -6,10 +6,11 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     BaseTable: typeof import('./src/components/common/table/BaseTable.vue')['default']
-    BigFileUpload: typeof import('./src/components/common/big-file-upload/index.vue')['default']
+    BigFileUpload: typeof import('./src/components/common/upload/big-file-upload.vue')['default']
     DarkSwitch: typeof import('./src/components/common/dark-switch/index.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
+    ElImage: typeof import('element-plus/es')['ElImage']
     ElLink: typeof import('element-plus/es')['ElLink']
     ElProgress: typeof import('element-plus/es')['ElProgress']
     ElTable: typeof import('element-plus/es')['ElTable']
@@ -18,6 +19,7 @@ declare module '@vue/runtime-core' {
     ExportExcel: typeof import('./src/components/common/download/ExportExcel.vue')['default']
     IEpCirclePlus: typeof import('~icons/ep/circle-plus')['default']
     IEpDelete: typeof import('~icons/ep/delete')['default']
+    IEpUploadFilled: typeof import('~icons/ep/upload-filled')['default']
     IEpVideoPause: typeof import('~icons/ep/video-pause')['default']
     KeywordSearch: typeof import('./src/components/common/search/KeywordSearch.vue')['default']
     Loading: typeof import('element-plus/es')['ElLoadingDirective']

@@ -1,3 +1,4 @@
+import { useKeepAliveStoreWithOut } from '@/store/modules/useKeepAliveStore'
 let beforeTime = 0, leaveTime = 0
 
 window.onunload = () => {
@@ -9,6 +10,7 @@ window.onunload = () => {
   } else {
     // 页面刷新
     console.log('====刷新=====')
+    useKeepAliveStoreWithOut().add('refresh'+ new Date().getTime())
 	}
 }
 

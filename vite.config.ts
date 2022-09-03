@@ -20,7 +20,7 @@ export default ({ mode }: ConfigEnv) => {
 	const resolvePath = (dir: string) => resolve(__dirname, dir)
 	return defineConfig({
 		base: './',
-		envDir: './env',
+		// envDir: './env',
 		server: {
 			host: '0.0.0.0',
 			port: 8888,
@@ -103,6 +103,9 @@ export default ({ mode }: ConfigEnv) => {
 			extensions: ['.ts', '.js', '.css', '.sass', '.less']
 		},
 		build: {
+			target: 'es2017',
+      cssTarget: 'chrome79',
+      chunkSizeWarningLimit: 2000,
 			minify: 'terser',
 			terserOptions: {
 				compress: {

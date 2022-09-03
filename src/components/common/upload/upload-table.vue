@@ -2,8 +2,8 @@
 	<div class="upload-table-container">
 		<file-upload
 			ref="upload"
-			post-action="/upload/post"
-			:multiple="true"
+			:post-action="url"
+			:multiple="multiple"
 			:size="size"
 			:accept="accept"
 			v-model="files"
@@ -19,7 +19,7 @@
 				type="primary"
 				@click.prevent="(upload as any).active = true"
 			>
-				上传
+			<i-ep-UploadFilled />&nbsp;上传
 			</el-button>
 			<el-button
 				v-if="filesStatus === '正在上传'"
@@ -33,10 +33,16 @@
 			<template #name="{ row }">
 				<div class="upload-file-name">
 					<img
-						height=20
-						width=20
-						:src="getIconByFileType(row.type) ? getIconByFileType(row.type) : row.blob"
-						alt="">
+						v-if="getIconByFileType(row.type)"
+						:src="(getIconByFileType(row.type) as string)"
+					/>
+					<el-image 
+						v-else
+						preview-teleported
+						title="图片预览"
+						:src="row.blob"
+						:preview-src-list="[row.blob]"
+					/>
 					<el-link v-download:[row.name]="row.blob">{{ row.name }}</el-link>
 				</div>
 			</template>
@@ -49,7 +55,7 @@
 					<el-progress
 						v-show="getFileStatus(row) === '正在上传'"
 						:percentage="isNaN(row.progress) ? 0 : parseInt(row.progress)"
-						:format="(pct: number): string => pct + '%'"
+						:format="(pct: number): string => ((pct === 100 && !row.success) ? 99 : pct) + '%'"
 					/>
 				</div>
 			</template>
@@ -95,6 +101,7 @@ const { fileTypes, size, multiple } = withDefaults(defineProps<{
 	fileTypes?: string[] | undefined
 	multiple?: boolean
 	size?: number
+	url: string
 }>(), {
 	fileTypes: undefined,
 	multiple: true,
@@ -157,11 +164,6 @@ const addFile = () => {
 const inputFilter = (newFile: any, oldFile: any, prevent: any) => {
 	// 添加文件前
 	if (newFile && !oldFile) {
-		// 过滤 php html js 文件
-		if (/\.(php5?|html?|jsx?)$/i.test(newFile.name)) {
-			// useMessage('error', '别想sql注入')
-			return prevent()
-		}
 		// 限制大小		
 		if (newFile.size > size) {
 			const sizeStr = (size / 1024 / 1024).toFixed() + 'MB'
@@ -170,12 +172,10 @@ const inputFilter = (newFile: any, oldFile: any, prevent: any) => {
 		}
 		// 限制类型
 		const mimeTypes = fileTypes ? fileTypes.map(type => FileMime[(type as keyof typeof FileMime)]) : undefined
-		console.log(mimeTypes)
-		console.log(newFile.type)
-		// if (mimeTypes && !mimeTypes.includes(newFile.type)) {
-		// 	useMessage('error', '文件类型不支持')
-		// 	return prevent()
-		// }
+		if (mimeTypes && !mimeTypes.includes(newFile.type)) {
+			useMessage('error', `请上传${fileTypes}类型的文件`)
+			return prevent()
+		}
 		// 创建 blob 字段 用于图片预览
 		newFile.blob = ''
 		let URL = window.URL || window.webkitURL
@@ -244,7 +244,9 @@ const getIconByFileType = (mimeType: string) => {
 		display: flex;
 		flex-direction: row;
 		justify-content: flex-start;
-		img {
+		img, .el-image {
+			width: 1.5em;
+			height: 1.5em;
 			margin-right: 10px;
 		}
 	}

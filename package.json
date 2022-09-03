@@ -4,7 +4,6 @@
 	"version": "0.0.0",
 	"scripts": {
 		"dev": "vite --mode dev",
-		"test": "vite --mode test",
 		"prod": "vite --mode production",
 		"build": "vite build",
 		"build1": "vue-tsc --noEmit && vite build",
@@ -15,7 +14,9 @@
 		"@vueup/vue-quill": "^1.0.0-beta.8",
 		"axios": "^0.27.2",
 		"dat.gui": "^0.7.9",
+		"dayjs": "^1.11.5",
 		"element-plus": "^2.2.6",
+		"mitt": "^3.0.0",
 		"nprogress": "^0.2.0",
 		"pinia": "^2.0.14",
 		"pinia-plugin-persistedstate": "^1.6.3",

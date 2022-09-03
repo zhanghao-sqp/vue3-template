@@ -1,4 +1,4 @@
-// 文件后缀名    对于mime type
+// 文件后缀名    对应mime type
 export enum FileMime {
   'apk' = 'application/vnd.android.package-archive',
   '3gp' = 'video/3gpp',

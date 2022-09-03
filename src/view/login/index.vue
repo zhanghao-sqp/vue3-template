@@ -7,27 +7,37 @@
 </template>
 
 <script lang="ts" setup>
-import { CanvasFocusPoint } from '@/utils/canvasDraw'
 import CanvasDraw from '@/utils/canvasDraw'
-import { formatDate } from '@/utils/common/common'
+import { useTime } from '@/hooks'
+import { randomColor } from '@/utils/common'
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-const canvasFocusPoint = new CanvasFocusPoint('#0f8189')
-const canvasDom = ref()
-onBeforeUnmount(() => {
-	canvasFocusPoint.close()
-})
-onMounted(() => {
 
-	canvasFocusPoint.start()
+const canvasDom = ref()
+const animationId = ref()
+const { hour, minute, second } = useTime()
+const init = () => {
 	const canvasDraw = new CanvasDraw(canvasDom.value)
-	canvasDraw.drawLine(20, 20, 50, 20, '#0f0')
-		.drawLine(50, 20, 20, 50, '#00f')
-		.drawLine(20, 50, 50, 50, '#f00')
-		.drawLine(70, 20, 70, 50, '#0f0')
-		.drawLine(70, 35, 100, 35, '#00f')
-		.drawLine(100, 20, 100, 50, '#f00')
-	const nowTime = formatDate(new Date())
-	canvasDraw.drawText('张浩 ' + nowTime, 200, 100, '409eff', '20px Arial bold', 'center', 'bottom')
+	const render = () => {
+	animationId.value = requestAnimationFrame(render as unknown as FrameRequestCallback)
+	canvasDraw.clear()
+	canvasDraw.drawLine(20, 20, 50, 20, randomColor('rgb'))
+		.drawLine(50, 20, 20, 50, randomColor('rgb'))
+		.drawLine(20, 50, 50, 50, randomColor('hex'))
+		.drawLine(70, 20, 70, 50, randomColor('hsl'))
+		.drawLine(70, 35, 100, 35, randomColor('hsl'))
+		.drawLine(100, 20, 100, 50, randomColor('hsl'))
+	canvasDraw.drawText('张浩 ' + `${hour.value}:${minute.value}:${second.value}`,
+		200, 100, '409eff', '20px Arial bold', 'center', 'bottom')
+
+}
+	render()
+}
+
+onMounted(() => {
+	init()
+})
+onBeforeUnmount(() => {
+	cancelAnimationFrame(animationId.value)
 })
 </script>
 

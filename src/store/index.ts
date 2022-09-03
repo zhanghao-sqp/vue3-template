@@ -1,28 +1,26 @@
-import { defineStore } from 'pinia'
+import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
-export default defineStore('myCount', {
-	state: () => ({
-		count: 0
-	}),
-	getters: {
-		doubleCount(state) {
-			return state.count * 2
-		}
-	},
-	// 持久化
-  persist: {
-    key: "myCount",
-    storage: window.localStorage,
-    beforeRestore: (context) => {
-      console.log("load userStore data start");
-    },
-    afterRestore: (context) => {
-      console.log("load userStore data end");
-    },
-  },
-	actions: {
-		increment() {
-			this.count++
-		}
-	}
-})
+export const store = createPinia().use(piniaPluginPersistedstate)
+
+// import.meta.glob 为动态导入，构建时，会分离为独立的 chunk
+// import.meta.globEager 为直接引入
+
+// const modulesFiles = Promise.resolve(import.meta.glob('./modules/*.ts'))
+// const moduleList: any[] = []
+// modulesFiles.then(modules => {
+//   Object.values(modules).forEach(module => {
+//     module().then(({ default: module }) => {
+//       moduleList.push(module)
+//     })
+//   })
+// })
+
+const modulesFiles = import.meta.globEager('./modules/*.ts')
+
+export default Object.keys(modulesFiles).reduce((modules, modulePath) => {
+  // 以文件名导出
+  const name = modulePath.replace(/(\.\/modules\/|\.ts)/g, '')
+  modules[name] = modulesFiles[(modulePath as string)]['default']
+  return modules
+}, {} as Record<string, any>)
