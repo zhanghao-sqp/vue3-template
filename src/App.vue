@@ -8,24 +8,4 @@
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 </script>
 
-<style lang="scss">
-@import '@var';
-::selection {
-	color: $main-color;
-	background-color: #bbb;
-}
-// 滚动条样式
-::-webkit-scrollbar {
-	width: 5px;
-}
-::-webkit-scrollbar-thumb {
-	background: $opacity-hover-color;
-	border-radius: 5px;
-	:hover {
-		cursor: pointer;
-	}
-}
-::-webkit-scrollbar-track {
-	background: #ccc;
-}
-</style>
+<style></style>

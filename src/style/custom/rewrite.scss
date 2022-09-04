@@ -1,0 +1,44 @@
+@import '@var';
+
+::selection {
+	color: $main-color;
+	background-color: #bbb;
+}
+// 滚动条样式
+::-webkit-scrollbar {
+	width: 0.25rem;
+	height: 0.25rem;
+}
+::-webkit-scrollbar-thumb {
+	background: $opacity-hover-color;
+	border-radius: 5rem;
+	:hover {
+		cursor: pointer;
+	}
+}
+::-webkit-scrollbar-track {
+	background: #ccc;
+}
+
+// 加载条
+#nprogress .bar {
+	height: 3px !important;
+	background: $main-color !important;
+	box-shadow: 0 0 5px #aaa;
+}
+
+// 下拉框
+.el-select__popper {
+	transform: translateY(-11px);
+	.el-popper__arrow {
+		background-color: transparent !important;
+		// top: -20px !important;
+		width: 0 !important;
+		height: 0 !important;
+		// border: 10px solid transparent;
+		// border-bottom-color: $opacity-most-color;
+		&::before {
+			display: none !important;
+		}
+	}
+}

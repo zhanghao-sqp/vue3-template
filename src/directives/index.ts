@@ -2,11 +2,12 @@ import type { App } from 'vue'
 
 import Observer from '@/utils/Observer'
 import { droppable } from './droppable'
+import { waves } from './waves'
 
 export default {
 	install: (app: App<Element>) => {
 		app.directive('droppable', droppable) // v-droppable 是否可拖拽
-
+		app.directive('waves', waves) // v-waves 点击涟漪效果
 		/**
 		 * 常用指令
 		 */

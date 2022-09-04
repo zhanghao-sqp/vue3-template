@@ -47,4 +47,7 @@ onBeforeUnmount(() => {
 	margin: 0 auto;
 	background-color: #eee;
 }
+h2 {
+	color: $main-color;
+}
 </style>

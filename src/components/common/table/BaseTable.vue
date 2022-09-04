@@ -6,7 +6,7 @@
 		:border="border"
 		:size="size"
 		:fit="fit"
-		:height="tableHeight"
+		:height="height"
 		:show-header="showHeader"
 		:header-row-class-name="
 			showHeaderColor ? 'define-header' : 'default-header'
@@ -67,7 +67,7 @@ interface Props {
 	showHeader?: boolean // 展示表头
 	showHeaderColor?: boolean // 表头颜色
 	border?: boolean // 边框
-	height?: number | string // 高度
+	height?: number | string | null// 高度
 	fit?: boolean // 列的宽度是否自动撑开
 	emptyText?: string // 没数据时展示的内容
 	tooltipEffect?: string // 文字提示
@@ -91,6 +91,7 @@ withDefaults(defineProps<Props>(), {
 	showHeader: true,
 	showHeaderColor: true,
 	border: true,
+	height: null,
 	fit: true,
 	emptyText: '无数据',
 	tooltipEffect: 'dark',
@@ -104,11 +105,11 @@ const emits = defineEmits([
 	'selection-change' // 选择的行
 ])
 
-const tableHeight = ref<string | number | null>(null)
-onBeforeMount(() => {
-	const { height } = getCurrentInstance()!.props
-	tableHeight.value = height === undefined ? null : (height as string | number)
-})
+// const tableHeight = ref<string | number | null>(null)
+// onBeforeMount(() => {
+// 	const { height } = getCurrentInstance()!.props
+// 	tableHeight.value = height === undefined ? null : (height as string | number)
+// })
 
 const cellClick = (
 	row: object,

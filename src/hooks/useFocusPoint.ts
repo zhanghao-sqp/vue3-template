@@ -32,27 +32,32 @@ class Npoint implements Point {
 		this.max = max
 	}
 }
+interface Params {
+	color?: string
+	pointWidth?: number
+	opacity?: number
+	zIndex?: number
+	pointRatio?: number
+}
+
 class CanvasFocusPoint {
-	public color: string
-	public pointWidth: number
-	public opacity: number
-	public zIndex: number
-	public canvas: HTMLCanvasElement | null = null
-	public W: number | null = null
-	public H: number | null = null
-	public mouse: Mouse
-	public points: Point[] = []
-	public animationId: number | null = null
-	constructor(
-		color: string,
-		pointWidth: number,
-		opacity: number,
-		zIndex: number
-	) {
-		this.color = color
-		this.pointWidth = pointWidth
-		this.opacity = opacity
-		this.zIndex = zIndex
+	private color: string
+	private pointWidth: number
+	private opacity: number
+	private zIndex: number
+	private pointRatio: number
+	private canvas: HTMLCanvasElement | null = null
+	private W: number | null = null
+	private H: number | null = null
+	private mouse: Mouse
+	private points: Point[] = []
+	private animationId: number | null = null
+	constructor(params: Params) {
+		this.color = params.color!
+		this.pointWidth = params.pointWidth!
+		this.opacity = params.opacity!
+		this.zIndex = params.zIndex!
+		this.pointRatio = params.pointRatio!
 		this.mouse = { x: null, y: null, max: null }
 	}
 
@@ -97,7 +102,7 @@ class CanvasFocusPoint {
 				window.innerHeight ||
 				document.documentElement.clientHeight ||
 				document.body.clientHeight)
-		this.points = Array(Math.floor((this.W * this.H) / 12000))
+		this.points = Array(Math.floor((this.W * this.H) * this.pointRatio))
 		for (let i = 0; i < this.points.length; i++) {
 			this.points[i] = new Npoint(null, null, null, null, null)
 		}
@@ -215,18 +220,15 @@ class CanvasFocusPoint {
 	}
 }
 
-export const useFoucsPoint = (
-	color = '#333',
-	pointWidth = 1,
-	opacity = 1,
-	zIndex = -1
-) => {
-	const canvasFocusPoint = new CanvasFocusPoint(
-		color,
-		pointWidth,
-		opacity,
-		zIndex
-	)
+export const useFoucsPoint = (params: Params = {}) => {
+	const canvasFocusPoint = new CanvasFocusPoint({
+		color: '#333',
+		pointWidth: 1,
+		opacity: 1,
+		zIndex: -1,
+		pointRatio: 0.00008,
+		...params
+	})
 	onMounted(() => {
 		canvasFocusPoint.start()
 	})

@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia'
-import { store } from '../index'
+import store from '../index'
 
 interface KeepAliveState {
 	/** 需要缓存的路由组件名称列表 */
 	list: string[]
 }
 
-const useKeepAliveStore = defineStore('keep-alive', {
+export const useKeepAliveStore = defineStore('keep-alive', {
 	state: (): KeepAliveState => ({
 		list: []
 	}),
@@ -32,7 +32,6 @@ const useKeepAliveStore = defineStore('keep-alive', {
 		}
 	}
 })
-export default useKeepAliveStore
 
 // 在组件setup函数外使用
 export const useKeepAliveStoreWithOut = () => {

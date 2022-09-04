@@ -39,9 +39,19 @@ export default ({ mode }: ConfigEnv) => {
 			preprocessorOptions: {
 				scss: {
 					// 修改element-plus默认样式
-					additionalData: `@use '@common/style/global/element-plus.scss' as *;`
+					additionalData: `
+						@use '@style/global/variable.scss' as *;
+						@use '@style/global/element-plus.scss' as *;
+					`
 				}
-			}
+				
+			},
+			// scss: {
+        //   additionalData: `
+        //   @use 'sass:math';
+        //   @import "src/styles/global.scss";
+        //   `,
+        // },
 		},
 		plugins: [
 			vue(),
@@ -92,8 +102,8 @@ export default ({ mode }: ConfigEnv) => {
 				'@components': resolvePath('src/components'),
 				'@assets': resolvePath('src/assets'),
 				'@common': resolvePath('src/common'),
-				'@style': resolvePath('src/common/style'),
-				'@var': resolvePath('src/common/style/global/variable.scss'),
+				'@style': resolvePath('src/style'),
+				'@var': resolvePath('src/style/global/variable.scss'),
 				'@hooks': resolvePath('src/hooks'),
 				'@api': resolvePath('src/api'),
 				'@router': resolvePath('src/router'),

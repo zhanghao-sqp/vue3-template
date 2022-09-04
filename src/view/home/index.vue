@@ -3,6 +3,7 @@
 	<el-button type="primary" @click="resetCount">重置count</el-button>
 	<span style="padding: 0 20px;">{{hour}}:{{minute}}:{{second}},周{{week}}</span>
 	<router-link to="/login">去登录页</router-link>
+  <DarkSwitch></DarkSwitch>
 	<!-- <UseDarkSwitch></UseDarkSwitch>
 	<UseExportExcel></UseExportExcel>
 	<OlMap style="width: 90%; height: 800px; margin: 0 auto;"></OlMap> -->
@@ -17,6 +18,7 @@
 			:fileTypes="['zip','docx','png','doc']"
 			url="/api/upload"
 		/>
+    <div v-waves style="width: 90%;height: 50px;"></div>
 		<div
 			v-focus
 			v-droppable
@@ -25,7 +27,7 @@
 				width: 300px;
 				height: 200px;
 				background-color: cornflowerblue;
-				left: 100px;
+				right: 0;
 				top: 300px;
 				position: absolute;
 			"
@@ -37,7 +39,7 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import store from '@/store'
+import { useCountStore } from '@/store'
 // import WS from '@/http/WS'
 import { ref } from 'vue'
 
@@ -49,7 +51,7 @@ const { month, day, hour, minute, second, week } = useTime();
 // 		console.log('ws message', e)
 // 	},
 // })
-const countStore = store.useCountStore()
+const countStore = useCountStore()
 const { count } = storeToRefs(countStore) // 直接解构会失去响应式，配合storeToRefs使用
 countStore.increment()
 const resetCount = () => {

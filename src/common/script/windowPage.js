@@ -1,4 +1,4 @@
-import { useKeepAliveStoreWithOut } from '@/store/modules/useKeepAliveStore'
+import { useKeepAliveStoreWithOut } from '@/store'
 let beforeTime = 0, leaveTime = 0
 
 window.onunload = () => {

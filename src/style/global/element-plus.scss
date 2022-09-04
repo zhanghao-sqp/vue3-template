@@ -2,7 +2,6 @@
 @use '../custom/rewrite.scss';
 @use 'nprogress/nprogress.css';
 @use './reset.css';
-// @use 'element-plus/theme-chalk/dark/css-vars.css';
 
 @forward 'element-plus/theme-chalk/src/common/var.scss'
 	with(
@@ -40,11 +39,12 @@
 		// 	'default': 8px,
 		// 	'small': 6px
 		// ),
-		$input-padding-horizontal: (
-			'large': 12px,
-			'default': 10px,
-			'small': 8px
-		),
+		$input-padding-horizontal:
+			(
+				'large': 12px,
+				'default': 10px,
+				'small': 8px
+			),
 		$select-dropdown: (
 			'padding': 3px 0,
 			'empty-padding': 20px 0,
@@ -54,8 +54,10 @@
 			'text-color': $text-light-color,
 			'hover-background': $opacity-hover-color,
 			'selected-text-color': $main-color
-		),
+		)
 	);
 
-// @use './element-dark.scss';
-// @use 'element-plus/theme-chalk/src/dark/var.scss' as *;
+// 导入深色模式主题
+
+@use 'element-plus/theme-chalk/dark/css-vars.css' as *;
+@use './element-dark.scss';

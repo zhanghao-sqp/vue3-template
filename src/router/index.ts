@@ -9,18 +9,26 @@ import { npStart, npDone } from '@/utils/NProgress'
 const routes: RouteRecordRaw[] = [
 	{
 		path: '/',
-		name: 'home',
-		component: () => import('@view/home/index.vue')
-	},
-	{
-		path: '/login',
-		name: 'login',
-		component: () => import('@view/login/index.vue')
-	},
-	{
-		path: '/three',
-		name: 'three',
-		component: () => import('@view/studyThree/index.vue')
+		name: 'index',
+		component: () => import('@components/layout/index.vue'),
+		redirect: '/home',
+		children: [
+			{
+				path: 'home',
+				name: 'home',
+				component: () => import('@view/home/index.vue'),
+			},
+			{
+				path: 'login',
+				name: 'login',
+				component: () => import('@view/login/index.vue')
+			},
+			{
+				path: 'three',
+				name: 'three',
+				component: () => import('@view/studyThree/index.vue')
+			}
+		]
 	}
 ]
 
