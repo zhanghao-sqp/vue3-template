@@ -136,7 +136,6 @@ defineExpose({ instance })
 </script>
 
 <style scoped lang="scss">
-@import '@var';
 .el-table {
 	:deep(.el-table__header-wrapper) {
 		border: #ccc;

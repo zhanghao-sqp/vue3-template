@@ -1,4 +1,4 @@
-@import '@var';
+@import '../global/variable.scss';
 
 ::selection {
 	color: $main-color;
@@ -25,6 +25,10 @@
 	height: 3px !important;
 	background: $main-color !important;
 	box-shadow: 0 0 5px #aaa;
+}
+
+.el-button {
+	box-shadow: inset 0 0 10px -1px rgba(0, 0, 0, 0.3);
 }
 
 // 下拉框

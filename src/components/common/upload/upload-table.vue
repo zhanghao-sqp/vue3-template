@@ -95,7 +95,7 @@ import FileUpload from 'vue-upload-component'
 import type { VueUploadItem } from 'vue-upload-component'
 import { FilesStatus, FileStatus } from '@/enums/state'
 import { FileMime } from '@/enums/fileMime'
-import { useMessage } from '@/hooks/element-plus/useActions'
+import { useMessage } from '@/utils/useActions'
 
 const { fileTypes, size, multiple } = withDefaults(defineProps<{
 	fileTypes?: string[] | undefined

@@ -24,7 +24,7 @@ export default ({ mode }: ConfigEnv) => {
 		server: {
 			host: '0.0.0.0',
 			port: 8888,
-			open: false,
+			open: true,
 			hmr: true,
 			cors: true,
 			proxy: {
@@ -43,15 +43,8 @@ export default ({ mode }: ConfigEnv) => {
 						@use '@style/global/variable.scss' as *;
 						@use '@style/global/element-plus.scss' as *;
 					`
-				}
-				
-			},
-			// scss: {
-        //   additionalData: `
-        //   @use 'sass:math';
-        //   @import "src/styles/global.scss";
-        //   `,
-        // },
+				}	
+			}
 		},
 		plugins: [
 			vue(),
@@ -103,9 +96,8 @@ export default ({ mode }: ConfigEnv) => {
 				'@assets': resolvePath('src/assets'),
 				'@common': resolvePath('src/common'),
 				'@style': resolvePath('src/style'),
-				'@var': resolvePath('src/style/global/variable.scss'),
 				'@hooks': resolvePath('src/hooks'),
-				'@api': resolvePath('src/api'),
+				'@api': resolvePath('src/http/api'),
 				'@router': resolvePath('src/router'),
 				'@store': resolvePath('src/store'),
 				'@utils': resolvePath('src/utils')

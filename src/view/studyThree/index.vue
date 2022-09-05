@@ -3,7 +3,7 @@
 		ref="statsRef"
 		style="position: absolute; top: 100px; right: 100px"
 	></div>
-	<el-icon type="primary"><i-ep-View /></el-icon>
+	<el-icon type="primary"><el-ep-View /></el-icon>
 	<el-button @click="move" :disabled="moveFlag">动起来</el-button>
 	<el-button @click="stop" :disabled="!moveFlag">停下</el-button>
 	<label>速度</label>

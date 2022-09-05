@@ -19,7 +19,8 @@ export const useConfirm = async (tip: string) => {
 		result = await ElMessageBox.confirm(tip, '提示', {
 			confirmButtonText: '确认',
 			cancelButtonText: '取消',
-			type: 'warning'
+			type: 'warning',
+			closeOnClickModal: false,
 		})
 	} catch (error) {
 		useMessage('info', '已取消')
@@ -34,6 +35,6 @@ export const useLoading = (text: string) => {
 	return ElLoading.service({
 		text,
 		lock: true,
-		background: 'raba(0,0,0,0.8)'
+		background: 'rgba(0,0,0,0.7)'
 	})
 }

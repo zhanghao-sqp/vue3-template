@@ -62,8 +62,6 @@ const updateContent = (data: string) => {
 </script>
 
 <style lang="scss">
-@import '@var';
-
 .editor {
 	line-height: normal !important;
 	height: 400px;
