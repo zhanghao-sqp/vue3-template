@@ -1,14 +1,14 @@
 <template>
 	<el-container class="main-container">
 		<el-header>
-			<Header></Header>
+			<LayoutComponentsHeader></LayoutComponentsHeader>
 		</el-header>
 		<el-container direction="horizontal">
 			<el-aside width="30%">
-				<Sider></Sider>
+				<LayoutComponentsSider></LayoutComponentsSider>
 			</el-aside>
 			<el-main>
-				<Breadcrumb></Breadcrumb>
+				<LayoutComponentsBreadcrumb></LayoutComponentsBreadcrumb>
 				<RouterView v-slot="{ Component }">
 					<template v-if="Component">
 						<!-- <Transition mode="out-in"> -->
@@ -24,7 +24,9 @@
 				</RouterView>
 			</el-main>
 		</el-container>
-		<el-footer><Footer></Footer></el-footer>
+		<el-footer>
+			<LayoutComponentsFooter></LayoutComponentsFooter>
+		</el-footer>
 	</el-container>
 </template>
 

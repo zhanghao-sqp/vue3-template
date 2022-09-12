@@ -6,7 +6,7 @@
 		:border="border"
 		:size="size"
 		:fit="fit"
-		:height="height"
+		:height="height!"
 		:show-header="showHeader"
 		:header-row-class-name="
 			showHeaderColor ? 'define-header' : 'default-header'
@@ -37,7 +37,7 @@
 			show-overflow-tooltip
 			v-for="(item, index) in column"
 			:key="index"
-			:prop="item.prop"
+			:prop="item.prop!"
 			:label="item.label"
 			:align="item.align || 'center'"
 			:width="item.width || 'auto'"
@@ -58,7 +58,6 @@
 
 <script setup lang="ts">
 import { getCurrentInstance, ComponentInternalInstance, ref, onBeforeMount } from 'vue'
-
 interface Props {
 	data: object[] // 表格数据
 	column: ColumnOption[] // 表头配置项

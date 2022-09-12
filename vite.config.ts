@@ -53,6 +53,7 @@ export default ({ mode }: ConfigEnv) => {
 			// 自动导入组件及样式
 			AutoImport({
 				// imports: ["vue"], // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
+				dts: 'types/auto-imports.d.ts', // 自动导入的类型声明文件,
 				resolvers: [
 					// 导入element-plus组件
 					ElementPlusResolver({
@@ -66,6 +67,13 @@ export default ({ mode }: ConfigEnv) => {
 			}),
 			// 注册组件
 			ComponentsPlugin({
+				dirs: [
+					resolvePath('src/components'),
+					resolvePath('src/views')
+				],
+				globalNamespaces: ['global'],
+				directoryAsNamespace: true,
+				dts: 'types/components.d.ts',
 				resolvers: [
 					ElementPlusResolver({
 						importStyle: 'sass'
@@ -91,6 +99,7 @@ export default ({ mode }: ConfigEnv) => {
 		resolve: {
 			alias: {
 				'@': resolvePath('src'),
+				'#': resolvePath('types'),
 				'@view': resolvePath('src/view'),
 				'@components': resolvePath('src/components'),
 				'@assets': resolvePath('src/assets'),

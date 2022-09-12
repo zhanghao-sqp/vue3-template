@@ -8,9 +8,9 @@
 		:name="form.name + form.fileType"
 		:header="form.header"
 	/>
-	<el-button type="primary" :size="size" @click="dialogVisible = true"
-		>导出</el-button
-	>
+	<el-button type="primary" :size="size" @click="dialogVisible = true">
+		导出
+	</el-button>
 	<el-dialog
 		custom-class="custom-export-dialog"
 		v-model="dialogVisible"
@@ -56,7 +56,7 @@ interface Option {
 const { option, size } = withDefaults(
 	defineProps<{
 		option: Option
-		size?: string
+		size?: '' | 'default' | 'large' | 'small' | undefined
 	}>(),
 	{ size: 'default' }
 )

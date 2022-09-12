@@ -1,6 +1,11 @@
 <template>
-	<input class="file-upload-input" type="file" ref="fileUploadInputRef" @change="change" />
-  <el-button type="primary" :size="size" @click="uploadFile">上传</el-button>
+	<input
+		class="file-upload-input"
+		type="file"
+		ref="fileUploadInputRef"
+		@change="change"
+	/>
+	<el-button type="primary" :size="size" @click="uploadFile">上传</el-button>
 	<transition name="el-fade-in-linear">
 		<el-progress v-show="showProgress" :percentage="percent" />
 	</transition>
@@ -9,10 +14,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+export type Size = '' | 'small' | 'default' | 'large' | undefined
 withDefaults(
 	defineProps<{
 		uploadUrl?: string
-		size?: string
+		size?: Size
 	}>(),
 	{
 		uploadUrl: '',
@@ -24,7 +30,7 @@ const showProgress = ref(false)
 const percent = ref(0)
 
 const uploadFile = () => {
-  fileUploadInputRef.value?.click()
+	fileUploadInputRef.value?.click()
 }
 const change = async (e: Event) => {
 	let chunkSize = 1024 * 1024 * 2 // 切片大小2M
@@ -68,8 +74,8 @@ const change = async (e: Event) => {
 
 <style scoped lang="scss">
 .file-upload-input {
-  width: 0;
-  height: 0;
-  visibility: hidden;
+	width: 0;
+	height: 0;
+	visibility: hidden;
 }
 </style>

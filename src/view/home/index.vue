@@ -17,7 +17,7 @@
 		<div style="position: absolute; left: 500px; top: 50px;">
 			<img src="../../../public/rain.png" alt="" />
 		</div> -->
-		<UploadTable
+		<CommonUploadUploadTable
 			:fileTypes="['zip', 'docx', 'png', 'doc']"
 			url="/api/upload"
 		/>
@@ -60,7 +60,9 @@ const { month, day, hour, minute, second, week } = useTime()
 
 const loadingTest = () => {
 	const loading = useLoading('加载中...')
+	console.log(loading)
 	setTimeout(() => {
+		loading.setText('加载完成')
 		loading.close()
 	}, 3000)
 }

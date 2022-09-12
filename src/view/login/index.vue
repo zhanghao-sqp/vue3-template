@@ -3,7 +3,7 @@
 	<router-link to="/">去首页</router-link>
 	<br />
 	<canvas id="canvas" ref="canvasDom" width="200" height="80"></canvas>
-	<BigFileUpload />
+	<CommonUploadBigFileUpload />
 </template>
 
 <script lang="ts" setup>

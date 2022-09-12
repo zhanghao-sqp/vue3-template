@@ -1,5 +1,5 @@
 <template>
-	<el-breadcrumb :separator-icon="ArrowLeftBold">
+	<el-breadcrumb>
 		<el-breadcrumb-item
 			v-for="item in breadcrumbList"
 			:key="item.path"
@@ -11,7 +11,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ArrowLeftBold } from '@element-plus/icons-vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 

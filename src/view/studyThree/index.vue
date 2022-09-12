@@ -41,7 +41,7 @@
 		@input="cameraPositionChange"
 	/>
 	<div ref="threeRef"></div>
-</template>
+</template> 
 
 <script lang="ts" name="three" setup>
 import { ref, onMounted, reactive, defineComponent } from 'vue'

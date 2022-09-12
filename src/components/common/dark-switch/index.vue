@@ -1,6 +1,6 @@
 <template>
   <el-icon
-    :size="size"
+    :size="size!"
     @click="toggleDark(); val=!val"
   >
     <i-ep-Moon v-if="val"></i-ep-Moon>
