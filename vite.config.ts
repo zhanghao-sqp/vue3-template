@@ -16,15 +16,15 @@ import IconsResolver from 'unplugin-icons/resolver'
 import ViteCompression from 'vite-plugin-compression'
 
 export default ({ mode }: ConfigEnv) => {
-	const env = loadEnv(mode, process.cwd())
+	const env = loadEnv(mode, process.cwd() + '/env')
 	const resolvePath = (dir: string) => resolve(__dirname, dir)
 	return defineConfig({
 		base: './',
-		// envDir: './env',
+		envDir: './env',
 		server: {
 			host: '0.0.0.0',
 			port: 8888,
-			open: true,
+			open: false,
 			hmr: true,
 			cors: true,
 			proxy: {

@@ -1,4 +1,5 @@
 import { ElLoading, ElMessage, ElMessageBox } from 'element-plus'
+import { svgFullScreenLoading } from './svgString'
 
 type Type = 'info' | 'success' | 'warning' | 'error'
 
@@ -35,6 +36,8 @@ export const useLoading = (text: string) => {
 	return ElLoading.service({
 		text,
 		lock: true,
+		customClass: 'custom-loading',
+		svg: svgFullScreenLoading,
 		background: 'rgba(0,0,0,0.7)'
 	})
 }

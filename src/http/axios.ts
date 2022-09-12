@@ -5,7 +5,7 @@ import {
 	AxiosError,
 	AxiosInstance
 } from 'axios'
-import { useMessage } from '@/hooks'
+import { useMessage } from '@/utils/useActions'
 
 const instance: AxiosInstance = axios.create({
 	baseURL: 'api',

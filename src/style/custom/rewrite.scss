@@ -24,25 +24,17 @@
 #nprogress .bar {
 	height: 3px !important;
 	background: $main-color !important;
-	box-shadow: 0 0 5px #aaa;
 }
 
 .el-button {
 	box-shadow: inset 0 0 10px -1px rgba(0, 0, 0, 0.3);
 }
 
-// 下拉框
-.el-select__popper {
-	transform: translateY(-11px);
-	.el-popper__arrow {
-		background-color: transparent !important;
-		// top: -20px !important;
-		width: 0 !important;
-		height: 0 !important;
-		// border: 10px solid transparent;
-		// border-bottom-color: $opacity-most-color;
-		&::before {
-			display: none !important;
-		}
+// 自定义加载动画
+.custom-loading {
+	.circular {
+		width: 100px;
+		height: 30px;
+		animation: none;
 	}
 }

@@ -1,0 +1,6 @@
+@use './variable.scss' as *;
+
+:export {
+  mainColor: $main-color;
+  mainDarkColor: $main-dark-color;
+}
