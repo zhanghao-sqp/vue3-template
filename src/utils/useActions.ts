@@ -1,4 +1,5 @@
 import { ElLoading, ElMessage, ElMessageBox } from 'element-plus'
+import type { LoadingOptionsResolved } from 'element-plus/es/components/loading/src/types'
 import { svgFullScreenLoading } from './svgString'
 
 type Type = 'info' | 'success' | 'warning' | 'error'
@@ -32,12 +33,13 @@ export const useConfirm = async (tip: string) => {
 }
 
 // 加载全屏动画 this.close()关闭
-export const useLoading = (text: string) => {
-	return ElLoading.service({
+export const useLoading = (text: string, options?: Partial<Omit<LoadingOptionsResolved, "target" | "parent">>) => {
+	const loadingOptions = Object.assign({
 		text,
 		lock: true,
 		customClass: 'custom-loading',
 		svg: svgFullScreenLoading,
 		background: 'rgba(0,0,0,0.7)'
-	})
+	}, options)
+	return ElLoading.service(loadingOptions)
 }

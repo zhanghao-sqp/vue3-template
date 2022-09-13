@@ -7,6 +7,7 @@
 	<router-link to="/login">去登录页</router-link>
 	<br />
 	<el-button type="primary" @click="loadingTest">加载中状态</el-button>
+	<el-button type="primary" @click="loadingTest2">加载中状态2</el-button>
 	<el-button type="success" @click="confirmTest">提示框</el-button>
 	<!-- <UseDarkSwitch></UseDarkSwitch>
 	<UseExportExcel></UseExportExcel> -->
@@ -61,6 +62,17 @@ const { month, day, hour, minute, second, week } = useTime()
 
 const loadingTest = () => {
 	const loading = useLoading('加载中...')
+	console.log(loading)
+	setTimeout(() => {
+		loading.setText('加载完成')
+		loading.close()
+	}, 3000)
+}
+const loadingTest2 = () => {
+	const loading = useLoading('加载中...', {
+		lock: true,
+		customClass: 'custom-loading',
+	})
 	console.log(loading)
 	setTimeout(() => {
 		loading.setText('加载完成')
