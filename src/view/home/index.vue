@@ -20,6 +20,7 @@
 		<CommonUploadUploadTable
 			:fileTypes="['zip', 'docx', 'png', 'doc']"
 			url="/api/upload"
+			@success-files="successFiles"
 		/>
 		<div
 			v-waves
@@ -75,6 +76,9 @@ const confirmTest = () => {
 		.catch(() => {
 			console.log('取消')
 		})
+}
+const successFiles = (files: object[]) => {
+	console.log(files)
 }
 // const ws = new WS('ws://121.40.165.18:8800', {
 // 	onmessage: (e: any) => {

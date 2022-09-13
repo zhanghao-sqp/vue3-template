@@ -3,8 +3,8 @@
     :size="size!"
     @click="toggleDark(); val=!val"
   >
-    <i-ep-Moon v-if="val"></i-ep-Moon>
-    <i-ep-Sunny v-else></i-ep-Sunny>
+    <IEpMoon v-if="val"></IEpMoon>
+    <IEpSunny v-else></IEpSunny>
   </el-icon>
 </template>
 

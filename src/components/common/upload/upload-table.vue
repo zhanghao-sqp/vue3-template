@@ -17,14 +17,14 @@
 			<el-button
 				v-if="files.length && filesStatus !== '正在上传' && filesStatus !== '上传完成'"
 				type="primary"
-				@click.prevent="(upload as any).active = true"
+				@click.prevent="upload!.active = true"
 			>
 			<IEpUploadFilled />&nbsp;上传
 			</el-button>
 			<el-button
 				v-if="filesStatus === '正在上传'"
 				type="warning"
-				@click.prevent="(upload as any).active = false"
+				@click.prevent="upload!.active = false"
 			>
 				<IEpVideoPause />&nbsp;取消上传
 			</el-button>
@@ -64,14 +64,14 @@
 					<span
 						v-if="getFileStatus(row) === '未上传' || getFileStatus(row) === '已取消上传' || getFileStatus(row) === '上传失败'"
 						title="删除文件"
-						@click="(upload as any).remove(row)"
+						@click="upload!.remove(row)"
 					>
 						<IEpDelete color="red" />
 					</span>
 					<span
 						v-if="getFileStatus(row) === '正在上传'"
 						title="取消上传"
-						@click="(upload as any).update(row, { active: false })"
+						@click="upload!.update(row, { active: false })"
 					>
 						<IEpVideoPause color="orange" />
 					</span>
@@ -90,7 +90,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, ComponentInternalInstance, computed } from 'vue'
+import { ref, DefineComponent, computed, watch, onMounted } from 'vue'
 import FileUpload from 'vue-upload-component'
 import type { VueUploadItem } from 'vue-upload-component'
 import { FilesStatus, FileStatus } from '@/enums/state'
@@ -107,8 +107,12 @@ const { fileTypes, size, multiple } = withDefaults(defineProps<{
 	multiple: true,
 	size: 1024 * 1024 * 1024
 })
+// const emits = defineEmits<{
+// 	'success-files': (files: VueUploadItem[]) => void
+// }>()
+const emits = defineEmits(['success-files'])
 
-const upload = ref<ComponentInternalInstance>()
+const upload = ref<DefineComponent>()
 const accept = computed(() => {
 	if (!fileTypes) return undefined
 	return fileTypes.map(type => {
@@ -146,10 +150,16 @@ const filesStatus = computed(() => {
 	if (!files.value.length) return FilesStatus[0] // 未添加文件
 	for (let file of files.value) {
 		if (file.active) return FilesStatus[2] // 正在上传
-		if (file.error === 'abort') return FilesStatus[3] // 已取消上传
+		// if (file.error === 'abort') return FilesStatus[3] // 已取消上传
 	}
 	if (files.value.every(file => file.progress === '0.00')) return FilesStatus[1] // 未开始上传
-	if (files.value.every(file => file.progress === '100.00')) return FilesStatus[4] // 上传完成
+	let lastFile = files.value[files.value.length - 1]
+	if (lastFile.success || lastFile.error) {
+		// 回调上传成功的response
+		const succssFiles = files.value.filter(file => file.success)
+		emits('success-files', succssFiles)
+		return FilesStatus[4] // 上传完成
+	}
 })
 const getFileStatus = (file: VueUploadItem) => {
 	if (file.active) return FileStatus[1] // 正在上传
@@ -159,7 +169,7 @@ const getFileStatus = (file: VueUploadItem) => {
 	if (file.success) return FileStatus[3] // 上传成功
 }
 const addFile = () => {
-	(upload.value as any).$el.querySelector('input').click()
+	upload.value?.$el.querySelector('input').click()
 }
 const inputFilter = (newFile: any, oldFile: any, prevent: any) => {
 	// 添加文件前
@@ -182,6 +192,9 @@ const inputFilter = (newFile: any, oldFile: any, prevent: any) => {
 		if (URL && URL.createObjectURL) {
 			newFile.blob = URL.createObjectURL(newFile.file)
 		}
+		// 文件格式设置
+
+
 	}
 }
 const inputFile = (newFile: any, oldFile: any) => {
@@ -221,6 +234,10 @@ const getIconByFileType = (mimeType: string) => {
 		return new URL('./img/file.png', import.meta.url).href
 	}
 }
+
+onMounted(() => {
+	console.log(upload.value)
+})
 </script>
 
 <style lang="scss" scoped>
