@@ -26,3 +26,9 @@ const breadcrumbList = computed(() => {
 	})
 })
 </script>
+
+<style scoped lang="scss">
+.el-breadcrumb {
+	padding: 0.5rem;
+}
+</style>

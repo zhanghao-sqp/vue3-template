@@ -1,14 +1,14 @@
 <template>
 	<el-container class="main-container">
 		<el-header>
-			<LayoutComponentsHeader></LayoutComponentsHeader>
+			<LayoutComponentsHeader />
 		</el-header>
 		<el-container direction="horizontal">
 			<el-aside width="30%">
-				<LayoutComponentsSider></LayoutComponentsSider>
+				<LayoutComponentsSider />
 			</el-aside>
 			<el-main>
-				<LayoutComponentsBreadcrumb></LayoutComponentsBreadcrumb>
+				<LayoutComponentsBreadcrumb />
 				<RouterView v-slot="{ Component }">
 					<template v-if="Component">
 						<!-- <Transition mode="out-in"> -->
@@ -25,7 +25,7 @@
 			</el-main>
 		</el-container>
 		<el-footer>
-			<LayoutComponentsFooter></LayoutComponentsFooter>
+			<LayoutComponentsFooter />
 		</el-footer>
 	</el-container>
 </template>
@@ -38,8 +38,9 @@ import {} from 'vue'
 .main-container {
 	min-height: 100vh;
 	.el-footer, .el-header {
-		width: 100%;
 		padding: 0;
+		width: 100%;
+		height: 100%;
 	}
 }
 </style>

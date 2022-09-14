@@ -57,7 +57,8 @@ import { ref } from 'vue'
 import { useTime, useFoucsPoint } from '@/hooks'
 import { useLoading, useConfirm } from '@/utils/useActions'
 import { svgLoading } from '@/utils/svgString'
-useFoucsPoint()
+import varCSS from '@/style/global/var.module.scss'
+useFoucsPoint({color: varCSS.mainColor})
 const { month, day, hour, minute, second, week } = useTime()
 
 const loadingTest = () => {

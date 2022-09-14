@@ -32,12 +32,12 @@ class Npoint implements Point {
 		this.max = max
 	}
 }
-interface Params {
-	color?: string
-	pointWidth?: number
-	opacity?: number
-	zIndex?: number
-	pointRatio?: number
+export interface Params {
+	color?: string // 颜色
+	pointWidth?: number // 点的半径
+	opacity?: number // 透明度
+	zIndex?: number // 层级
+	pointRatio?: number // 点的数量与屏幕像素点的比例
 }
 
 class CanvasFocusPoint {
@@ -102,7 +102,7 @@ class CanvasFocusPoint {
 				window.innerHeight ||
 				document.documentElement.clientHeight ||
 				document.body.clientHeight)
-		this.points = Array(Math.floor((this.W * this.H) * this.pointRatio))
+		this.points = Array(Math.floor(this.W * this.H * this.pointRatio))
 		for (let i = 0; i < this.points.length; i++) {
 			this.points[i] = new Npoint(null, null, null, null, null)
 		}
