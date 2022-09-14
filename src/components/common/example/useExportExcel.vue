@@ -1,10 +1,9 @@
 <template>
-	<ExportExcel size="default" :option="option"></ExportExcel>
+	<CommonDownloadExportExcel size="default" :option="option"></CommonDownloadExportExcel>
 </template>
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import ExportExcel from '@components/common/download/ExportExcel.vue'
 
 const option = reactive({
 	jsonData: [

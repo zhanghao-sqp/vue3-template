@@ -1,6 +1,7 @@
 // 浅色模式
-$main-color: rgb(219, 106, 0); // 主题色
-$deep-color: rgb(223, 223, 0); // 更深色
+$main-color: rgb(0, 108, 132); // 主题色
+$deep-color: rgb(0, 72, 82); // 更深色
+$active-text-color: rgb(235, 102, 20); // 激活文字颜色
 $main-bg-color: rgba($main-color, 0.5); // 半透明背景
 $opacity-color: rgba($main-color, 0.2);
 $opacity-most-color: rgba($main-color, 0.1);

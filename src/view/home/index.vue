@@ -7,7 +7,7 @@
 	<router-link to="/login">去登录页</router-link>
 	<br />
 	<el-button type="primary" @click="loadingTest">加载中状态</el-button>
-	<el-button type="primary" @click="loadingTest2">加载中状态2</el-button>
+	<el-button type="primary" @click="loadingTest2">加载中状态百分比</el-button>
 	<el-button type="success" @click="confirmTest">提示框</el-button>
 	<!-- <UseDarkSwitch></UseDarkSwitch>
 	<UseExportExcel></UseExportExcel> -->
@@ -68,16 +68,18 @@ const loadingTest = () => {
 		loading.close()
 	}, 3000)
 }
+
 const loadingTest2 = () => {
-	const loading = useLoading('加载中...', {
-		lock: true,
-		customClass: 'custom-loading',
-	})
-	console.log(loading)
-	setTimeout(() => {
-		loading.setText('加载完成')
-		loading.close()
-	}, 3000)
+	let percent = 0
+	const loading = useLoading(`正在加载 ${percent}%`)
+	let timer = setInterval(() => {
+		percent += 1
+		loading.setText(`正在加载 ${percent}%`)
+		if (percent === 100) {
+			loading.close()
+			clearInterval(timer)
+		}
+	}, 50)
 }
 const confirmTest = () => {
 	const confirm = useConfirm('确定删除吗？')

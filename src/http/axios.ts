@@ -19,6 +19,7 @@ const instance: AxiosInstance = axios.create({
 instance.interceptors.request.use(
 	(config: AxiosRequestConfig) => {
 		config.headers!.Authorization = `Bearer ${localStorage.getItem('token')}`
+		console.log('请求拦截器', config)
 		return config
 	},
 	(error: AxiosError) => {
@@ -31,10 +32,12 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
 	(response: AxiosResponse) => {
 		if (response.status === 200) {
-			console.log(response.data.code)
+			if (response.data.code !== 200) {
+				useMessage('error', response.data.msg)
+			}
 			return response.data
 		} else {
-			const message = response.data.message || response.data.msg
+			const message = response.data.msg || '请求失败'
 			useMessage('error', message)
 			return Promise.reject(response)
 		}
@@ -48,7 +51,7 @@ instance.interceptors.response.use(
 export const get = (
 	url: string,
 	params?: any,
-	...config: AxiosRequestConfig[]
+	config?: AxiosRequestConfig
 ) => {
 	return instance.get(url, { params, ...config })
 }
@@ -56,9 +59,9 @@ export const get = (
 export const post = (
 	url: string,
 	data?: any,
-	...config: AxiosRequestConfig[]
+	config?: AxiosRequestConfig
 ) => {
-	return instance.post(url, data, ...config)
+	return instance.post(url, data, config)
 }
 
 // post请求url中带有参数

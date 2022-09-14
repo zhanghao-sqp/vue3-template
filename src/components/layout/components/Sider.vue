@@ -1,7 +1,7 @@
 <template>
 	<el-menu
-		active-text-color="#ffd04b"
-		background-color="#545c64"
+		:active-text-color="activeTextColor"
+		:background-color="mainColor"
 		class="el-menu-vertical-demo"
 		default-active="2"
 		text-color="#fff"
@@ -10,7 +10,7 @@
 	>
 		<el-sub-menu index="1">
 			<template #title>
-				<el-icon><location /></el-icon>
+				<el-icon><IEpLocation /></el-icon>
 				<span>Navigator One</span>
 			</template>
 			<el-menu-item-group title="Group One">
@@ -26,27 +26,26 @@
 			</el-sub-menu>
 		</el-sub-menu>
 		<el-menu-item index="2">
-			<el-icon><icon-menu /></el-icon>
+			<el-icon><IEpMenu /></el-icon>
 			<span>Navigator Two</span>
 		</el-menu-item>
 		<el-menu-item index="3" disabled>
-			<el-icon><document /></el-icon>
+			<el-icon><IEpDocument /></el-icon>
 			<span>Navigator Three</span>
 		</el-menu-item>
 		<el-menu-item index="4">
-			<el-icon><setting /></el-icon>
+			<el-icon><IEpSetting /></el-icon>
 			<span>Navigator Four</span>
 		</el-menu-item>
 	</el-menu>
 </template>
 
 <script lang="ts" setup>
-import {
-	Document,
-	Menu as IconMenu,
-	Location,
-	Setting
-} from '@element-plus/icons-vue'
+import varCss from '@/style/global/var.module.scss'
+
+const mainColor = varCss.mainColor
+const activeTextColor = varCss.activeTextColor
+
 const handleOpen = (key: string, keyPath: string[]) => {
 	console.log(key, keyPath)
 }

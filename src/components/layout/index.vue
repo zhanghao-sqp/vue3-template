@@ -37,5 +37,9 @@ import {} from 'vue'
 <style scoped lang="scss">
 .main-container {
 	min-height: 100vh;
+	.el-footer, .el-header {
+		width: 100%;
+		padding: 0;
+	}
 }
 </style>

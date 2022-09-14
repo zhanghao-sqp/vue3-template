@@ -26,9 +26,9 @@
 	background: $main-color !important;
 }
 
-.el-button {
-	box-shadow: inset 0 0 10px -1px rgba(0, 0, 0, 0.3);
-}
+// .el-button {
+// 	box-shadow: inset 0 0 10px -1px rgba(0, 0, 0, 0.3);
+// }
 
 // 自定义加载动画
 .custom-loading {
@@ -36,5 +36,13 @@
 		width: 100px;
 		height: 30px;
 		animation: none;
+	}
+}
+
+// message提示信息
+.el-message {
+	@extend %flex;
+	.el-message__content {
+		font-size: 1.2rem;
 	}
 }

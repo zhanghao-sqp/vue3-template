@@ -1,11 +1,11 @@
 <template>
 	<el-menu
+		:active-text-color="activeTextColor"
+		:background-color="mainColor"
 		:default-active="'1'"
 		class="el-menu-demo"
 		mode="horizontal"
-		background-color="#545c64"
 		text-color="#fff"
-		active-text-color="#ffd04b"
 	>
 		<el-menu-item index="1">Processing Center</el-menu-item>
 		<el-sub-menu index="2">
@@ -27,6 +27,9 @@
 
 <script setup lang="ts">
 import {} from 'vue'
+import varCss from '@/style/global/var.module.scss'
+const mainColor = varCss.mainColor
+const activeTextColor = varCss.activeTextColor
 </script>
 
 <style scoped lang="scss"></style>

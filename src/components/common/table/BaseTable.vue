@@ -43,14 +43,14 @@
 			:width="item.width || 'auto'"
 		>
 			<!-- 渲染值 -->
-			<template v-if="item.render" #default="scoped">
+			<template v-if="item.render" #default="{ row }">
 				<span>
-					{{item.render!(scoped.row[(item.prop as string)], scoped.row)}}
+					{{item.render!(row[(item.prop as string)], row)}}
 				</span>
 			</template>
 			<!-- 插槽 -->
-			<template v-if="item.defineColumn" #default="scoped">
-				<slot :name="item.prop || 'operation'" :row="scoped.row" />
+			<template v-if="item.defineColumn" #default="{ row }">
+				<slot :name="item.defineColumn" :row="row" />
 			</template>
 		</el-table-column>
 	</el-table>
@@ -58,7 +58,7 @@
 
 <script setup lang="ts">
 import { getCurrentInstance, ComponentInternalInstance, ref, onBeforeMount } from 'vue'
-interface Props {
+export interface TableProps {
 	data: object[] // 表格数据
 	column: ColumnOption[] // 表头配置项
 	loading?: boolean // 加载动画
@@ -73,16 +73,16 @@ interface Props {
 	selection?: boolean // 多选框
 	index?: boolean // 序号
 }
-interface ColumnOption {
+export interface ColumnOption {
 	label: string
 	prop?: string | null | undefined
 	align?: string
 	width?: number
 	render?: Function
-	defineColumn?: boolean
+	defineColumn?: string // 具名插槽名称
 }
 
-withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<TableProps>(), {
 	data: () => [],
 	column: () => [],
 	loading: false,

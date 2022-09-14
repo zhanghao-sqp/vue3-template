@@ -11,3 +11,8 @@ export const logout = () => {
 export const getUserList = (params: any) => {
   return get('/user/list', params)
 }
+
+// post请求url中带有参数
+export const paramsPost = (params: any) => {
+  return post('/user/list', params, { params })
+}

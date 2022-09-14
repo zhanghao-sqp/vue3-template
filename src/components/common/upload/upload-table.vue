@@ -124,7 +124,7 @@ const tableColumn = [
 	{
 		label: '文件名',
 		prop: 'name',
-		defineColumn: true
+		defineColumn: 'name'
 	},
 	{
 		label: '文件大小',
@@ -137,11 +137,11 @@ const tableColumn = [
 	{
 		label: '状态',
 		prop: 'progress',
-		defineColumn: true
+		defineColumn: 'progress'
 	},
 	{
 		label: '操作',
-		defineColumn: true
+		defineColumn: 'operation'
 	}
 ]
 

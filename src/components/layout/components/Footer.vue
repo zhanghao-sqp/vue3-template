@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="footer">
     footer
   </div>
 
@@ -11,5 +11,10 @@ import {  } from 'vue'
 </script>
 
 <style scoped lang="scss">
-
+.footer {
+  height: 100%;
+  background-color: $main-color;
+  color: #fff;
+  @extend %flex;
+}
 </style>

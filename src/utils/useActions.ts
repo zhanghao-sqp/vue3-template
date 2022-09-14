@@ -10,7 +10,7 @@ export const useMessage = (type: Type, tip: string) => {
 		message: tip,
 		type,
 		grouping: true,
-		duration: 2000
+		duration: 3000
 	})
 }
 
