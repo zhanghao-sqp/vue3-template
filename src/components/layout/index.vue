@@ -4,7 +4,7 @@
 			<LayoutComponentsHeader />
 		</el-header>
 		<el-container direction="horizontal">
-			<el-aside width="30%">
+			<el-aside>
 				<LayoutComponentsSider />
 			</el-aside>
 			<el-main>
@@ -12,7 +12,7 @@
 				<RouterView v-slot="{ Component }">
 					<template v-if="Component">
 						<!-- <Transition mode="out-in"> -->
-							<KeepAlive>
+							<KeepAlive :max="10">
 								<Suspense>
 									<component :is="Component"></component>
 									<!-- 加载中状态 -->
@@ -37,10 +37,18 @@ import {} from 'vue'
 <style scoped lang="scss">
 .main-container {
 	min-height: 100vh;
-	.el-footer, .el-header {
+ .el-header, .el-footer {
 		padding: 0;
 		width: 100%;
 		height: 100%;
+	}
+	.el-header {
+		@extend %flex;
+	}
+	.el-aside {
+		width: 30%;
+		max-width: 15rem;
+		min-width: 1.5rem;
 	}
 }
 </style>

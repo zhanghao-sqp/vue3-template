@@ -1,55 +1,50 @@
 <template>
-	<el-menu
-		:active-text-color="activeTextColor"
-		:background-color="mainColor"
-		class="el-menu-vertical-demo"
-		default-active="2"
-		text-color="#fff"
-		@open="handleOpen"
-		@close="handleClose"
-	>
-		<el-sub-menu index="1">
-			<template #title>
-				<el-icon><IEpLocation /></el-icon>
-				<span>Navigator One</span>
-			</template>
-			<el-menu-item-group title="Group One">
-				<el-menu-item index="1-1">item one</el-menu-item>
-				<el-menu-item index="1-2">item two</el-menu-item>
-			</el-menu-item-group>
-			<el-menu-item-group title="Group Two">
-				<el-menu-item index="1-3">item three</el-menu-item>
-			</el-menu-item-group>
-			<el-sub-menu index="1-4">
-				<template #title>item four</template>
-				<el-menu-item index="1-4-1">item one</el-menu-item>
-			</el-sub-menu>
-		</el-sub-menu>
-		<el-menu-item index="2">
-			<el-icon><IEpMenu /></el-icon>
-			<span>Navigator Two</span>
-		</el-menu-item>
-		<el-menu-item index="3" disabled>
-			<el-icon><IEpDocument /></el-icon>
-			<span>Navigator Three</span>
-		</el-menu-item>
-		<el-menu-item index="4">
-			<el-icon><IEpSetting /></el-icon>
-			<span>Navigator Four</span>
-		</el-menu-item>
-	</el-menu>
+	<LayoutComponentsMenu :menuList="menuList" />
 </template>
 
-<script lang="ts" setup>
-import varCss from '@/style/global/var.module.scss'
-
-const mainColor = varCss.mainColor
-const activeTextColor = varCss.activeTextColor
-
-const handleOpen = (key: string, keyPath: string[]) => {
-	console.log(key, keyPath)
-}
-const handleClose = (key: string, keyPath: string[]) => {
-	console.log(key, keyPath)
-}
+<script setup lang="ts">
+import { reactive } from 'vue'
+import type { MenuList } from './Menu.vue'
+// 从路由中获取，这里模拟数据
+const menuList = reactive<MenuList[]>([
+	{
+		path: '/home',
+		meta: {
+			title: '首页',
+			icon: 'HomeFilled'
+		}
+	},
+	{
+		path: '/about',
+		meta: {
+			title: '关于',
+			icon: 'QuestionFilled'
+		}
+	},
+	{
+		path: '/user',
+		meta: {
+			title: '用户',
+			icon: 'UserFilled'
+		},
+		children: [
+			{
+				path: '/user/list',
+				meta: {
+					title: '用户列表',
+					icon: 'DocumentCopy'
+				}
+			},
+			{
+				path: '/user/add',
+				meta: {
+					title: '添加用户',
+					icon: 'Plus'
+				}
+			}
+		]
+	}
+])
 </script>
+
+<style scoped lang="scss"></style>

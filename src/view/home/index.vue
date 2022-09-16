@@ -9,6 +9,11 @@
 	<el-button type="primary" @click="loadingTest">加载中状态</el-button>
 	<el-button type="primary" @click="loadingTest2">加载中状态百分比</el-button>
 	<el-button type="success" @click="confirmTest">提示框</el-button>
+	<el-select>
+		<el-option label="选项1" value="1"></el-option>
+		<el-option label="选项2" value="2"></el-option>
+		<el-option label="选项3" value="3"></el-option>
+	</el-select>
 	<!-- <UseDarkSwitch></UseDarkSwitch>
 	<UseExportExcel></UseExportExcel> -->
 	<div id="parallax">

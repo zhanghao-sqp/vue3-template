@@ -49,11 +49,11 @@
 		$select-dropdown: (
 			'padding': 3px 0,
 			'empty-padding': 20px 0,
-			'bg-color': $opacity-color
+			'bg-color': $main-color
 		),
 		$select-option: (
-			'text-color': $text-light-color,
-			'hover-background': $opacity-hover-color,
+			'text-color': #fff,
+			'hover-background': $deep-color,
 			'selected-text-color': $main-color
 		)
 	);

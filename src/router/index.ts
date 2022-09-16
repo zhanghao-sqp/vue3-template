@@ -6,7 +6,7 @@ import {
 } from 'vue-router'
 import { npStart, npDone } from '@/utils/NProgress'
 
-const routes: RouteRecordRaw[] = [
+export const routes: RouteRecordRaw[] = [
 	{
 		path: '/',
 		name: 'index',

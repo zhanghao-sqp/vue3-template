@@ -46,3 +46,25 @@
 		font-size: 1.2rem;
 	}
 }
+
+// 菜单栏
+// .el-menu {
+// 	&>.is-active {
+// 		background-color: $active-bg-color;
+// 	}
+// }
+.el-menu--horizontal {
+	border-bottom: none !important;
+}
+
+// 下拉选项
+.el-popper {
+	border: 1px solid $main-color !important;
+	.el-menu {
+		min-width: 5rem;
+	}
+	.el-popper__arrow::before {
+		border-color: $main-color !important;
+		background-color: $main-color !important;
+	}
+}
