@@ -13,7 +13,6 @@ import {  } from 'vue'
 <style scoped lang="scss">
 .footer {
   min-height: 3rem;
-  background-color: $main-color;
   color: #fff;
   @extend %flex-center;
 }

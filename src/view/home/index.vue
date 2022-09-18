@@ -9,11 +9,23 @@
 	<el-button type="primary" @click="loadingTest">加载中状态</el-button>
 	<el-button type="primary" @click="loadingTest2">加载中状态百分比</el-button>
 	<el-button type="success" @click="confirmTest">提示框</el-button>
-	<el-select>
+	<el-select v-model="elSelectValue">
 		<el-option label="选项1" value="1"></el-option>
 		<el-option label="选项2" value="2"></el-option>
 		<el-option label="选项3" value="3"></el-option>
 	</el-select>
+	<el-tree-select
+		v-model="elTreeSelectValue"
+		:data="elTreeSelectData"
+		check-strictly
+		:render-after-expand="false"
+	/>
+	<el-date-picker
+		v-model="elDataPickerValue"
+		type="datetime"
+		placeholder="Select date and time"
+		:shortcuts="shortcuts"
+	/>
 	<!-- <UseDarkSwitch></UseDarkSwitch>
 	<UseExportExcel></UseExportExcel> -->
 	<div id="parallax">
@@ -63,7 +75,7 @@ import { useTime, useFoucsPoint } from '@/hooks'
 import { useLoading, useConfirm } from '@/utils/useActions'
 import { svgLoading } from '@/utils/svgString'
 import varCSS from '@/style/global/var.module.scss'
-useFoucsPoint({color: varCSS.mainColor})
+useFoucsPoint({ color: varCSS.mainColor })
 const { month, day, hour, minute, second, week } = useTime()
 
 const loadingTest = () => {
@@ -121,6 +133,101 @@ setTimeout(() => {
 const appearFn = (num: number, e: Event) => {
 	count.value += num
 }
+const elSelectValue = ref()
+const elTreeSelectValue = ref()
+const elTreeSelectData = [
+	{
+		value: '1',
+		label: 'Level one 1',
+		children: [
+			{
+				value: '1-1',
+				label: 'Level two 1-1',
+				children: [
+					{
+						value: '1-1-1',
+						label: 'Level three 1-1-1'
+					}
+				]
+			}
+		]
+	},
+	{
+		value: '2',
+		label: 'Level one 2',
+		children: [
+			{
+				value: '2-1',
+				label: 'Level two 2-1',
+				children: [
+					{
+						value: '2-1-1',
+						label: 'Level three 2-1-1'
+					}
+				]
+			},
+			{
+				value: '2-2',
+				label: 'Level two 2-2',
+				children: [
+					{
+						value: '2-2-1',
+						label: 'Level three 2-2-1'
+					}
+				]
+			}
+		]
+	},
+	{
+		value: '3',
+		label: 'Level one 3',
+		children: [
+			{
+				value: '3-1',
+				label: 'Level two 3-1',
+				children: [
+					{
+						value: '3-1-1',
+						label: 'Level three 3-1-1'
+					}
+				]
+			},
+			{
+				value: '3-2',
+				label: 'Level two 3-2',
+				children: [
+					{
+						value: '3-2-1',
+						label: 'Level three 3-2-1'
+					}
+				]
+			}
+		]
+	}
+]
+const shortcuts = [
+  {
+    text: 'Today',
+    value: new Date(),
+  },
+  {
+    text: 'Yesterday',
+    value: () => {
+      const date = new Date()
+      date.setTime(date.getTime() - 3600 * 1000 * 24)
+      return date
+    },
+  },
+  {
+    text: 'A week ago',
+    value: () => {
+      const date = new Date()
+      date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+      return date
+    },
+  },
+]
+const elDataPickerValue = ref('')
 </script>
 
 <style scoped lang="scss"></style>

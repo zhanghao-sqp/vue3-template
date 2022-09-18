@@ -54,8 +54,14 @@
 		$select-option: (
 			'text-color': #fff,
 			'hover-background': $deep-color,
-			'selected-text-color': $main-color
-		)
+			'selected-text-color': $active-text-color
+		),
+		$scrollbar: (
+			'bg-color': $main-color
+		),
+		$datepicker: (
+			'border-color': $main-color
+		),
 	);
 
 // 导入深色模式主题

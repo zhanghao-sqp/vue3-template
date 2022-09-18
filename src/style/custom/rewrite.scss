@@ -58,6 +58,14 @@
 }
 
 // 下拉选项
+.el-select {
+	.el-select-dropdown__item {
+		:hover {
+			color: #fff;
+			background-color: $deep-color;
+		}
+	}
+}
 .el-popper {
 	border: 1px solid $main-color !important;
 	.el-menu {
@@ -66,5 +74,34 @@
 	.el-popper__arrow::before {
 		border-color: $main-color !important;
 		background-color: $main-color !important;
+	}
+}
+
+// tree树形控件
+.el-tree {
+	background-color: $main-color;
+	.el-tree-node {
+		&:focus > .el-tree-node__content {
+			background-color: $deep-color;
+		}
+	}
+	.el-tree-node__content {
+		&:hover {
+			color: #fff;
+			background-color: $deep-color;
+		}
+	}
+}
+
+// 时间选择
+.el-picker-panel {
+	background-color: $main-color;
+	.el-picker-panel__body-wrapper {
+		.el-picker-panel__sidebar, .el-picker-panel__sidebar {
+			background-color: $main-color;
+		}
+	}
+	.el-picker-panel__footer {
+		background-color: $main-color;
 	}
 }
