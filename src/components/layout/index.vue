@@ -43,7 +43,7 @@ import {} from 'vue'
 		height: 100%;
 	}
 	.el-header {
-		@extend %flex;
+		@extend %flex-center;
 	}
 	.el-aside {
 		width: 30%;

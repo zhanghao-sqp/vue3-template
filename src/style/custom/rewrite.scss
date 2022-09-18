@@ -41,7 +41,7 @@
 
 // message提示信息
 .el-message {
-	@extend %flex;
+	@extend %flex-center;
 	.el-message__content {
 		font-size: 1.2rem;
 	}

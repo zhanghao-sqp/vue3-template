@@ -15,6 +15,6 @@ import {  } from 'vue'
   min-height: 3rem;
   background-color: $main-color;
   color: #fff;
-  @extend %flex;
+  @extend %flex-center;
 }
 </style>
