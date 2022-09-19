@@ -44,8 +44,15 @@
 		type="datetime"
 		placeholder="Select date and time"
 		:shortcuts="shortcuts"
-	/> <br />
-	<el-table :data="tableData" border style="width: 100%">
+	/>
+	<el-date-picker
+		v-model="elDataPickerValue2"
+		type="daterange"
+		range-separator="-"
+		start-placeholder="Start date"
+		end-placeholder="End date"
+	/><br />
+	<el-table :data="tableData" border>
     <el-table-column prop="date" label="Date" width="180" />
     <el-table-column prop="name" label="Name" width="180" />
     <el-table-column prop="address" label="Address" />
@@ -56,7 +63,7 @@
 		:page-sizes="[100, 200, 300, 400]"
 		:small="small"
 		:disabled="disabled"
-		:background="background"
+		:background="!background"
 		layout="total, sizes, prev, pager, next, jumper"
 		:total="400"
 		@size-change="handleSizeChange"
@@ -267,6 +274,7 @@ const shortcuts = [
   },
 ]
 const elDataPickerValue = ref('')
+const elDataPickerValue2 = ref('')
 const currentPage4 = ref(4)
 const pageSize4 = ref(100)
 const small = ref(false)

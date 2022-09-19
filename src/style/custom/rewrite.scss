@@ -102,11 +102,20 @@
 				}
 				td.available{
 					color: #fff;
+					.el-date-table-cell:hover {
+						background-color: $main-color;
+					}
 				}
 				td.today {
 					color: #fff;
-					background-color: $active-bg-color;
+					background-color: $main-color;
+					.el-date-table-cell__text {
+						color: #fff;
+					}
 				}
+			}
+			.el-date-range-picker__header {
+				color: #fff;
 			}
 		}
 	}
@@ -146,6 +155,16 @@
 				background-color: $light-color;
 				color: #fff;
 			}
+		}
+	}
+}
+.el-date-editor {
+	.el-icon, .el-range-input, .el-range-separator {
+		color: #fff;
+	}
+	.el-range-input {
+		&:-webkit-input-placeholder {
+			color: $text-light-color;
 		}
 	}
 }

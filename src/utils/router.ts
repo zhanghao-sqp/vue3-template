@@ -1,8 +1,8 @@
-interface RouteDate {
+export interface RouteDate {
 	name: string
 	title?: string
 	path: string
-	component: any
+	component?: any
 	meta: any
 	redirect?: string
 	alwaysShow?: boolean
@@ -10,12 +10,12 @@ interface RouteDate {
 	hidden?: boolean
 	children?: RouteDate[]
 }
-interface Route {
+export interface Route {
 	path: string
 	name: string
 }
 type GenerateRoutes = (routes: RouteDate[]) => any[]
-type isInRoutes = (route: Route, routes: RouteDate[]) => boolean
+type IsInRoutes = (route: Route, routes: RouteDate[]) => boolean
 
 // 生成路由
 export const generateRoutes: GenerateRoutes = (routes) => {
@@ -31,7 +31,7 @@ export const generateRoutes: GenerateRoutes = (routes) => {
 }
 
 // 判断是否在路由列表中
-export const isInRoutes: isInRoutes = (current, routes) => {
+export const isInRoutes: IsInRoutes = (current, routes) => {
 	let flag = false
   for (const route of routes) {
 		if (route.path === current.path || route.name === current.name)

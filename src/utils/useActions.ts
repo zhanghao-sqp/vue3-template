@@ -33,7 +33,7 @@ export const useConfirm = async (tip: string) => {
 }
 
 // 加载全屏动画 this.close()关闭
-export const useLoading = (text: string, options?: Partial<Omit<LoadingOptionsResolved, "target" | "parent">>) => {
+export const useLoading = (text: string, options?: Partial<Omit<LoadingOptionsResolved, 'target' | 'parent'>>) => {
 	const loadingOptions = Object.assign({
 		text,
 		lock: true,

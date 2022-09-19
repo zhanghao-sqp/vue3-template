@@ -5,6 +5,8 @@ import {
 	RouteRecordRaw
 } from 'vue-router'
 import { npStart, npDone } from '@/utils/NProgress'
+import { isInRoutes } from '@/utils/router'
+import type { Route, RouteDate } from '@/utils/router'
 
 export const routes: RouteRecordRaw[] = [
 	{
@@ -41,6 +43,14 @@ export const routes: RouteRecordRaw[] = [
 				component: () => import('@view/studyThree/index.vue')
 			}
 		]
+	},
+	{
+		path: '/404',
+		name: '页面未找到',
+		meta: {
+			title: '404'
+		},
+		component: () => import('@view/exception/404.vue')
 	}
 ]
 
@@ -52,6 +62,10 @@ const router = createRouter({
 
 router.beforeEach((to: RouteLocationNormalized) => {
 	npStart()
+	document.title = to.meta.title as string
+	if (!isInRoutes((to as Route), (router.getRoutes() as RouteDate[]))) {
+		router.push('/404')
+	}
 })
 
 router.afterEach((to: RouteLocationNormalized) => {

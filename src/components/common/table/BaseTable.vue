@@ -8,9 +8,6 @@
 		:fit="fit"
 		:height="height!"
 		:show-header="showHeader"
-		:header-row-class-name="
-			showHeaderColor ? 'define-header' : 'default-header'
-		"
 		:tooltip-effect="tooltipEffect"
 		:empty-text="emptyText"
 		@cell-click="cellClick"
@@ -64,7 +61,6 @@ export interface TableProps {
 	loading?: boolean // 加载动画
 	size?: 'default' | 'large' | 'small' // 表格大小
 	showHeader?: boolean // 展示表头
-	showHeaderColor?: boolean // 表头颜色
 	border?: boolean // 边框
 	height?: number | string | null// 高度
 	fit?: boolean // 列的宽度是否自动撑开
@@ -88,7 +84,6 @@ withDefaults(defineProps<TableProps>(), {
 	loading: false,
 	size: 'default',
 	showHeader: true,
-	showHeaderColor: true,
 	border: true,
 	height: null,
 	fit: true,
@@ -134,24 +129,4 @@ const instance: ComponentInternalInstance | null = getCurrentInstance()
 defineExpose({ instance })
 </script>
 
-<style scoped lang="scss">
-.el-table {
-	:deep(.el-table__header-wrapper) {
-		border: #ccc;
-		.define-header {
-			color: #fff;
-			th {
-				background-color: $main-color;
-				border-color: #aaa;
-			}
-		}
-		.default-header {
-			color: $main-color;
-			th {
-				background-color: #f1f1f1;
-				border-color: #ddd;
-			}
-		}
-	}
-}
-</style>
+<style scoped lang="scss"></style>
