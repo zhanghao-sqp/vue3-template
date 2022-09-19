@@ -29,7 +29,11 @@
 // .el-button {
 // 	box-shadow: inset 0 0 10px -1px rgba(0, 0, 0, 0.3);
 // }
-
+// 输入框
+.el-input-group__append, .el-input-group__prepend {
+	background-color: $main-bg-color;
+	color: #fff;
+}
 // 自定义加载动画
 .custom-loading {
 	.circular {
@@ -48,13 +52,15 @@
 }
 
 // 菜单栏
-// .el-menu {
-// 	&>.is-active {
-// 		background-color: $active-bg-color;
-// 	}
-// }
 .el-menu--horizontal {
 	border-bottom: none !important;
+	.el-sub-menu {
+		.el-sub-menu__title {
+			&:hover {
+				background-color: $active-bg-color;
+			}
+		}
+	}
 }
 
 // 下拉选项
@@ -62,7 +68,7 @@
 	.el-select-dropdown__item {
 		:hover {
 			color: #fff;
-			background-color: $deep-color;
+			background-color: $active-bg-color;
 		}
 	}
 }
@@ -80,17 +86,6 @@
 // tree树形控件
 .el-tree {
 	background-color: $main-color;
-	.el-tree-node {
-		&:focus > .el-tree-node__content {
-			background-color: $deep-color;
-		}
-	}
-	.el-tree-node__content {
-		&:hover {
-			color: #fff;
-			background-color: $deep-color;
-		}
-	}
 }
 
 // 时间选择
@@ -100,8 +95,57 @@
 		.el-picker-panel__sidebar, .el-picker-panel__sidebar {
 			background-color: $main-color;
 		}
+		.el-picker-panel__content {
+			.el-date-table {
+				td.next-month,  td.prev-month {
+					color: #bbb;
+				}
+				td.available{
+					color: #fff;
+				}
+				td.today {
+					color: #fff;
+					background-color: $active-bg-color;
+				}
+			}
+		}
 	}
 	.el-picker-panel__footer {
 		background-color: $main-color;
+		.is-text, .is-plain, .is-text:hover {
+			background-color: $light-color;
+			color: #fff;
+			border-radius: 4px;
+		}
+	}
+	.el-date-picker__header-label {
+		color: #fff;
+	}
+	.el-time-panel {
+		background-color: $main-color;
+		.el-time-spinner__item {
+			color: #fff;
+			&:hover:not(.is-disabled):not(.is-active) {
+				color: #fff;
+				background-color: $active-bg-color;
+			}
+			&:hover:not(.is-active):not(.is-disabled) {
+				color: $active-text-color;
+			}
+		}
+		.is-active:not(.is-disabled) {
+			color: $active-text-color;
+		}
+		.el-time-panel__footer {
+			.cancel, .confirm {
+				background-color: #fff;
+				color: #000;
+				border-radius: 5px;
+			}
+			.confirm {
+				background-color: $light-color;
+				color: #fff;
+			}
+		}
 	}
 }

@@ -31,6 +31,11 @@
 		$message: (
 			'min-width': 150px,
 			'padding': 8px,
+			// 'bg-color': getCssVar('color', 'info', 'light-9'),
+			// 'border-color': getCssVar('border-color-lighter'),
+			// 'close-size': 16px,
+			// 'close-icon-color': getCssVar('text-color-placeholder'),
+			// 'close-hover-color': getCssVar('text-color-secondary'),
 		),
 		// $button-padding-horizontal: (
 		// 	"default": 80px
@@ -40,6 +45,28 @@
 		// 	'default': 8px,
 		// 	'small': 6px
 		// ),
+		$input: (
+			'text-color': #fff,
+			// 'border': getCssVar('border'),
+			// 'hover-border': getCssVar('border-color-hover'),
+			'focus-border': $light-color,
+			// 'transparent-border': 0 0 0 1px transparent inset,
+			// 'border-color': getCssVar('border-color'),
+			// 'border-radius': getCssVar('border-radius-base'),
+			// 'bg-color': getCssVar('fill-color', 'blank'),
+			'bg-color': $main-bg-color,
+			'icon-color': #fff,
+			'placeholder-color': $text-light-color,
+			// 'hover-border-color': getCssVar('border-color-hover'),
+			// 'clear-hover-color': getCssVar('text-color-secondary'),
+			// 'focus-border-color': getCssVar('color-primary'),
+		),
+		$input-disabled: (
+			'fill': $main-bg-color2,
+			'border': $main-bg-color2,
+			'text-color': #eee,
+			'placeholder-color': #eee
+		),
 		$input-padding-horizontal:
 			(
 				'large': 12px,
@@ -53,17 +80,100 @@
 		),
 		$select-option: (
 			'text-color': #fff,
-			'hover-background': $deep-color,
+			'hover-background': $active-bg-color,
 			'selected-text-color': $active-text-color
 		),
 		$scrollbar: (
 			'bg-color': $main-color
 		),
 		$datepicker: (
-			'border-color': $main-color
+			'header-text-color': #fff,
+			'text-color': #fff,
+			'off-text-color': #eee,
+			'border-color': $main-color,
+			'icon-color': #fff,
+			'inrange-bg-color': $main-color,
+			'active-color': $active-text-color,
+			'hover-text-color': $active-text-color,
 		),
+		$tree: (
+			'node-hover-bg-color': $active-bg-color,
+			// 'text-color': getCssVar('text-color-regular'),
+			// 'expand-icon-color': getCssVar('text-color-placeholder'),
+		),
+		$dialog: (
+			// 'width': 50%,
+			// 'margin-top': 15vh,
+			// 'bg-color': getCssVar('bg-color'),
+			// 'box-shadow': getCssVar('box-shadow'),
+			// 'title-font-size': getCssVar('font-size-large'),
+			// 'content-font-size': 14px,
+			// 'font-line-height': getCssVar('font-line-height-primary'),
+			// 'padding-primary': 20px,
+			// 'border-radius': getCssVar('border-radius-small'),
+		),
+		$menu: (
+			// 'active-color': getCssVar('color-primary'),
+			'active-color': $active-text-color,
+			// 'text-color': getCssVar('text-color-primary'),
+			'text-color': #fff,
+			'hover-text-color': #fff,
+			'bg-color': $main-color,
+			'hover-bg-color': $active-bg-color,
+			// 'item-height': 56px,
+			// 'sub-item-height': calc(#{getCssVar('menu-item-height')} - 6px),
+			// 'horizontal-sub-item-height': 36px,
+			// 'item-font-size': getCssVar('font-size-base'),
+			// 'item-hover-fill': getCssVar('color-primary-light-9'),
+			// 'border-color': getCssVar('border-color'),
+			// 'base-level-padding': 20px,
+			// 'level-padding': 20px,
+			// 'icon-width': 24px,
+			// 'icon-transform-closed': 'none',
+			// 'icon-transform-open': 'rotateZ(180deg)',
+		),
+		$table: (
+			'border-color': $active-bg-color,
+			'border': 1px solid $active-bg-color,
+			'text-color': #fff,
+			'header-text-color': $deep-color,
+			// 'row-hover-bg-color': getCssVar('fill-color', 'light'),
+			// 'current-row-bg-color': getCssVar('color-primary-light-9'),
+			// 'header-bg-color': getCssVar('bg-color'),
+			// 'fixed-box-shadow': getCssVar('box-shadow', 'light'),
+			// 'bg-color': getCssVar('fill-color', 'blank'),
+			// 'tr-bg-color': getCssVar('fill-color', 'blank'),
+			// 'expanded-cell-bg-color': getCssVar('fill-color', 'blank'),
+			// 'fixed-left-column': inset 10px 0 10px -10px rgb(0 0 0 / 15%),
+			// 'fixed-right-column': inset -10px 0 10px -10px rgb(0 0 0 / 15%),
+		),
+		$pagination: (
+			// 'font-size': 14px,
+			// 'bg-color': getCssVar('fill-color', 'blank'),
+			// 'text-color': getCssVar('text-color-primary'),
+			// 'border-radius': 3px,
+			// 'button-color': getCssVar('text-color-primary'),
+			// 'button-width': 32px,
+			// 'button-height': 32px,
+			// 'button-disabled-color': getCssVar('text-color-placeholder'),
+			// 'button-disabled-bg-color': getCssVar('fill-color', 'blank'),
+			// 'button-bg-color': getCssVar('fill-color'),
+			// 'hover-color': getCssVar('color-primary'),
+			// 'height-extra-small': 24px,
+			// 'line-height-extra-small': getCssVar('pagination-height-extra-small'),
+		),
+		$border-color: (
+			'': $border-color,
+			'light': $border-color,
+			'lighter': $border-color,
+		),
+		$border-color-hover: $active-bg-color,
+		$border-radius: (
+			// 'base': 5px,
+    	// 'small': 3px,
+		)
 	);
 
 // 导入深色模式主题
-@use 'element-plus/theme-chalk/dark/css-vars.css' as *;
-@use './element-dark.scss';
+// @use 'element-plus/theme-chalk/dark/css-vars.css' as *;
+// @use './element-dark.scss';

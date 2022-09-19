@@ -1,12 +1,12 @@
 <template>
-  <template v-for="menu in menuList" :key="menu.path">
+  <template v-for="menu in menuList" :key="menu.name">
     <!-- 有子项 -->
     <el-sub-menu
       v-if="menu.children && menu.children.length"
-      :index="menu.path"
+      :index="menu.name"
       :popper-offset="6"
       :show-timeout="0"
-      :hide-timeout="200"
+      :hide-timeout="100"
     >
       <template #title>
         <component class="icon" :is="menu.meta.icon" />
@@ -15,7 +15,7 @@
       <LayoutComponentsMenuItem :menuList="menu.children"></LayoutComponentsMenuItem>
     </el-sub-menu>
     <!-- 无子项 -->
-    <el-menu-item v-else :index="menu.path">
+    <el-menu-item v-else :index="menu.name">
       <template #title>
         <component class="icon" :is="menu.meta.icon" />
         <span class="menu-item-title">{{ menu.meta.title }}</span>

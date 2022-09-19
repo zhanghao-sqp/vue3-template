@@ -1,13 +1,16 @@
 // 浅色模式
-$main-color: #006c84; // 主题色
-$deep-color: darken($main-color, 10%); // 更深色
-$active-text-color: rgb(210, 87, 0); // 激活文字颜色
-$active-bg-color: #369; // 激活背景颜色
-$main-bg-color: rgba($main-color, 0.5); // 半透明背景
+$main-color: #004684; // 主题色
+$light-color: lighten($main-color, 20%); // 浅色
+$deep-color: darken($main-color, 20%); // 更深色
+$active-text-color: rgb(255, 156, 26); // 激活文字颜色
+$active-bg-color: darken($main-color, 10%); // 激活背景颜色
+$border-color: darken($main-color, 5%); // 激活背景颜色
+$text-light-color: lighten($main-color, 20%); // 文字浅色
+$main-bg-color: rgba($main-color, 0.9);
+$main-bg-color2: rgba($main-color, 0.6);
 $opacity-color: rgba($main-color, 0.2);
 $opacity-most-color: rgba($main-color, 0.1);
 $opacity-hover-color: rgba($main-color, 0.3);
-$text-light-color: #4d4d4d;
 $text-dark-color: #fff;
 
 // 深色模式

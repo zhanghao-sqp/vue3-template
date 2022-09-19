@@ -9,7 +9,26 @@
 	<el-button type="primary" @click="loadingTest">加载中状态</el-button>
 	<el-button type="primary" @click="loadingTest2">加载中状态百分比</el-button>
 	<el-button type="success" @click="confirmTest">提示框</el-button>
-	<el-select v-model="elSelectValue">
+	<el-input v-model="elInputValue" width="100" />
+	<div class="mt-4">
+    <el-input
+      v-model="input3"
+      placeholder="Please input"
+      class="input-with-select"
+    >
+      <template #prepend>
+        <el-select v-model="select" placeholder="Select" style="width: 115px">
+          <el-option label="Restaurant" value="1" />
+          <el-option label="Order No." value="2" />
+          <el-option label="Tel" value="3" />
+        </el-select>
+      </template>
+      <template #append>
+        <el-button :icon="'Search'" />
+      </template>
+    </el-input>
+  </div>
+	<el-select v-model="elSelectValue" disabled>
 		<el-option label="选项1" value="1"></el-option>
 		<el-option label="选项2" value="2"></el-option>
 		<el-option label="选项3" value="3"></el-option>
@@ -25,6 +44,23 @@
 		type="datetime"
 		placeholder="Select date and time"
 		:shortcuts="shortcuts"
+	/> <br />
+	<el-table :data="tableData" border style="width: 100%">
+    <el-table-column prop="date" label="Date" width="180" />
+    <el-table-column prop="name" label="Name" width="180" />
+    <el-table-column prop="address" label="Address" />
+  </el-table>
+	<el-pagination
+		v-model:currentPage="currentPage4"
+		v-model:page-size="pageSize4"
+		:page-sizes="[100, 200, 300, 400]"
+		:small="small"
+		:disabled="disabled"
+		:background="background"
+		layout="total, sizes, prev, pager, next, jumper"
+		:total="400"
+		@size-change="handleSizeChange"
+		@current-change="handleCurrentChange"
 	/>
 	<!-- <UseDarkSwitch></UseDarkSwitch>
 	<UseExportExcel></UseExportExcel> -->
@@ -133,7 +169,10 @@ setTimeout(() => {
 const appearFn = (num: number, e: Event) => {
 	count.value += num
 }
+const elInputValue = ref('')
 const elSelectValue = ref()
+const input3 = ref('')
+const select = ref('')
 const elTreeSelectValue = ref()
 const elTreeSelectData = [
 	{
@@ -228,6 +267,39 @@ const shortcuts = [
   },
 ]
 const elDataPickerValue = ref('')
+const currentPage4 = ref(4)
+const pageSize4 = ref(100)
+const small = ref(false)
+const background = ref(false)
+const disabled = ref(false)
+const tableData = [
+  {
+    date: '2016-05-03',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-02',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-04',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-01',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+]
+const handleSizeChange = (val: number) => {
+  console.log(`${val} items per page`)
+}
+const handleCurrentChange = (val: number) => {
+  console.log(`current page: ${val}`)
+}
 </script>
 
 <style scoped lang="scss"></style>

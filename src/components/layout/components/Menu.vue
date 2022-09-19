@@ -1,43 +1,35 @@
 <template>
-	<el-menu
-		:active-text-color="activeTextColor"
-		:background-color="mainColor"
-		:default-active="currentPath"
-    :mode="mode"
-		text-color="#fff"
-	>
+	<el-menu :default-active="currentName" :mode="mode">
 	  <LayoutComponentsMenuItem :menuList="menuList" />
 	</el-menu>
 </template>
 
 <script lang="ts" setup>
-import varCss from '@style/global/var.module.scss'
-
 export interface MenuList {
   path: string
+  name: string
   meta: {
     title: string
     icon?: string
   }
   children?: MenuList[]
 }
-
-const { menuList } = withDefaults(defineProps<{
+withDefaults(defineProps<{
   mode?: 'vertical' | 'horizontal'
+  currentName: string
   menuList: MenuList[]
 }>(), {
   mode: 'vertical',
+  currentName: 'default',
   menuList: () => ([{
     path: 'default',
+    name: 'default',
     meta: {
       title: '未获取到数据',
       icon: 'WarningFilled'
     }
   }])
 })
-const { mainColor, activeTextColor } = varCss
-
-const currentPath = (menuList.length && menuList[0].path) || 'default'
 
 </script>
 

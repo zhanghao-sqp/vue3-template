@@ -1,5 +1,5 @@
 <template>
-	<LayoutComponentsMenu :menuList="menuList" />
+	<LayoutComponentsMenu :menuList="menuList" :currentName="currentName" />
 </template>
 
 <script setup lang="ts">
@@ -9,6 +9,7 @@ import type { MenuList } from './Menu.vue'
 const menuList = reactive<MenuList[]>([
 	{
 		path: '/home',
+		name: 'Home',
 		meta: {
 			title: '首页',
 			icon: 'HomeFilled'
@@ -16,6 +17,7 @@ const menuList = reactive<MenuList[]>([
 	},
 	{
 		path: '/about',
+		name: 'About',
 		meta: {
 			title: '关于',
 			icon: 'QuestionFilled'
@@ -23,20 +25,23 @@ const menuList = reactive<MenuList[]>([
 	},
 	{
 		path: '/user',
+		name: 'User',
 		meta: {
 			title: '用户',
 			icon: 'UserFilled'
 		},
 		children: [
 			{
-				path: '/user/list',
+				path: 'list',
+				name: 'UserList',
 				meta: {
 					title: '用户列表',
 					icon: 'DocumentCopy'
 				}
 			},
 			{
-				path: '/user/add',
+				path: 'add',
+				name: 'UserAdd',
 				meta: {
 					title: '添加用户',
 					icon: 'Plus'
@@ -45,6 +50,7 @@ const menuList = reactive<MenuList[]>([
 		]
 	}
 ])
+const currentName = 'UserAdd'
 </script>
 
 <style scoped lang="scss"></style>
