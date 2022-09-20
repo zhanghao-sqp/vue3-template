@@ -21,7 +21,7 @@ type IsInRoutes = (route: Route, routes: RouteDate[]) => boolean
 export const generateRoutes: GenerateRoutes = (routes) => {
 	return routes.map(route => {
 		if (route.component) {
-			route.component = () => import(`@/views${route.component}`)
+			route.component = () => import(/* @vite-ignore */ `@/views${route.component}`)
 		}
 		if (route.children && route.children.length) {
 			route.children = generateRoutes(route.children)

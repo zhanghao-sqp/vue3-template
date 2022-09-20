@@ -1,5 +1,5 @@
 <template>
-	<span>count：{{ count }}</span>
+	<span>count: {{ count }}</span>
 	<el-button type="primary" @click="resetCount">重置count</el-button>
 	<span style="padding: 0 20px">
 		{{ hour }}:{{ minute }}:{{ second }},周{{ week }}
@@ -9,30 +9,36 @@
 	<el-button type="primary" @click="loadingTest">加载中状态</el-button>
 	<el-button type="primary" @click="loadingTest2">加载中状态百分比</el-button>
 	<el-button type="success" @click="confirmTest">提示框</el-button>
-	<el-input v-model="elInputValue" width="100" />
-	<div class="mt-4">
-    <el-input
-      v-model="input3"
-      placeholder="Please input"
-      class="input-with-select"
-    >
-      <template #prepend>
-        <el-select v-model="select" placeholder="Select" style="width: 115px">
-          <el-option label="Restaurant" value="1" />
-          <el-option label="Order No." value="2" />
-          <el-option label="Tel" value="3" />
-        </el-select>
-      </template>
-      <template #append>
-        <el-button :icon="'Search'" />
-      </template>
-    </el-input>
-  </div>
+	<el-button type="primary" v-print="'#parallax'">打印</el-button>
+	<CommonDownloadExportExcel size="default" :option="option"></CommonDownloadExportExcel>
+	<el-input v-model="elInputValue" width="100" v-debounce="{fn: inputFn, event: 'input', delay: 500}" />
+	<el-input
+		v-model="input3"
+		placeholder="Please input"
+		class="input-with-select"
+	>
+		<template #prepend>
+			<el-select v-model="select" placeholder="Select" style="width: 115px">
+				<el-option label="Restaurant" value="1" />
+				<el-option label="Order No." value="2" />
+				<el-option label="Tel" value="3" />
+			</el-select>
+		</template>
+		<template #append>
+			<el-button :icon="'Search'" />
+		</template>
+	</el-input>
 	<el-select v-model="elSelectValue" disabled>
 		<el-option label="选项1" value="1"></el-option>
 		<el-option label="选项2" value="2"></el-option>
 		<el-option label="选项3" value="3"></el-option>
 	</el-select>
+	<el-cascader :options="options">
+    <template #default="{ node, data }">
+      <span>{{ data.label }}</span>
+      <span v-if="!node.isLeaf"> ({{ data.children.length }}) </span>
+    </template>
+  </el-cascader>
 	<el-tree-select
 		v-model="elTreeSelectValue"
 		:data="elTreeSelectData"
@@ -52,7 +58,7 @@
 		start-placeholder="Start date"
 		end-placeholder="End date"
 	/><br />
-	<el-table :data="tableData" border>
+	<el-table id="print-data" :data="tableData" border>
     <el-table-column prop="date" label="Date" width="180" />
     <el-table-column prop="name" label="Name" width="180" />
     <el-table-column prop="address" label="Address" />
@@ -85,7 +91,6 @@
 		/>
 		<div
 			v-waves
-			style="width: 100%; height: 350px; background-color: cornflowerblue"
 			class="custom-loading"
 			v-loading="true"
 			element-loading-text="加载中···"
@@ -112,18 +117,18 @@
 import { storeToRefs } from 'pinia'
 import { useCountStore } from '@/store'
 // import WS from '@/http/WS'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 
 import { useTime, useFoucsPoint } from '@/hooks'
 import { useLoading, useConfirm } from '@/utils/useActions'
 import { svgLoading } from '@/utils/svgString'
 import varCSS from '@/style/global/var.module.scss'
-useFoucsPoint({ color: varCSS.mainColor })
+const { mainColor } = varCSS
+useFoucsPoint({ color: mainColor })
 const { month, day, hour, minute, second, week } = useTime()
 
 const loadingTest = () => {
 	const loading = useLoading('加载中...')
-	console.log(loading)
 	setTimeout(() => {
 		loading.setText('加载完成')
 		loading.close()
@@ -133,14 +138,23 @@ const loadingTest = () => {
 const loadingTest2 = () => {
 	let percent = 0
 	const loading = useLoading(`正在加载 ${percent}%`)
-	let timer = setInterval(() => {
-		percent += 1
-		loading.setText(`正在加载 ${percent}%`)
-		if (percent === 100) {
+	// let timer = setInterval(() => {
+	// 	percent += 1
+	// 	loading.setText(`正在加载 ${percent}%`)
+	// 	if (percent === 100) {
+	// 		loading.close()
+	// 		clearInterval(timer)
+	// 	}
+	// }, 50)
+	const load = () => {
+		percent += .1
+		loading.setText(`正在加载 ${percent.toFixed(2)}%`)
+		if (percent >= 100) {
 			loading.close()
-			clearInterval(timer)
 		}
-	}, 50)
+		let raf = requestAnimationFrame(load)
+	}
+	load()
 }
 const confirmTest = () => {
 	const confirm = useConfirm('确定删除吗？')
@@ -175,6 +189,9 @@ setTimeout(() => {
 }, 3000)
 const appearFn = (num: number, e: Event) => {
 	count.value += num
+}
+const inputFn = () => {
+	console.log(elInputValue.value)
 }
 const elInputValue = ref('')
 const elSelectValue = ref()
@@ -308,6 +325,354 @@ const handleSizeChange = (val: number) => {
 const handleCurrentChange = (val: number) => {
   console.log(`current page: ${val}`)
 }
+
+const option = reactive({
+	jsonData: [
+		{
+			auditState: 0,
+			channel: '',
+			checksumData: '',
+			createdAt: '2022-03-23 13:36:44',
+			customer: '',
+			group: '默认分组',
+			groupName: '默认分组',
+			height: 0,
+			id: '10845',
+			installAddress: '',
+			installType: 0,
+			location: '',
+			mac: 'CC0000BB2211',
+			macText: 'CC0000BB2211',
+			name: 'CC0000BB2211',
+			no: '',
+			online: 0,
+			onoffs: '',
+			onoffsVo: [],
+			region: '',
+			resolution: '0*0',
+			ringRoad: '',
+			screenDirection: 0,
+			sim: '89861120235007360004',
+			terminalId: '10845',
+			tvNo: '',
+			week: '',
+			width: 0
+		}
+	],
+	excelFields: {
+		主机编码: {
+			field: 'mac',
+			callback: (val: any) => {
+				return `${val}&nbsp`
+			}
+		},
+		电视编码: {
+			field: 'tvNo',
+			callback: (val: any) => {
+				return `${val}&nbsp`
+			}
+		},
+		客户名称: {
+			field: 'customer',
+			callback: (val: any) => {
+				return `${val}&nbsp`
+			}
+		},
+		分组: 'group',
+		安装地址: 'installAddress',
+		安装位置: 'location',
+		安装方式: 'installType',
+		屏幕方向: 'screenDirection',
+		尺寸: {
+			field: 'screenSize',
+			callback: (val: any) => {
+				return `${val}&nbsp  `
+			}
+		},
+		渠道: 'channelName',
+		行政区: 'regionName',
+		环路: 'ringRoadName',
+		sim: 'sim',
+		备注: 'comment',
+		开机时间: 'startupTime',
+		关机时间: 'shutdownTime',
+		预警规则: 'warnName'
+	}
+})
+const options = [
+  {
+    value: 'guide',
+    label: 'Guide',
+    children: [
+      {
+        value: 'disciplines',
+        label: 'Disciplines',
+        children: [
+          {
+            value: 'consistency',
+            label: 'Consistency',
+          },
+          {
+            value: 'feedback',
+            label: 'Feedback',
+          },
+          {
+            value: 'efficiency',
+            label: 'Efficiency',
+          },
+          {
+            value: 'controllability',
+            label: 'Controllability',
+          },
+        ],
+      },
+      {
+        value: 'navigation',
+        label: 'Navigation',
+        children: [
+          {
+            value: 'side nav',
+            label: 'Side Navigation',
+          },
+          {
+            value: 'top nav',
+            label: 'Top Navigation',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    value: 'component',
+    label: 'Component',
+    children: [
+      {
+        value: 'basic',
+        label: 'Basic',
+        children: [
+          {
+            value: 'layout',
+            label: 'Layout',
+          },
+          {
+            value: 'color',
+            label: 'Color',
+          },
+          {
+            value: 'typography',
+            label: 'Typography',
+          },
+          {
+            value: 'icon',
+            label: 'Icon',
+          },
+          {
+            value: 'button',
+            label: 'Button',
+          },
+        ],
+      },
+      {
+        value: 'form',
+        label: 'Form',
+        children: [
+          {
+            value: 'radio',
+            label: 'Radio',
+          },
+          {
+            value: 'checkbox',
+            label: 'Checkbox',
+          },
+          {
+            value: 'input',
+            label: 'Input',
+          },
+          {
+            value: 'input-number',
+            label: 'InputNumber',
+          },
+          {
+            value: 'select',
+            label: 'Select',
+          },
+          {
+            value: 'cascader',
+            label: 'Cascader',
+          },
+          {
+            value: 'switch',
+            label: 'Switch',
+          },
+          {
+            value: 'slider',
+            label: 'Slider',
+          },
+          {
+            value: 'time-picker',
+            label: 'TimePicker',
+          },
+          {
+            value: 'date-picker',
+            label: 'DatePicker',
+          },
+          {
+            value: 'datetime-picker',
+            label: 'DateTimePicker',
+          },
+          {
+            value: 'upload',
+            label: 'Upload',
+          },
+          {
+            value: 'rate',
+            label: 'Rate',
+          },
+          {
+            value: 'form',
+            label: 'Form',
+          },
+        ],
+      },
+      {
+        value: 'data',
+        label: 'Data',
+        children: [
+          {
+            value: 'table',
+            label: 'Table',
+          },
+          {
+            value: 'tag',
+            label: 'Tag',
+          },
+          {
+            value: 'progress',
+            label: 'Progress',
+          },
+          {
+            value: 'tree',
+            label: 'Tree',
+          },
+          {
+            value: 'pagination',
+            label: 'Pagination',
+          },
+          {
+            value: 'badge',
+            label: 'Badge',
+          },
+        ],
+      },
+      {
+        value: 'notice',
+        label: 'Notice',
+        children: [
+          {
+            value: 'alert',
+            label: 'Alert',
+          },
+          {
+            value: 'loading',
+            label: 'Loading',
+          },
+          {
+            value: 'message',
+            label: 'Message',
+          },
+          {
+            value: 'message-box',
+            label: 'MessageBox',
+          },
+          {
+            value: 'notification',
+            label: 'Notification',
+          },
+        ],
+      },
+      {
+        value: 'navigation',
+        label: 'Navigation',
+        children: [
+          {
+            value: 'menu',
+            label: 'Menu',
+          },
+          {
+            value: 'tabs',
+            label: 'Tabs',
+          },
+          {
+            value: 'breadcrumb',
+            label: 'Breadcrumb',
+          },
+          {
+            value: 'dropdown',
+            label: 'Dropdown',
+          },
+          {
+            value: 'steps',
+            label: 'Steps',
+          },
+        ],
+      },
+      {
+        value: 'others',
+        label: 'Others',
+        children: [
+          {
+            value: 'dialog',
+            label: 'Dialog',
+          },
+          {
+            value: 'tooltip',
+            label: 'Tooltip',
+          },
+          {
+            value: 'popover',
+            label: 'Popover',
+          },
+          {
+            value: 'card',
+            label: 'Card',
+          },
+          {
+            value: 'carousel',
+            label: 'Carousel',
+          },
+          {
+            value: 'collapse',
+            label: 'Collapse',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    value: 'resource',
+    label: 'Resource',
+    children: [
+      {
+        value: 'axure',
+        label: 'Axure Components',
+      },
+      {
+        value: 'sketch',
+        label: 'Sketch Templates',
+      },
+      {
+        value: 'docs',
+        label: 'Design Documentation',
+      },
+    ],
+  },
+]
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.custom-loading {
+	width: 100%;
+	height: 300px;
+	background-color: $main-color;
+}
+</style>

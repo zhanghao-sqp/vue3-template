@@ -7,7 +7,7 @@ $active-bg-color: darken($main-color, 10%); // 激活背景颜色
 $border-color: darken($main-color, 5%); // 激活背景颜色
 $text-light-color: lighten($main-color, 20%); // 文字浅色
 $main-bg-color: rgba($main-color, 0.9);
-$main-bg-color2: rgba($main-color, 0.6);
+$main-bg-color2: rgba($main-color, 0.6); // 禁用背景色
 $opacity-color: rgba($main-color, 0.2);
 $opacity-most-color: rgba($main-color, 0.1);
 $opacity-hover-color: rgba($main-color, 0.3);
@@ -18,6 +18,12 @@ $main-dark-color: rgb(58, 94, 135);
 
 %flex-center {
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+%flex-align-center {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }

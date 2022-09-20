@@ -50,6 +50,11 @@
 				<slot :name="item.defineColumn" :row="row" />
 			</template>
 		</el-table-column>
+		<!-- <CommonTableBaseTableColumn :column="column">
+			<template v-for="item in column" :key="item.label + Date.now()" #default="{ row }">
+				<slot :name="item.defineColumn" :row="row" />
+			</template>
+		</CommonTableBaseTableColumn> -->
 	</el-table>
 </template>
 
@@ -72,10 +77,12 @@ export interface TableProps {
 export interface ColumnOption {
 	label: string
 	prop?: string | null | undefined
+	fixed?: boolean | 'left' | 'right'
 	align?: string
 	width?: number
 	render?: Function
 	defineColumn?: string // 具名插槽名称
+	children?: ColumnOption[]
 }
 
 withDefaults(defineProps<TableProps>(), {
@@ -124,9 +131,7 @@ const rowClick = (
 const selectionChange = (row: object) => {
 	emits('selection-change', row)
 }
-
-const instance: ComponentInternalInstance | null = getCurrentInstance()
-defineExpose({ instance })
+defineExpose({ instance: getCurrentInstance() })
 </script>
 
 <style scoped lang="scss"></style>

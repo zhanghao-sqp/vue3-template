@@ -24,7 +24,8 @@
 		"vue": "^3.2.25",
 		"vue-router": "^4.0.16",
 		"vue-upload-component": "^3.1.2",
-		"vue3-json-excel": "^1.0.10-alpha"
+		"vue3-json-excel": "^1.0.10-alpha",
+		"vue3-print-nb": "^0.1.4"
 	},
 	"devDependencies": {
 		"@iconify-json/ep": "^1.1.5",

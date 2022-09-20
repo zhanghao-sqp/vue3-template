@@ -37,7 +37,17 @@ const menuList = reactive<MenuList[]>([
 				meta: {
 					title: '用户列表',
 					icon: 'DocumentCopy'
-				}
+				},
+				children: [
+					{
+						path: 'detail',
+						name: 'UserDetail',
+						meta: {
+							title: '用户详情',
+							icon: 'Avatar'
+						}
+					}
+				]
 			},
 			{
 				path: 'add',

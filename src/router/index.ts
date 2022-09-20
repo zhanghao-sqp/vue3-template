@@ -64,7 +64,7 @@ router.beforeEach((to: RouteLocationNormalized) => {
 	npStart()
 	document.title = to.meta.title as string
 	if (!isInRoutes((to as Route), (router.getRoutes() as RouteDate[]))) {
-		router.push('/404')
+		router.replace('/404')
 	}
 })
 

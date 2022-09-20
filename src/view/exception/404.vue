@@ -31,6 +31,7 @@
 				p-id="2436"
 			></path>
 		</svg>
+		<div class="info">页面不存在</div>
 	</div>
 </template>
 
@@ -43,6 +44,10 @@ const { mainColor, opacityHoverColor } = varCSS
 .exception-page {
   width: 100vw;
   height: 60vh;
-  @extend %flex-center;
+  @extend %flex-align-center;
+	.info {
+		font-size: 26px;
+		color: $main-color;
+	}
 }
 </style>
