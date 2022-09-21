@@ -31,7 +31,7 @@
 				p-id="2436"
 			></path>
 		</svg>
-		<div class="info">页面不存在</div>
+		<h2 class="info">页面不存在</h2>
 	</div>
 </template>
 
@@ -46,7 +46,7 @@ const { mainColor, opacityHoverColor } = varCSS
   height: 60vh;
   @extend %flex-align-center;
 	.info {
-		font-size: 26px;
+		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 		color: $main-color;
 	}
 }

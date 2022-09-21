@@ -12,7 +12,6 @@
 		"@element-plus/icons-vue": "^2.0.6",
 		"@vueup/vue-quill": "^1.0.0-beta.8",
 		"axios": "^0.27.2",
-		"dat.gui": "^0.7.9",
 		"dayjs": "^1.11.5",
 		"element-plus": "^2.2.6",
 		"mitt": "^3.0.0",
@@ -30,7 +29,6 @@
 	"devDependencies": {
 		"@iconify-json/ep": "^1.1.5",
 		"@iconify/json": "^2.1.65",
-		"@types/dat.gui": "^0.7.7",
 		"@types/node": "^18.0.0",
 		"@types/nprogress": "^0.2.0",
 		"@types/stats.js": "^0.17.0",

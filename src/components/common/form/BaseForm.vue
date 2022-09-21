@@ -1,14 +1,16 @@
 <template>
-	<h2>login</h2>
   <div class="base-form">
-    <el-form :model="formData" :rules="rules" ref="formRef">
+    <!-- <el-form :model="formData" :rules="rules" ref="formRef" label-width="100px">
       <el-form-item v-for="item in formItems" :key="item.prop" :label="item.label" :prop="item.prop">
-				<el-input v-if="item.type === 'input'" v-model="formData[item.prop]" :placeholder="item.placeholder"></el-input>
+        <el-input v-if="item.type === 'input'" v-model="form[item.prop]" :placeholder="item.placeholder"></el-input>
+        <el-select v-if="item.type === 'select'" v-model="form[item.prop]" :placeholder="item.placeholder">
+          <el-option v-for="option in item.options" :key="option.value" :label="option.label" :value="option.value"></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submit">提交</el-button>
       </el-form-item>
-    </el-form>
+    </el-form> -->
   </div>
 </template>
 
@@ -24,18 +26,11 @@ const rules = {
     { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
   ],
   password: [
-    { required: false, message: '请输入密码', trigger: 'blur' },
+    { required: true, message: '请输入密码', trigger: 'blur' },
     { min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'blur' }
   ]
 }
-interface P {
-	prop: keyof typeof formData,
-	label: string,
-	type: string,
-	placeholder: string,
-	options?: Array<{label: string, value: string}>
-}
-const formItems: P[] = [
+const formItems = [
   {
     prop: 'username',
     label: '用户名',

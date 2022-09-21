@@ -1,7 +1,7 @@
 <template>
 	<div
 		ref="statsRef"
-		style="position: absolute; top: 100px; right: 100px"
+		style="position: absolute; top: 60px; right: 80px"
 	></div>
 	<el-button @click="move" :disabled="moveFlag">动起来</el-button>
 	<el-button @click="stop" :disabled="!moveFlag">停下</el-button>
@@ -380,34 +380,34 @@ const init = () => {
 	// if (document.querySelector('.dg')) {
 	// 	document.querySelector('.dg')?.remove()
 	// }
-	const gui = new dat.GUI()
+	// const gui = new dat.GUI()
 
-	const control = {
-		addCube: () => {
-			const cubeGeometry = new BoxGeometry(10, 10, 10)
-			cubeGeometry.name = 'newCube'
-			const cubeMaterial = new MeshLambertMaterial({
-				color: 0xff0000
-			})
-			const cube = new Mesh(cubeGeometry, cubeMaterial)
-			cube.name = 'newCube'
-			cube.position.x = Math.random() * 100 - 50
-			cube.position.y = Math.random() * 100
-			cube.position.z = Math.random() * 100 - 50
-			cube.castShadow = true
-			newCubeGroup.add(cube)
-		},
-		removeCube: () => {
-			console.log('🚀 ~ scene.children', scene.children)
-			const groups: Group = scene.children.find(
-				child => child.name === 'newCubeGroup'
-			) as Group
-			scene.remove(groups)
-			// groups.remove(groups.children[groups.children.length - 1])
-		}
-	}
-	gui.add(control, 'addCube')
-	gui.add(control, 'removeCube')
+	// const control = {
+	// 	addCube: () => {
+	// 		const cubeGeometry = new BoxGeometry(10, 10, 10)
+	// 		cubeGeometry.name = 'newCube'
+	// 		const cubeMaterial = new MeshLambertMaterial({
+	// 			color: 0xff0000
+	// 		})
+	// 		const cube = new Mesh(cubeGeometry, cubeMaterial)
+	// 		cube.name = 'newCube'
+	// 		cube.position.x = Math.random() * 100 - 50
+	// 		cube.position.y = Math.random() * 100
+	// 		cube.position.z = Math.random() * 100 - 50
+	// 		cube.castShadow = true
+	// 		newCubeGroup.add(cube)
+	// 	},
+	// 	removeCube: () => {
+	// 		console.log('🚀 ~ scene.children', scene.children)
+	// 		const groups: Group = scene.children.find(
+	// 			child => child.name === 'newCubeGroup'
+	// 		) as Group
+	// 		scene.remove(groups)
+	// 		// groups.remove(groups.children[groups.children.length - 1])
+	// 	}
+	// }
+	// gui.add(control, 'addCube')
+	// gui.add(control, 'removeCube')
 }
 const getGeometry = () => {
 	// console.log(scene.children)
