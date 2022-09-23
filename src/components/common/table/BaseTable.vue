@@ -61,7 +61,7 @@
 <script setup lang="ts">
 import { getCurrentInstance, ComponentInternalInstance, ref, onBeforeMount } from 'vue'
 export interface TableProps {
-	data: object[] // 表格数据
+	data: Array<Record<string, any>> // 表格数据
 	column: ColumnOption[] // 表头配置项
 	loading?: boolean // 加载动画
 	size?: 'default' | 'large' | 'small' // 表格大小

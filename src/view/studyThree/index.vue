@@ -86,7 +86,7 @@ import {
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Stats from 'stats.js'
-import * as dat from 'dat.gui'
+// import * as dat from 'dat.gui'
 
 const threeRef = ref()
 const statsRef = ref()
