@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { getCurrentInstance, ComponentInternalInstance, ref, onBeforeMount } from 'vue'
+import { getCurrentInstance } from 'vue'
 export interface TableProps {
 	data: Array<Record<string, any>> // 表格数据
 	column: ColumnOption[] // 表头配置项
@@ -100,36 +100,20 @@ withDefaults(defineProps<TableProps>(), {
 	index: false
 })
 
-const emits = defineEmits([
-	'cell-click', // 点击表格单元格
-	'row-click', // 点击表格行
-	'selection-change' // 选择的行
-])
+const emit = defineEmits<{
+	(event: 'cell-click', row: Record<string, any>, column: object, cell: HTMLElement): void // 点击表格单元格
+	(event: 'row-click', row: Record<string, any>, column: object, cell: HTMLElement): void // 点击表格行
+	(event: 'selection-change', row: Record<string, any>): void // 选择的行
+}>()
 
-// const tableHeight = ref<string | number | null>(null)
-// onBeforeMount(() => {
-// 	const { height } = getCurrentInstance()!.props
-// 	tableHeight.value = height === undefined ? null : (height as string | number)
-// })
-
-const cellClick = (
-	row: object,
-	column: object,
-	cell: HTMLElement,
-	event: MouseEvent
-) => {
-	emits('cell-click', row, column, cell, event)
+const cellClick = (row: Record<string, any>, column: object, cell: HTMLElement) => {
+	emit('cell-click', row, column, cell)
 }
-const rowClick = (
-	row: object,
-	column: object,
-	cell: HTMLElement,
-	event: MouseEvent
-) => {
-	emits('row-click', row, column, cell, event)
+const rowClick = (row: Record<string, any>, column: object, cell: HTMLElement) => {
+	emit('row-click', row, column, cell)
 }
-const selectionChange = (row: object) => {
-	emits('selection-change', row)
+const selectionChange = (row: Record<string, any>) => {
+	emit('selection-change', row)
 }
 defineExpose({ instance: getCurrentInstance() })
 </script>

@@ -3,14 +3,14 @@
 		ref="formRef"
 		:model="formData"
 		:rules="rules"
-		:inline="false"
-		:size="'default'"
+		:inline="inline"
+		:size="size"
 		:label-suffix="':'"
-		:require-asterisk-position="'right'"
-		:status-icon="true"
-		:scroll-to-error="true"
-		:label-width="'auto'"
-		:label-position="'right'"
+		:require-asterisk-position="requireAsteriskPosition"
+		:status-icon="statusIcon"
+		:scroll-to-error="scrollToError"
+		:label-width="labelWidth"
+		:label-position="labelPosition"
 	>
 		<el-form-item
 			v-for="item in fields"
@@ -22,9 +22,57 @@
 				v-if="item.type === 'input'"
 				v-model="formData[item.prop]"
 				:placeholder="item.placeholder"
+				:disabled="item.disabled"
 			></el-input>
+			<el-select
+				v-if="item.type === 'select'"
+				v-model="formData[item.prop]"
+				:placeholder="item.placeholder"
+				:disabled="item.disabled"
+			>
+				<el-option
+					v-for="option in item.options"
+					:key="option.value"
+					:label="option.label"
+					:value="option.value"
+				></el-option>
+			</el-select>
+			<el-radio-group
+				v-if="item.type === 'radio'"
+				v-model="formData[item.prop]"
+				:disabled="item.disabled"
+			>
+				<el-radio
+					v-for="option in item.options"
+					:key="option.value"
+					:label="option.value"
+				>
+					{{ option.label }}
+				</el-radio>
+			</el-radio-group>
+			<el-checkbox-group
+				v-if="item.type === 'checkbox'"
+				v-model="formData[item.prop]"
+				:disabled="item.disabled"
+			>
+				<el-checkbox
+					v-for="option in item.options"
+					:key="option.value"
+					:label="option.value"
+				>
+					{{ option.label }}
+				</el-checkbox>
+			</el-checkbox-group>
+			<el-date-picker
+				v-if="item.type === 'date'"
+				v-model="formData[item.prop]"
+				type="date"
+				:placeholder="item.placeholder"
+				:disabled="item.disabled"
+			></el-date-picker>
+
 		</el-form-item>
-		<el-form-item>
+		<el-form-item class="form-operation">
 			<el-button type="" @click="resetFields(formRef!)">重置</el-button>
 			<el-button type="primary" @click="confirm(formRef!)">确认</el-button>
 		</el-form-item>
@@ -32,19 +80,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
-import type { ElForm, FormItemRule, FormInstance } from 'element-plus'
+import { reactive, ref } from 'vue'
+import type { FormItemRule, FormInstance } from 'element-plus'
+import { cloneDeep } from 'lodash'
 
 export type Model = Record<string, any>
 export type FieldsOption = Array<{
 	prop: keyof Model  // 属性名
 	label: string  // 标签名
-	type: 'input' | 'number' | 'select' | 'date' | 'upload'  // 类型
+	type: 'input' | 'number' | 'select' | 'radio' | 'checkbox' | 'date' | 'upload'  // 类型
 	placeholder?: string  // 占位符
 	options?: Array<{
 		label: string  // 选项名
-		value: string  // 选项值
+		value: string | number  // 选项值
 	}>
+	disabled?: boolean  // 是否禁用
 }>
 type Arrayable<T> = T | T[]; // 可以是数组也可以是单个值
 const { model } = withDefaults(defineProps<{
@@ -58,7 +108,7 @@ const { model } = withDefaults(defineProps<{
 	statusIcon?: boolean  // 是否在输入框中显示校验结果反馈图标
 	scrollToError?: boolean  // 是否在第一个校验规则不通过时，滚动到该表单域
 	labelWidth?: string  // 表单域标签的的宽度
-	labelPosition?: 'left' | 'right'  // 表单域标签label向左右对齐
+	labelPosition?: 'left' | 'right' | 'top'  // 表单域标签label位置
 }>(), {
   rules: {} as any,
 	inline: false,
@@ -70,17 +120,30 @@ const { model } = withDefaults(defineProps<{
 	labelWidth: 'auto',
 	labelPosition: 'right'
 })
+const emit = defineEmits<{
+	(event: 'confirm', data: Model): void // 确认事件
+}>()
 const formRef = ref<FormInstance>()
-const formData = computed(() => model)
+const formData = reactive(cloneDeep(model))
 const resetFields = (instance: FormInstance) => {
 	instance.resetFields()
 }
 const confirm = (instance: FormInstance) => {
 	instance.validate((valid: boolean) => {
 		if (!valid) return
-    // emits('confirm', formData.value)
+    emit('confirm', formData)
 	})
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.form-operation {
+	@extend %flex-center;
+	:deep(.el-form-item__content) {
+		@extend %flex-center;
+		.el-button {
+			margin-left: 2rem;
+		}
+	}
+}
+</style>
