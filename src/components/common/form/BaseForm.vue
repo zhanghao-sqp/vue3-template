@@ -82,7 +82,7 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import type { FormItemRule, FormInstance } from 'element-plus'
-import { cloneDeep } from 'lodash'
+import { cloneDeep } from 'lodash-es'
 
 export type Model = Record<string, any>
 export type FieldsOption = Array<{
@@ -93,6 +93,7 @@ export type FieldsOption = Array<{
 	options?: Array<{
 		label: string  // 选项名
 		value: string | number  // 选项值
+		[propName: string]: any // 其他属性
 	}>
 	disabled?: boolean  // 是否禁用
 }>
