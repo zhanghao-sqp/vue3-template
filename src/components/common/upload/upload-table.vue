@@ -12,21 +12,21 @@
 		/>
 		<div class="upload-file-operation">
 			<el-button type="primary" @click="addFile">
-				<IEpCirclePlus />&nbsp;添加
+				<el-icon><CirclePlus /></el-icon>&nbsp;添加
 			</el-button>
 			<el-button
 				v-if="files.length && filesStatus !== '正在上传' && filesStatus !== '上传完成'"
 				type="primary"
 				@click.prevent="upload!.active = true"
 			>
-			<IEpUploadFilled />&nbsp;上传
+			<el-icon><UploadFilled /></el-icon>&nbsp;上传
 			</el-button>
 			<el-button
 				v-if="filesStatus === '正在上传'"
 				type="warning"
 				@click.prevent="upload!.active = false"
 			>
-				<IEpVideoPause />&nbsp;取消上传
+			<el-icon><VideoPause /></el-icon>&nbsp;取消上传
 			</el-button>
 		</div>
 		<CommonTableBaseTable :data="files" :column="tableColumn" emptyText="请添加上传文件">
@@ -66,14 +66,14 @@
 						title="删除文件"
 						@click="upload!.remove(row)"
 					>
-						<IEpDelete color="red" />
+					<el-icon title="删除"><Delete /></el-icon>
 					</span>
 					<span
 						v-if="getFileStatus(row) === '正在上传'"
 						title="取消上传"
 						@click="upload!.update(row, { active: false })"
 					>
-						<IEpVideoPause color="orange" />
+					<el-icon title="取消上传" ><VideoPause /></el-icon>
 					</span>
 					<!-- <span
 						v-if="getFileStatus(row) === '上传失败'"

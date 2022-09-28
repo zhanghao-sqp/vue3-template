@@ -1,22 +1,13 @@
 import { defineConfig, ConfigEnv, loadEnv } from 'vite'
-import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
-import VueSetupExtend from 'vite-plugin-vue-setup-extend'
-
-// 自动导入
-import AutoImport from 'unplugin-auto-import/vite'
-import ComponentsPlugin from 'unplugin-vue-components/vite'
-// element-plus相关
-import ElementPlusPlugin from 'unplugin-element-plus/vite'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-// icon相关
-import Icons from 'unplugin-icons/vite'
-import IconsResolver from 'unplugin-icons/resolver'
-// 打包相关
-import ViteCompression from 'vite-plugin-compression'
+// 代理配置
+import { getProxyTarget } from './config/vite/proxy'
+// 插件
+import { createVitePlugins } from './config/vite/plugins'
 
 export default ({ mode }: ConfigEnv) => {
-	const env = loadEnv(mode, process.cwd() + '/env')
+	const env = loadEnv(mode, process.cwd() + '/config/env')
+	const isBuild = mode === 'production'
 	const resolvePath = (dir: string) => resolve(__dirname, dir)
 	return defineConfig({
 		base: './',
@@ -27,18 +18,12 @@ export default ({ mode }: ConfigEnv) => {
 			open: false,
 			hmr: true,
 			cors: true,
-			proxy: {
-				'/api': {
-					target: env.VITE_BASE_URL,
-					changeOrigin: true,
-					rewrite: path => path.replace(/\/api/, '')
-				}
-			}
+			proxy: getProxyTarget(env)
 		},
 		css: {
 			preprocessorOptions: {
 				scss: {
-					// 修改element-plus默认样式
+					// 修改element-plus默认样式 导入全局变量和mixin
 					additionalData: `
 						@use '@style/global/variable.scss' as *;
 						@use '@style/global/element-plus.scss' as *;
@@ -46,56 +31,7 @@ export default ({ mode }: ConfigEnv) => {
 				}	
 			}
 		},
-		plugins: [
-			vue(),
-			VueSetupExtend(),
-			ElementPlusPlugin({ useSource: true }),
-			// 自动导入组件及样式
-			AutoImport({
-				// imports: ["vue"], // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
-				dts: 'types/auto-imports.d.ts', // 自动导入的类型声明文件,
-				resolvers: [
-					// 导入element-plus组件
-					ElementPlusResolver({
-						importStyle: 'sass'
-					}),
-					// 导入图标组件
-					IconsResolver({
-						prefix: 'Icon'
-					})
-				]
-			}),
-			// 注册组件
-			ComponentsPlugin({
-				dirs: [
-					resolvePath('src/components'),
-					resolvePath('src/views')
-				],
-				globalNamespaces: ['global'],
-				directoryAsNamespace: true,
-				dts: 'types/components.d.ts',
-				resolvers: [
-					ElementPlusResolver({
-						importStyle: 'sass'
-					}),
-					IconsResolver({
-						enabledCollections: ['ep'] // <View /> => <i-ep-View />
-					})
-				]
-			}),
-			// 图标
-			Icons({
-				autoInstall: true
-			}),
-			// 压缩
-			ViteCompression({
-				verbose: true, // 输出压缩成功
-				disable: false, // 是否禁用
-				threshold: 1, // 体积大于阈值会被压缩，单位是b
-				algorithm: 'gzip', // 压缩算法
-				ext: '.gz' // 生成的压缩包后缀
-			})
-		],
+		plugins: createVitePlugins(isBuild),
 		resolve: {
 			alias: {
 				'@': resolvePath('src'),

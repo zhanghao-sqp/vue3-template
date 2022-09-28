@@ -2,7 +2,7 @@ import { ElLoading, ElMessage, ElMessageBox } from 'element-plus'
 import type { LoadingOptionsResolved } from 'element-plus/es/components/loading/src/types'
 import { svgFullScreenLoading } from './svgString'
 
-type Type = 'info' | 'success' | 'warning' | 'error'
+export type Type = 'info' | 'success' | 'warning' | 'error'
 
 // 消息提示
 export const useMessage = (type: Type, tip: string) => {
