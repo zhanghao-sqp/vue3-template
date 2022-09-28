@@ -6,6 +6,7 @@ import {
 	AxiosInstance
 } from 'axios'
 import { useMessage } from '@/utils/useActions'
+import type { Type } from '@/utils/useActions'
 
 const instance: AxiosInstance = axios.create({
 	baseURL: 'api',
@@ -33,7 +34,11 @@ instance.interceptors.response.use(
 	(response: AxiosResponse) => {
 		if (response.status === 200) {
 			if (response.data.code !== 200) {
-				useMessage('error', response.data.msg)
+				const code = response.data.code
+				let type: Type = 'error'
+				// 2,3开头的code为警告提示
+				if (new RegExp(/^[23]\d{2}/).test(code)) type = 'warning'
+				useMessage(type, response.data.msg)
 			}
 			return response.data
 		} else {
