@@ -20,8 +20,8 @@ type IsInRoutes = (route: Route, routes: RouteDate[]) => boolean
 // 生成路由
 export const generateRoutes: GenerateRoutes = (routes) => {
 	return routes.map(route => {
-		if (route.component) {
-			route.component = () => import(/* @vite-ignore */ `@/view${route.component}`)
+		if (route.component as string) {
+			route.component = () => import(/* @vite-ignore */ `@/${route.component}`)
 		}
 		if (route.children && route.children.length) {
 			route.children = generateRoutes(route.children)

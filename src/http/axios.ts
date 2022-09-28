@@ -38,7 +38,7 @@ instance.interceptors.response.use(
 				let type: Type = 'error'
 				// 2,3开头的code为警告提示
 				if (new RegExp(/^[23]\d{2}/).test(code)) type = 'warning'
-				useMessage(type, response.data.msg)
+				response.data.msg && useMessage(type, response.data.msg)
 			}
 			return response.data
 		} else {
@@ -49,6 +49,7 @@ instance.interceptors.response.use(
 	},
 	(error: AxiosError) => {
 		// Do something with response error
+		console.log('响应拦截器', error.response)
 		return Promise.reject(error)
 	}
 )

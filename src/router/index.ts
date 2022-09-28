@@ -34,14 +34,14 @@ export const routes: RouteRecordRaw[] = [
 				},
 				component: () => import('@view/login/index.vue')
 			},
-			{
-				path: 'three',
-				name: 'three',
-				meta: {
-					title: 'three'
-				},
-				component: () => import('@view/studyThree/index.vue')
-			}
+			// {
+			// 	path: 'three',
+			// 	name: 'three',
+			// 	meta: {
+			// 		title: 'three'
+			// 	},
+			// 	component: () => import('@view/studyThree/index.vue')
+			// }
 		]
 	},
 	{
@@ -60,7 +60,9 @@ const router = createRouter({
 	routes // 路由规则
 })
 
-router.beforeEach((to: RouteLocationNormalized) => {
+router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized) => {
+	// console.log('from', from)
+	// console.log('to', to)
 	npStart()
 	document.title = to.meta.title as string
 	if (!isInRoutes((to as Route), (router.getRoutes() as RouteDate[]))) {

@@ -1,0 +1,13 @@
+{
+	"data": [
+		{
+			"path": "/three",
+			"name": "three",
+			"meta": {
+				"name": "three",
+				"title": "three"
+			},
+			"component": "view/studyThree/index.vue"
+		}
+	]
+}

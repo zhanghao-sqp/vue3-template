@@ -10,8 +10,8 @@ export default ({ mode }: ConfigEnv) => {
 	const isBuild = mode === 'production'
 	const resolvePath = (dir: string) => resolve(__dirname, dir)
 	return defineConfig({
-		base: './',
-		envDir: './env',
+		base: '/',
+		envDir: './config/env',
 		server: {
 			host: '0.0.0.0',
 			port: 8888,

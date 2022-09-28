@@ -41,7 +41,7 @@
 		"unplugin-element-plus": "^0.4.0",
 		"unplugin-icons": "^0.14.5",
 		"unplugin-vue-components": "^0.19.6",
-		"vite": "^2.9.9",
+		"vite": "^2.9.15",
 		"vite-plugin-compression": "^0.5.1",
 		"vite-plugin-imagemin": "^0.6.1",
 		"vite-plugin-restart": "^0.2.0",
