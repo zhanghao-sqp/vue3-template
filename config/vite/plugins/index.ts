@@ -12,7 +12,7 @@ import { ConfigElementPlusPlugin } from './elementPlus'
 import { ConfigCompressPlugin } from './compress'
 // import { ConfigPagesPlugin } from './pages'
 import { ConfigRestartPlugin } from './restart'
-import { ConfigImageminPlugin } from './imagemin'
+// import { ConfigImageminPlugin } from './imagemin'
 
 export const createVitePlugins = (isBuild: boolean) => {
 	const vitePlugins: (PluginOption | PluginOption[])[] = [
@@ -27,7 +27,7 @@ export const createVitePlugins = (isBuild: boolean) => {
     // 按需引入Element Plus
     ConfigElementPlusPlugin(),
     // 图片压缩
-    ConfigImageminPlugin(),
+    // ConfigImageminPlugin(),
     // svg图标
     ConfigSvgIconsPlugin(isBuild),
     // 监听配置文件修改自动重启Vite

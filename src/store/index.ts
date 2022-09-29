@@ -3,8 +3,8 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 export default createPinia().use(piniaPluginPersistedstate)
 export * from './modules/count'
-export * from './modules/keepAlive'
 export * from './modules/route'
+export * from './modules/user'
 
 // import.meta.glob 为动态导入，构建时，会分离为独立的 chunk
 // import.meta.globEager 为直接引入

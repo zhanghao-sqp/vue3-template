@@ -18,5 +18,5 @@ export const paramsPost = (params: any) => {
 }
 
 export const getRoutes = () => {
-  return get('/asyncRoutes', null, { baseURL: '' })
+  return get('/asyncRoutes.json', null, { baseURL: '' })
 }

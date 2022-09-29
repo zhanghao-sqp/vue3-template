@@ -20,7 +20,6 @@ const instance: AxiosInstance = axios.create({
 instance.interceptors.request.use(
 	(config: AxiosRequestConfig) => {
 		config.headers!.Authorization = `Bearer ${localStorage.getItem('token')}`
-		console.log('请求拦截器', config)
 		return config
 	},
 	(error: AxiosError) => {

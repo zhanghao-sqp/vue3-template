@@ -115,7 +115,8 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useCountStore } from '@/store'
+import { useCountStore, useRouteStore } from '@/store'
+import { getRoutes } from '@/http/api/user'
 // import WS from '@/http/WS'
 import { ref, reactive } from 'vue'
 
@@ -131,7 +132,6 @@ const loadingTest = () => {
 		loading.close()
 	}, 3000)
 }
-
 const loadingTest2 = () => {
 	let percent = 0
 	const loading = useLoading(`正在加载 ${percent}%`)
@@ -181,12 +181,8 @@ const resetCount = () => {
 const flag = ref(true)
 setTimeout(() => {
 	countStore.increment()
-	count.value++
 	flag.value = false
 }, 3000)
-const appearFn = (num: number, e: Event) => {
-	count.value += num
-}
 const inputFn = () => {
 	console.log(elInputValue.value)
 }

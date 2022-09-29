@@ -31,16 +31,6 @@ const removeRoute = () => {
 	console.log(router.getRoutes())
 }
 
-const addRoute = async () => {
-	const { data } = await get('/asyncRoutes.json', 1, { baseURL: '' })
-	const routes = generateRoutes(data)
-	console.log(router.getRoutes())
-	routes.forEach((route: RouteRecordRaw) => {
-		router.addRoute(route)
-	})
-	console.log(router.getRoutes())
-}
-
 const formData: Model = reactive({
 	username: '123',
 	phone: '15723208056',

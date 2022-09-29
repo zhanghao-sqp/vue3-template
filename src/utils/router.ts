@@ -15,7 +15,7 @@ export interface Route {
 	name: string
 }
 type GenerateRoutes = (routes: RouteDate[]) => any[]
-type IsInRoutes = (route: Route, routes: RouteDate[]) => boolean
+type IsInRoutes = (routeName: string, routes: RouteDate[]) => boolean
 
 // 生成路由
 const comp = import.meta.glob(`@/**/*.vue`)
@@ -34,13 +34,13 @@ export const generateRoutes: GenerateRoutes = (routes) => {
 }
 
 // 判断是否在路由列表中
-export const isInRoutes: IsInRoutes = (current, routes) => {
+export const isInRoutes: IsInRoutes = (currentName, routes) => {
 	let flag = false
   for (const route of routes) {
-		if (route.name === current.name)
+		if (route.name === currentName)
       return (flag = true)
     if (route.children && route.children.length) {
-      flag = isInRoutes(current, route.children)
+      flag = isInRoutes(currentName, route.children)
     }
 	}
 	return flag

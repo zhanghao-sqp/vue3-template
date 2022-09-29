@@ -1,4 +1,4 @@
-import { useKeepAliveStoreWithOut } from '@/store'
+import { useRouteStoreWithOut } from '@/store'
 let beforeTime = 0, leaveTime = 0
 
 window.onunload = () => {
@@ -10,7 +10,7 @@ window.onunload = () => {
   } else {
     // 页面刷新
     console.log('====刷新=====')
-    useKeepAliveStoreWithOut().add('refresh'+ new Date().getTime())
+    // useRouteStoreWithOut().add('refresh'+ new Date().getTime())
 	}
 }
 

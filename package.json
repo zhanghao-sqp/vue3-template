@@ -28,8 +28,6 @@
 		"vue3-print-nb": "^0.1.4"
 	},
 	"devDependencies": {
-		"@iconify-json/ep": "^1.1.5",
-		"@iconify/json": "^2.1.65",
 		"@types/node": "^18.0.0",
 		"@types/nprogress": "^0.2.0",
 		"@types/stats.js": "^0.17.0",
@@ -43,7 +41,6 @@
 		"unplugin-vue-components": "^0.19.6",
 		"vite": "^2.9.15",
 		"vite-plugin-compression": "^0.5.1",
-		"vite-plugin-imagemin": "^0.6.1",
 		"vite-plugin-restart": "^0.2.0",
 		"vite-plugin-svg-icons": "^2.0.1",
 		"vite-plugin-vue-setup-extend": "^0.4.0",

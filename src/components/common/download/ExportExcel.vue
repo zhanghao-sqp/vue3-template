@@ -12,7 +12,7 @@
 		导出
 	</el-button>
 	<el-dialog
-		custom-class="custom-export-dialog"
+		class="custom-export-dialog"
 		v-model="dialogVisible"
 		:close-on-click-modal="false"
 		append-to-body

@@ -9,10 +9,7 @@ type RouteState = {
 
 export const useRouteStore = defineStore('routes', {
   // 持久化
-  persist: {
-    key: "routes",
-    storage: window.localStorage
-  },
+  persist: true,
 
 	state: (): RouteState => ({
 		routeList: [], // 路由列表
@@ -63,5 +60,5 @@ export const useRouteStore = defineStore('routes', {
 
 // 在组件setup函数外使用
 export const useRouteStoreWithOut = () => {
-  return useRouteStore(store);
+  return useRouteStore(store)
 }
