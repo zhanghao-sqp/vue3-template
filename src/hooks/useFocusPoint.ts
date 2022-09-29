@@ -220,7 +220,7 @@ class CanvasFocusPoint {
 	}
 }
 
-export const useFoucsPoint = (params: Params = {}) => {
+export const useFocusPoint = (params: Params = {}) => {
 	const canvasFocusPoint = new CanvasFocusPoint({
 		color: '#333',
 		pointWidth: 1,

@@ -16,3 +16,7 @@ export const getUserList = (params: any) => {
 export const paramsPost = (params: any) => {
   return post('/user/list', params, { params })
 }
+
+export const getRoutes = () => {
+  return get('/asyncRoutes', null, { baseURL: '' })
+}

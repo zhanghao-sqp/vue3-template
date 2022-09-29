@@ -188,3 +188,14 @@
 // 表单
 // .el-form {
 // }
+
+// 弹框
+.el-dialog {
+	.el-dialog__header {
+		background-color: $main-color;
+		color: #fff;
+		.el-dialog__title {
+			color: #fff;
+		}
+	}
+}

@@ -70,7 +70,6 @@
 				:placeholder="item.placeholder"
 				:disabled="item.disabled"
 			></el-date-picker>
-
 		</el-form-item>
 		<el-form-item class="form-operation">
 			<el-button type="" @click="resetFields(formRef!)">重置</el-button>
@@ -86,41 +85,43 @@ import { cloneDeep } from 'lodash-es'
 
 export type Model = Record<string, any>
 export type FieldsOption = Array<{
-	prop: keyof Model  // 属性名
-	label: string  // 标签名
-	type: 'input' | 'number' | 'select' | 'radio' | 'checkbox' | 'date' | 'upload'  // 类型
-	placeholder?: string  // 占位符
+	prop: keyof Model // 属性名
+	label: string // 标签名
+	type: 'input' | 'number' | 'select' | 'radio' | 'checkbox' | 'date' | 'upload' // 类型
+	placeholder?: string // 占位符
 	options?: Array<{
-		label: string  // 选项名
-		value: string | number  // 选项值
+		label: string // 选项名
+		value: string | number // 选项值
 		[propName: string]: any // 其他属性
 	}>
-	disabled?: boolean  // 是否禁用
+	disabled?: boolean // 是否禁用
 }>
-type Arrayable<T> = T | T[]; // 可以是数组也可以是单个值
-const { model } = withDefaults(defineProps<{
-	model: Model  // 表单数据
-	fields: FieldsOption  // 表单配置
-	rules?: Partial<Record<string, Arrayable<FormItemRule>>>  // 表单验证规则
-	inline?: boolean  // 行内表单模式
-	size?: 'default' | 'large' | 'small'  // 表单尺寸
-	labelSuffix?: string  // 表单域标签的后缀
-	requireAsteriskPosition?: 'right' | 'left'  // 必填字段的标签旁边的红色星号位置
-	statusIcon?: boolean  // 是否在输入框中显示校验结果反馈图标
-	scrollToError?: boolean  // 是否在第一个校验规则不通过时，滚动到该表单域
-	labelWidth?: string  // 表单域标签的的宽度
-	labelPosition?: 'left' | 'right' | 'top'  // 表单域标签label位置
-}>(), {
-  rules: {} as any,
-	inline: false,
-	size: 'default',
-	labelSuffix: ':',
-	requireAsteriskPosition: 'right',
-	statusIcon: true,
-	scrollToError: true,
-	labelWidth: 'auto',
-	labelPosition: 'right'
-})
+type Arrayable<T> = T | T[] // 可以是数组也可以是单个值
+const { model } = withDefaults(
+	defineProps<{
+		model: Model // 表单数据
+		fields: FieldsOption // 表单配置
+		rules?: Partial<Record<string, Arrayable<FormItemRule>>> // 表单验证规则
+		inline?: boolean // 行内表单模式
+		size?: 'default' | 'large' | 'small' // 表单尺寸
+		labelSuffix?: string // 表单域标签的后缀
+		requireAsteriskPosition?: 'right' | 'left' // 必填字段的标签旁边的红色星号位置
+		statusIcon?: boolean // 是否在输入框中显示校验结果反馈图标
+		scrollToError?: boolean // 是否在第一个校验规则不通过时，滚动到该表单域
+		labelWidth?: string // 表单域标签的的宽度
+		labelPosition?: 'left' | 'right' | 'top' // 表单域标签label位置
+	}>(),
+	{
+		rules: {} as any,
+		inline: false,
+		size: 'default',
+		labelSuffix: ':',
+		requireAsteriskPosition: 'right',
+		statusIcon: true,
+		scrollToError: true,
+		labelPosition: 'right'
+	}
+)
 const emit = defineEmits<{
 	(event: 'confirm', data: Model): void // 确认事件
 }>()
@@ -132,7 +133,7 @@ const resetFields = (instance: FormInstance) => {
 const confirm = (instance: FormInstance) => {
 	instance.validate((valid: boolean) => {
 		if (!valid) return
-    emit('confirm', formData)
+		emit('confirm', formData)
 	})
 }
 </script>
@@ -145,6 +146,9 @@ const confirm = (instance: FormInstance) => {
 		.el-button {
 			margin-left: 2rem;
 		}
+	}
+	:deep(.el-form-item__label-wrap) {
+		display: none;
 	}
 }
 </style>

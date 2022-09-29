@@ -18,10 +18,13 @@ type GenerateRoutes = (routes: RouteDate[]) => any[]
 type IsInRoutes = (route: Route, routes: RouteDate[]) => boolean
 
 // 生成路由
+const comp = import.meta.glob(`@/**/*.vue`)
+// console.log(comp)
 export const generateRoutes: GenerateRoutes = (routes) => {
 	return routes.map(route => {
 		if (route.component as string) {
-			route.component = () => import(/* @vite-ignore */ `@/${route.component}`)
+			// route.component = () => import(/* @vite-ignore */ `@/${route.component}`)
+			route.component = comp[`../${route.component}`]
 		}
 		if (route.children && route.children.length) {
 			route.children = generateRoutes(route.children)
@@ -34,7 +37,7 @@ export const generateRoutes: GenerateRoutes = (routes) => {
 export const isInRoutes: IsInRoutes = (current, routes) => {
 	let flag = false
   for (const route of routes) {
-		if (route.path === current.path || route.name === current.name)
+		if (route.name === current.name)
       return (flag = true)
     if (route.children && route.children.length) {
       flag = isInRoutes(current, route.children)

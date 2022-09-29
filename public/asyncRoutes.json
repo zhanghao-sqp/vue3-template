@@ -1,13 +1,32 @@
 {
 	"data": [
 		{
-			"path": "/three",
-			"name": "three",
+			"path": "/",
+			"name": "Layout",
 			"meta": {
-				"name": "three",
-				"title": "three"
+				"title": "布局"
 			},
-			"component": "view/studyThree/index.vue"
+			"component": "components/layout/index.vue",
+			"redirect": "/home",
+			"children": [
+				{
+					"path": "home",
+					"name": "Home",
+					"meta": {
+						"title": "首页"
+					},
+					"component": "view/home/index.vue"
+				},
+				{
+					"path": "/three",
+					"name": "Three",
+					"meta": {
+						"name": "three",
+						"title": "three"
+					},
+					"component": "view/studyThree/index.vue"
+				}
+			]
 		}
 	]
 }

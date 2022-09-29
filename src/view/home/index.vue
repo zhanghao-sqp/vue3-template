@@ -119,12 +119,9 @@ import { useCountStore } from '@/store'
 // import WS from '@/http/WS'
 import { ref, reactive } from 'vue'
 
-import { useTime, useFoucsPoint } from '@/hooks'
+import { useTime } from '@/hooks'
 import { useLoading, useConfirm } from '@/utils/useActions'
 import { svgLoading } from '@/utils/svgString'
-import varCSS from '@/style/global/var.module.scss'
-const { mainColor } = varCSS
-useFoucsPoint({ color: mainColor })
 const { month, day, hour, minute, second, week } = useTime()
 
 const loadingTest = () => {
