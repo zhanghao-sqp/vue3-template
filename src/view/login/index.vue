@@ -97,9 +97,7 @@ const confirm = async (form: Model) => {
 	routes.forEach((route: RouteRecordRaw) => {
 		router.addRoute(route)
 	})
-	// router.push('/home')
-	userStore.test()
-	console.log(router.getRoutes())
+	// router.push('/')
 }
 
 onMounted(() => {
