@@ -2,9 +2,12 @@ import { defineStore } from 'pinia'
 import store from '../index'
 
 export const useUserStore = defineStore('user', {
-  persist: true,
+  persist: {
+    key: 'user',
+    storage: window.localStorage
+  },
   state: () => ({
-    token: '',
+    token: '123456',
   }),
   getters: {
     
@@ -28,9 +31,12 @@ export const useUserStore = defineStore('user', {
     //     throw(error)
     //   }
     // }
+    test() {
+      this.token = 'test'
+    }
   }
 })
 
-export const useCountStoreWithOut = () => {
+export const useUserStoreWithOut = () => {
   return useUserStore(store)
 }

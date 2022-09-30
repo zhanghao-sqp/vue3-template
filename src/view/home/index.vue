@@ -116,7 +116,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useCountStore, useRouteStore } from '@/store'
-import { getRoutes } from '@/http/api/user'
 // import WS from '@/http/WS'
 import { ref, reactive } from 'vue'
 
@@ -171,6 +170,9 @@ const successFiles = (files: object[]) => {
 // 		console.log('ws message', e)
 // 	},
 // })
+const routeStore = useRouteStore()
+routeStore.getRouteList()
+
 const countStore = useCountStore()
 const { count } = storeToRefs(countStore) // 直接解构会失去响应式，配合storeToRefs使用
 countStore.increment()

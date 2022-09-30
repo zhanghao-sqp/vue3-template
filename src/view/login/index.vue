@@ -6,9 +6,10 @@
 				:model="formData"
 				:fields="fields"
 				:rules="rules"
-				label-width="auto"
+				label-width="80px"
 				@confirm="confirm"
 			/>
+			token: {{ token }}
 		</div>
 	</div>
 </template>
@@ -21,16 +22,15 @@ import { useFocusPoint } from '@/hooks/useFocusPoint'
 import type { FieldsOption, Model } from '@/components/common/form/BaseForm.vue'
 import { validatePhone, validateEmail } from '@/utils/validate'
 import { objDiff } from '@/utils/common'
-import { get } from '@/http/axios'
+import { useRouteStore, useUserStore } from '@/store'
+import { storeToRefs } from 'pinia'
 import { generateRoutes } from '@/utils/router'
 
 const router = useRouter()
-console.log(router)
-const removeRoute = () => {
-	router.removeRoute('login')
-	console.log(router.getRoutes())
-}
-
+const routeStore = useRouteStore()
+const userStore = useUserStore()
+const { routeList } = storeToRefs(routeStore)
+const { token } = storeToRefs(userStore)
 const formData: Model = reactive({
 	username: '123',
 	phone: '15723208056',
@@ -91,26 +91,15 @@ setTimeout(() => {
 }, 3000)
 const confirm = async (form: Model) => {
 	console.log(objDiff(formData, form))
-	const { data } = await get('/asyncRoutes.json', 1, { baseURL: '' })
-	const routes = generateRoutes(data)
+	await routeStore.getRouteList()
+	const routes = generateRoutes(routeList.value as any[])
 	console.log(router.getRoutes())
 	routes.forEach((route: RouteRecordRaw) => {
 		router.addRoute(route)
 	})
-	router.push('/home')
+	// router.push('/home')
+	userStore.test()
 	console.log(router.getRoutes())
-}
-
-const dialogVisible = ref(false)
-
-const handleClose = (done: () => void) => {
-	ElMessageBox.confirm('Are you sure to close this dialog?')
-		.then(() => {
-			done()
-		})
-		.catch(() => {
-			// catch error
-		})
 }
 
 onMounted(() => {

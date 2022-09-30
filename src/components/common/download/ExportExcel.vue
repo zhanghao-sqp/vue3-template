@@ -11,8 +11,9 @@
 	<el-button type="primary" :size="size" @click="dialogVisible = true">
 		导出
 	</el-button>
+	<!-- custom-class 已被 废弃，将于版本 2.3.0时移除，请使用class。 -->
 	<el-dialog
-		class="custom-export-dialog"
+		custom-class="custom-export-dialog"
 		v-model="dialogVisible"
 		:close-on-click-modal="false"
 		append-to-body

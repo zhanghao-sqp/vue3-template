@@ -1,7 +1,8 @@
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
-export default createPinia().use(piniaPluginPersistedstate)
+const pinia = createPinia().use(piniaPluginPersistedstate)
+export default pinia
 export * from './modules/count'
 export * from './modules/route'
 export * from './modules/user'
