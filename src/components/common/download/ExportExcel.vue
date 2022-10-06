@@ -13,7 +13,7 @@
 	</el-button>
 	<!-- custom-class 已被 废弃，将于版本 2.3.0时移除，请使用class。 -->
 	<el-dialog
-		custom-class="custom-export-dialog"
+		class="custom-export-dialog"
 		v-model="dialogVisible"
 		:close-on-click-modal="false"
 		append-to-body

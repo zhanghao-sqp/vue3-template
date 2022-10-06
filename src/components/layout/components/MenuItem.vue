@@ -27,7 +27,7 @@
 <script setup lang="ts" name="LayoutComponentsMenuItem">
 import type { MenuList } from './Menu.vue'
 
-defineProps<{ menuList: MenuList[] }>()
+defineProps<{ menuList: MenuList }>()
 </script>
 
 <style scoped lang="scss">

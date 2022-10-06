@@ -2,29 +2,28 @@
 	<div class="login-layout">
 		<div class="login-form">
 			<CommonFormBaseForm
+				ref="loginForm"
 				:inline="false"
 				:model="formData"
 				:fields="fields"
 				:rules="rules"
 				label-width="80px"
-				@confirm="confirm"
-			/>
-			token: {{ token }}
+			>
+				<el-button type="primary" @click="confirm">登录</el-button>
+			</CommonFormBaseForm>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { RouteRecordRaw } from 'vue-router'
 import { useFocusPoint } from '@/hooks/useFocusPoint'
 import type { FieldsOption, Model } from '@/components/common/form/BaseForm.vue'
 import { validatePhone, validateEmail } from '@/utils/validate'
 import { objDiff } from '@/utils/common'
 import { useRouteStore, useUserStore } from '@/store'
 import { storeToRefs } from 'pinia'
-import { generateRoutes } from '@/utils/router'
 
 const router = useRouter()
 const routeStore = useRouteStore()
@@ -80,6 +79,7 @@ const fields: FieldsOption = reactive([
 		options: selectOptions.value
 	}
 ])
+const loginForm = ref()
 
 setTimeout(() => {
 	let options = [
@@ -91,18 +91,10 @@ setTimeout(() => {
 }, 3000)
 const confirm = async (form: Model) => {
 	console.log(objDiff(formData, form))
-	await routeStore.getRouteList()
-	const routes = generateRoutes(routeList.value as any[])
-	console.log(router.getRoutes())
-	routes.forEach((route: RouteRecordRaw) => {
-		router.addRoute(route)
-	})
+	console.log(loginForm.value.confirm())
 	// router.push('/')
 }
-
-onMounted(() => {
-	useFocusPoint({ color: 'red', pointRatio: 0.00001 })
-})
+useFocusPoint()
 </script>
 
 <style scoped lang="scss">

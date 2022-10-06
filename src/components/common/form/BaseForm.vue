@@ -5,7 +5,7 @@
 		:rules="rules"
 		:inline="inline"
 		:size="size"
-		:label-suffix="':'"
+		:label-suffix="labelSuffix"
 		:require-asterisk-position="requireAsteriskPosition"
 		:status-icon="statusIcon"
 		:scroll-to-error="scrollToError"
@@ -71,10 +71,12 @@
 				:disabled="item.disabled"
 			></el-date-picker>
 		</el-form-item>
-		<el-form-item class="form-operation">
-			<el-button type="" @click="resetFields(formRef!)">重置</el-button>
-			<el-button type="primary" @click="confirm(formRef!)">确认</el-button>
-		</el-form-item>
+		<div class="form-operation">
+			<slot >
+				<el-button type="" @click="resetFields">重置</el-button>
+				<el-button type="primary" @click="confirm">确认</el-button>
+			</slot>
+		</div>
 	</el-form>
 </template>
 
@@ -116,7 +118,7 @@ const { model } = withDefaults(
 		inline: false,
 		size: 'default',
 		labelSuffix: ':',
-		requireAsteriskPosition: 'right',
+		requireAsteriskPosition: 'left',
 		statusIcon: true,
 		scrollToError: true,
 		labelPosition: 'right'
@@ -127,28 +129,24 @@ const emit = defineEmits<{
 }>()
 const formRef = ref<FormInstance>()
 const formData = reactive(cloneDeep(model))
-const resetFields = (instance: FormInstance) => {
-	instance.resetFields()
+const resetFields = () => {
+	formRef.value!.resetFields()
 }
-const confirm = (instance: FormInstance) => {
-	instance.validate((valid: boolean) => {
+const confirm = () => {
+	formRef.value!.validate((valid: boolean) => {
 		if (!valid) return
 		emit('confirm', formData)
 	})
 }
+
+defineExpose({ resetFields, confirm })
 </script>
 
 <style scoped lang="scss">
 .form-operation {
 	@extend %flex-center;
-	:deep(.el-form-item__content) {
-		@extend %flex-center;
-		.el-button {
-			margin-left: 2rem;
-		}
-	}
-	:deep(.el-form-item__label-wrap) {
-		display: none;
+	.el-button:not(:first-child) {
+		margin-right: 2em;
 	}
 }
 </style>

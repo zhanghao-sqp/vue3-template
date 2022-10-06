@@ -234,10 +234,6 @@ const getIconByFileType = (mimeType: string) => {
 		return new URL('./img/file.png', import.meta.url).href
 	}
 }
-
-onMounted(() => {
-	console.log(upload.value)
-})
 </script>
 
 <style lang="scss" scoped>

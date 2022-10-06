@@ -6,12 +6,12 @@ import {
 	RouteRecordRaw
 } from 'vue-router'
 import { npStart, npDone } from '@/utils/NProgress'
-import { isInRoutes } from '@/utils/router'
+import { isInRoutes, generateRoutes } from '@/utils/router'
 import type { Route, RouteDate } from '@/utils/router'
 import { useRouteStoreWithOut, useUserStoreWithOut } from '@/store'
 
 // 静态路由
-export const routes: RouteRecordRaw[] = [
+const routes: RouteRecordRaw[] = [
 	{
 		path: '/login',
 		name: 'Login',
@@ -32,6 +32,15 @@ export const routes: RouteRecordRaw[] = [
 // 白名单-静态路由
 const staticList = routes.map(v => v.name)
 
+// 生成路由
+const generateRoutesFn = (routeList: RouteDate) => {
+	const list = generateRoutes(routeList)
+	list.forEach(route => {
+		router.addRoute(route)
+	})
+	router.options.routes = [...routes, ...list]
+}
+
 const router = createRouter({
 	history: createWebHashHistory(), // hash 路由模式
 	// history: createWebHistory(), // history 路由模式
@@ -50,16 +59,38 @@ router.beforeEach(
 
 		// 白名单直接放行
 		if (staticList.includes(to.name as string)) {
-			next()
+			return next()
 		}
 
 		// 异步路由列表 用户token 放外面数据持久化失效
-		const routeList = useRouteStoreWithOut().$state.routeList
-		const userStore = useUserStoreWithOut()
-		// 不存在该路由
-		if (!isInRoutes(to.name as string, router.getRoutes() as RouteDate[])) {
-			next({ name: '404' })
+		let routeList = useRouteStoreWithOut().$state.routeList
+		const token = useUserStoreWithOut().$state.token
+
+		// 没有动态路由，获取动态路由
+		if (!routeList.length) {
+			try {
+				await useRouteStoreWithOut().getRouteList()
+				routeList = useRouteStoreWithOut().$state.routeList
+				generateRoutesFn(routeList as RouteDate)
+				if (isInRoutes(to as Route, routeList as RouteDate)) {
+					return next({ ...to, replace: true })
+				}
+			} catch (error) {
+				console.log(error)
+			}
 		}
+		// 页面刷新
+		if (routeList.length && router.getRoutes().length === staticList.length) {
+			// 重新添加路由
+			generateRoutesFn(routeList as RouteDate)
+			return next({ ...to, replace: true })
+		}
+
+		// 不存在该路由
+		if (!isInRoutes(to as Route, router.getRoutes() as RouteDate)) {
+			return next({ name: '404' })
+		}
+
 		next()
 	}
 )

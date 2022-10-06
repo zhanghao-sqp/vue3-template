@@ -6,7 +6,7 @@
 import { reactive } from 'vue'
 import type { MenuList } from './Menu.vue'
 // 从路由中获取，这里模拟数据
-const menuList = reactive<MenuList[]>([
+const menuList = reactive<MenuList>([
 	{
 		path: '/home',
 		name: 'Home',

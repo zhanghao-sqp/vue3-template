@@ -5,19 +5,19 @@
 </template>
 
 <script lang="ts" setup>
-export interface MenuList {
+export type MenuList = Array<{
   path: string
   name: string
   meta: {
     title: string
     icon?: string
   }
-  children?: MenuList[]
-}
+  children?: MenuList
+}>
 withDefaults(defineProps<{
   mode?: 'vertical' | 'horizontal'
   currentName: string
-  menuList: MenuList[]
+  menuList: MenuList
 }>(), {
   mode: 'vertical',
   currentName: 'default',

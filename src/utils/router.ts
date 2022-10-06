@@ -1,4 +1,5 @@
-export interface RouteDate {
+import { cloneDeep } from 'lodash-es'
+export type RouteDate = Array<{
 	name: string
 	title?: string
 	path: string
@@ -8,20 +9,21 @@ export interface RouteDate {
 	alwaysShow?: boolean
 	sort?: number
 	hidden?: boolean
-	children?: RouteDate[]
-}
+	children?: RouteDate
+}>
 export interface Route {
 	path: string
 	name: string
 }
-type GenerateRoutes = (routes: RouteDate[]) => any[]
-type IsInRoutes = (routeName: string, routes: RouteDate[]) => boolean
+type GenerateRoutes = (routes: RouteDate) => any[]
+type IsInRoutes = (route: Route, routes: RouteDate) => boolean
 
 // 生成路由
 const comp = import.meta.glob(`@/**/*.vue`)
 // console.log(comp)
 export const generateRoutes: GenerateRoutes = (routes) => {
-	return routes.map(route => {
+	const list = cloneDeep(routes)
+	return list.map(route => {
 		if (route.component as string) {
 			// route.component = () => import(/* @vite-ignore */ `@/${route.component}`)
 			route.component = comp[`../${route.component}`]
@@ -34,13 +36,14 @@ export const generateRoutes: GenerateRoutes = (routes) => {
 }
 
 // 判断是否在路由列表中
-export const isInRoutes: IsInRoutes = (currentName, routes) => {
+export const isInRoutes: IsInRoutes = (current, routes) => {
 	let flag = false
   for (const route of routes) {
-		if (route.name === currentName)
+		if (route.name === current.name || route.path === current.path) {
       return (flag = true)
+		}
     if (route.children && route.children.length) {
-      flag = isInRoutes(currentName, route.children)
+      flag = isInRoutes(current, route.children)
     }
 	}
 	return flag
