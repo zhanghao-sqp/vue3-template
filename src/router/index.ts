@@ -3,7 +3,8 @@ import {
 	createWebHashHistory,
 	RouteLocationNormalized,
 	NavigationGuardNext,
-	RouteRecordRaw
+	RouteRecordRaw,
+	createWebHistory
 } from 'vue-router'
 import { npStart, npDone } from '@/utils/NProgress'
 import { isInRoutes, generateRoutes } from '@/utils/router'
@@ -42,8 +43,8 @@ const generateRoutesFn = (routeList: RouteDate) => {
 }
 
 const router = createRouter({
-	history: createWebHashHistory(), // hash 路由模式
-	// history: createWebHistory(), // history 路由模式
+	// history: createWebHashHistory(), // hash 路由模式
+	history: createWebHistory(), // history 路由模式
 	routes // 路由规则
 })
 
