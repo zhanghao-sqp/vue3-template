@@ -1,11 +1,12 @@
 import type { App } from 'vue'
 
-import Observer from '@/utils/Observer'
+import { appear } from './appear'
 import { droppable } from './droppable'
 import { waves } from './waves'
 
 export default {
 	install: (app: App<Element>) => {
+		app.directive('appear', appear) // v-appear 元素出现在视口时触发
 		app.directive('droppable', droppable) // v-droppable 是否可拖拽
 		app.directive('waves', waves) // v-waves 点击涟漪效果
 		/**
@@ -107,16 +108,6 @@ export default {
 			},
 			beforeUnmount(el) {
 				el.removeEventListener('scroll', el.$scoll)
-			}
-		})
-
-		// v-appear = "fn"
-		app.directive('appear', {
-			mounted(el, { arg, value }) {
-				if (typeof value !== 'function') return
-				const sustain = arg === undefined ? false : arg
-				const observer = new Observer([el], value, <boolean>sustain)
-				observer.start()
 			}
 		})
 
