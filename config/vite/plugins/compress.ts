@@ -3,11 +3,10 @@
  * @description 开启.gz压缩
  */
 import viteCompression from 'vite-plugin-compression'
-
-const ISCOMPRESSION = true // 是否开启压缩
+import { IS_COMPRESS } from '../../../config/constant/system'
 
 export const ConfigCompressPlugin = () => {
-	if (ISCOMPRESSION) {
+	if (IS_COMPRESS) {
 		return viteCompression({
 			verbose: true, // 默认即可
 			disable: false, //开启压缩(不禁用)，默认即可
