@@ -88,6 +88,7 @@
 			:fileTypes="['zip', 'docx', 'png', 'doc']"
 			url="/api/upload"
 			@success-files="successFiles"
+      @vnode-mounted="vnodeMounted"
 		/>
 		<div
 			v-waves
@@ -116,7 +117,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useCountStore, useRouteStore } from '@/store'
-// import WS from '@/http/WS'
 import { ref, reactive } from 'vue'
 
 import { useTime } from '@/hooks'
@@ -124,6 +124,9 @@ import { useLoading, useConfirm } from '@/utils/useActions'
 import { svgLoading } from '@/utils/svgString'
 const { month, day, hour, minute, second, week } = useTime()
 
+const vnodeMounted = (vnode: any) => {
+  console.log(vnode, 123)
+}
 const loadingTest = () => {
 	const loading = useLoading('加载中...')
 	setTimeout(() => {

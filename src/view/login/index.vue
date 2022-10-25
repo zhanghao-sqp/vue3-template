@@ -21,14 +21,13 @@ import { useRouter } from 'vue-router'
 import { useFocusPoint } from '@/hooks/useFocusPoint'
 import type { FieldsOption, Model } from '@/components/common/form/BaseForm.vue'
 import { validatePhone, validateEmail } from '@/utils/validate'
+import { Md5 } from 'ts-md5'
 import { objDiff } from '@/utils/common'
-import { useRouteStore, useUserStore } from '@/store'
+import { useUserStore } from '@/store'
 import { storeToRefs } from 'pinia'
 
 const router = useRouter()
-const routeStore = useRouteStore()
 const userStore = useUserStore()
-const { routeList } = storeToRefs(routeStore)
 const { token } = storeToRefs(userStore)
 const formData: Model = reactive({
 	username: '123',
@@ -89,12 +88,17 @@ setTimeout(() => {
 	]
 	selectOptions.value.push(...options)
 }, 3000)
-const confirm = async (form: Model) => {
-	console.log(objDiff(formData, form))
-	console.log(loginForm.value.confirm())
-	// router.push('/')
+const confirm = async () => {
+	loginForm.value.confirm().then((res: false | Model) => {
+		if (!res) return
+		console.log(objDiff(formData, res))
+		console.log('password', Md5.hashStr(res.password))
+		console.log('md5', Md5.hashStr(''))
+		userStore.$state.token = '改变了'
+		router.push('/')
+	}).catch((err: any) => err)
 }
-useFocusPoint()
+useFocusPoint({ color: '#0f0' })
 </script>
 
 <style scoped lang="scss">

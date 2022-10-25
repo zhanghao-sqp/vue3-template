@@ -12,7 +12,8 @@
 				<RouterView v-slot="{ Component }">
 					<template v-if="Component">
 						<!-- <Transition mode="out-in"> -->
-							<KeepAlive :max="10">
+							<!-- <KeepAlive :include="keepAliveList"> -->
+							<KeepAlive :max="max">
 								<Suspense>
 									<component :is="Component"></component>
 									<!-- 加载中状态 -->
@@ -31,7 +32,11 @@
 </template>
 
 <script setup lang="ts">
-import {} from 'vue'
+import { useRouteStore } from '@/store'
+import { storeToRefs } from 'pinia'
+
+const routeStore = useRouteStore()
+const { keepAliveList, max } = storeToRefs(routeStore)
 </script>
 
 <style scoped lang="scss">

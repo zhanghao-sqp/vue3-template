@@ -132,11 +132,14 @@ const formData = reactive(cloneDeep(model))
 const resetFields = () => {
 	formRef.value!.resetFields()
 }
-const confirm = () => {
-	formRef.value!.validate((valid: boolean) => {
-		if (!valid) return
-		emit('confirm', formData)
-	})
+const confirm = async () => {
+	try {
+		const validate = await formRef.value!.validate()
+		if (validate) emit('confirm', formData)
+		return formData
+	} catch (error) {
+		throw error
+	}
 }
 
 defineExpose({ resetFields, confirm })
@@ -146,7 +149,7 @@ defineExpose({ resetFields, confirm })
 .form-operation {
 	@extend %flex-center;
 	.el-button:not(:first-child) {
-		margin-right: 2em;
+		margin-left: 10%;
 	}
 }
 </style>

@@ -5,6 +5,7 @@ import { getRoutes } from '@/http/api/user'
 type RouteState = {
   routeList: unknown[]
   keepAliveList: string[]
+  max: number
 }
 
 export const useRouteStore = defineStore('routes', {
@@ -13,8 +14,8 @@ export const useRouteStore = defineStore('routes', {
 
 	state: (): RouteState => ({
 		routeList: [], // 路由列表
-    keepAliveList: [] // 需要缓存的路由组件名称列表
-
+    keepAliveList: [], // 需要缓存的路由组件名称列表
+    max: 10 // 最大缓存数量
 	}),
 	getters: {
 		
@@ -37,10 +38,16 @@ export const useRouteStore = defineStore('routes', {
     addKeepAlive(name: string | string[]) {
       if (typeof name === 'string') {
         !this.keepAliveList.includes(name) && this.keepAliveList.push(name)
+        if (this.keepAliveList.length > this.max) {
+          this.keepAliveList.shift()
+        }
       } else {
         name.map(v => {
           v && !this.keepAliveList.includes(v) && this.keepAliveList.push(v)
         })
+        if (this.keepAliveList.length > this.max) {
+          this.keepAliveList.splice(0, this.keepAliveList.length - this.max)
+        }
       }
     },
     // 移除缓存路由
