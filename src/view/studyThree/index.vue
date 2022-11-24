@@ -12,7 +12,7 @@
 		:show-tooltip="false"
 	/>
 	<el-button type="primary" @click="getGeometry">查看元素</el-button>
-	<br />
+	<br/>
 	<label>cameraX</label>
 	<el-slider
 		v-model="cameraPosition.x"
