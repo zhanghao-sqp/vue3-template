@@ -111,6 +111,10 @@
 		>
 			<input type="text" />
 		</div> -->
+    <el-button @click="itemList.push('223')">添加拖拽元素</el-button>
+    <div v-drag-sort style="background-color: aquamarine; padding: 50px;">
+      <div class="drag-item" v-for="item in itemList">{{ item }}</div>
+    </div>
 	</div>
 </template>
 
@@ -124,6 +128,7 @@ import { useLoading, useConfirm } from '@/utils/useActions'
 import { svgLoading } from '@/utils/svgString'
 const { month, day, hour, minute, second, week } = useTime()
 
+const itemList = reactive(['1', '2', '3'])
 const vnodeMounted = (vnode: any) => {
   console.log(vnode, 123)
 }
@@ -672,5 +677,12 @@ const options = [
 	width: 100%;
 	height: 300px;
 	background-color: $main-color;
+}
+.drag-item {
+  padding: 3px;
+  margin: 5px;
+  border: 1px solid #2d2828;
+  background-color: #2d2828;
+  color: #fff;
 }
 </style>

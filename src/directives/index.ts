@@ -3,12 +3,14 @@ import type { App } from 'vue'
 import { appear } from './appear'
 import { droppable } from './droppable'
 import { waves } from './waves'
+import { dragSort } from './drag-sort'
 
 export default {
 	install: (app: App<Element>) => {
 		app.directive('appear', appear) // v-appear 元素出现在视口时触发
 		app.directive('droppable', droppable) // v-droppable 是否可拖拽
 		app.directive('waves', waves) // v-waves 点击涟漪效果
+		app.directive('drag-sort', dragSort) // v-drag-sort 拖拽排序
 		/**
 		 * 常用指令
 		 */
@@ -95,7 +97,7 @@ export default {
 		app.directive('grounding', {
 			created(el, { value }) {
 				if (typeof value !== 'function') return
-				el.$scoll = (e: MouseEvent) => {
+				el.$scroll = (e: MouseEvent) => {
 					const element: HTMLElement = e.target as HTMLElement
 					const isBottom =
 						element.scrollHeight - element.scrollTop <= element.clientHeight
@@ -104,10 +106,10 @@ export default {
 						value()
 					}
 				}
-				el.addEventListener('scroll', el.$scoll)
+				el.addEventListener('scroll', el.$scroll)
 			},
 			beforeUnmount(el) {
-				el.removeEventListener('scroll', el.$scoll)
+				el.removeEventListener('scroll', el.$scroll)
 			}
 		})
 
@@ -137,7 +139,12 @@ export default {
 						if (!(blob instanceof Blob)) return
 						const link = document.createElement('a')
 						link.href = window.URL.createObjectURL(blob)
-						link.download = arg || 'download'
+						link.download =
+							arg ||
+							'download' +
+								new Date().getFullYear() +
+								(new Date().getMonth() + 1).toString().padStart(2, '0') +
+								new Date().getDate().toString().padStart(2, '0')
 						link.click()
 						window.URL.revokeObjectURL(link.href)
 						link.remove()
