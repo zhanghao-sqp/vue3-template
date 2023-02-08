@@ -4,6 +4,13 @@ import { appear } from './appear'
 import { droppable } from './droppable'
 import { waves } from './waves'
 import { dragSort } from './drag-sort'
+import { clickOutside } from './click-outside'
+import { debounce, throttle } from './debounce-throttle'
+import { bottomOut } from './bottom-out'
+import { clearEmoji } from './clear-emoji'
+import { copy } from './copy'
+import { forbidden } from './forbidden'
+import { input } from './input'
 
 export default {
 	install: (app: App<Element>) => {
@@ -11,6 +18,15 @@ export default {
 		app.directive('droppable', droppable) // v-droppable 是否可拖拽
 		app.directive('waves', waves) // v-waves 点击涟漪效果
 		app.directive('drag-sort', dragSort) // v-drag-sort 拖拽排序
+		app.directive('click-outside', clickOutside) // v-click-outside 点击外部区域
+		app.directive('debounce', debounce) // v-debounce 防抖
+		app.directive('throttle', throttle) // v-throttle 节流
+		app.directive('bottom-out', bottomOut) // v-bottom-out 滚动到底部触发
+		app.directive('clear-emoji', clearEmoji) // v-clear-emoji 清除表情符号
+		app.directive('copy', copy) // v-copy 复制
+		app.directive('forbidden', forbidden) // v-forbidden 禁用
+		app.directive('input', input) // v-input 限制输入类型
+
 		/**
 		 * 常用指令
 		 */
@@ -23,103 +39,18 @@ export default {
 			}
 		})
 
-		// v-disabled
-		app.directive('disabled', {
-			created(el, { value }) {
-				if (value === true || value === undefined) {
-					el.style.pointerEvents = 'none'
-					el.style.opacity = '0.7'
-				}
-			},
-			updated(el, { value }) {
-				if (value === true || value === undefined) {
-					el.style.pointerEvents = 'none'
-					el.style.opacity = '0.5'
-				} else {
-					el.style.pointerEvents = 'auto'
-					el.style.opacity = 1
-				}
-			}
-		})
-
-		// v-debounce="{fn, event, delay}"
-		app.directive('debounce', {
-			created(el, { value }) {
-				// 至少需要回调函数以及监听事件类型
-				if (typeof value.fn !== 'function' || !value.event) return
-				el.timer = null
-				el.handler = function () {
-					if (el.timer) {
-						clearTimeout(el.timer)
-						el.timer = null
-					}
-					el.timer = setTimeout(() => {
-						value.fn.apply(this, arguments)
-						el.timer = null
-					}, value.delay || 200)
-				}
-				el.addEventListener(value.event, el.handler)
-			},
-			beforeUnmount(el, { value }) {
-				if (el.timer) {
-					clearTimeout(el.timer)
-					el.timer = null
-				}
-				el.removeEventListener(value.event, el.handler)
-			}
-		})
-
-		// v-throttle="{fn, event, delay}"
-		app.directive('throttle', {
-			created(el, { value }) {
-				// 至少需要回调函数以及监听事件类型
-				if (typeof value.fn !== 'function' || !value.event) return
-				el.timer = null
-				el.handler = function () {
-					if (el.timer) return
-					el.timer = setTimeout(() => {
-						value.fn.apply(this, arguments)
-						el.timer = null
-					}, value.delay || 200)
-				}
-				el.addEventListener(value.event, el.handler)
-			},
-			beforeUnmount(el, { value }) {
-				if (el.timer) {
-					clearTimeout(el.timer)
-					el.timer = null
-				}
-				el.removeEventListener(value.event, el.handler)
-			}
-		})
-
-		// v-grounding = "fn"
-		app.directive('grounding', {
-			created(el, { value }) {
-				if (typeof value !== 'function') return
-				el.$scroll = (e: MouseEvent) => {
-					const element: HTMLElement = e.target as HTMLElement
-					const isBottom =
-						element.scrollHeight - element.scrollTop <= element.clientHeight
-					if (isBottom) {
-						// 触底调用方法
-						value()
-					}
-				}
-				el.addEventListener('scroll', el.$scroll)
-			},
-			beforeUnmount(el) {
-				el.removeEventListener('scroll', el.$scroll)
-			}
-		})
-
 		// v-download:filename="url"
 		app.directive('download', {
-			created(el, binding) {
+			created(el, { value, arg }) {
 				el.$download = () => {
 					const a = document.createElement('a')
-					a.href = binding.value
-					a.download = binding.arg || 'download'
+					a.href = value
+					a.download =
+						arg ||
+						'download' +
+							new Date().getFullYear() +
+							(new Date().getMonth() + 1).toString().padStart(2, '0') +
+							new Date().getDate().toString().padStart(2, '0')
 					a.click()
 					a.remove()
 				}

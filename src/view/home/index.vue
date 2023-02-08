@@ -11,7 +11,7 @@
 	<el-button type="success" @click="confirmTest">提示框</el-button>
 	<el-button type="primary" v-print="'#parallax'">打印</el-button>
 	<CommonDownloadExportExcel size="default" :option="option"></CommonDownloadExportExcel>
-	<el-input v-model="elInputValue" width="100" v-debounce="{fn: inputFn, event: 'input', delay: 500}" />
+	<el-input v-clear-emoji v-model="elInputValue" width="100" v-debounce="{fn: inputFn, event: 'input', delay: 500}" />
 	<el-input
 		v-model="input3"
 		placeholder="Please input"
@@ -90,6 +90,7 @@
 			@success-files="successFiles"
       @vnode-mounted="vnodeMounted"
 		/>
+    <hr>
 		<div
 			v-waves
 			class="custom-loading"
@@ -111,9 +112,29 @@
 		>
 			<input type="text" />
 		</div> -->
-    <el-button @click="itemList.push('223')">添加拖拽元素</el-button>
-    <div v-drag-sort style="background-color: aquamarine; padding: 50px;">
-      <div class="drag-item" v-for="item in itemList">{{ item }}</div>
+    <List v-drag-sort></List>
+    <el-select placeholder="Select"  v-bottom-out:[bindClassName]="bottomOut">
+      <el-option label="Option 1" value="1" />
+      <el-option label="Option 2" value="2" />
+      <el-option label="Option 3" value="3"
+        ><span style="float: left">Option 3</span
+        ><span style="float: right; color: #8492a6; font-size: 13px"
+          >Option 3</span
+        >
+      </el-option>
+      <el-option label="Option 4" value="4" />
+      <el-option label="Option 5" value="5" />
+      <el-option label="Option 6" value="6" />
+      <el-option label="Option 7" value="7" />
+      <el-option label="Option 8" value="8" />
+      <el-option label="Option 9" value="9" />
+      <el-option label="Option 10" value="10" />
+      <el-option label="Option 11" value="11" />
+      <el-option label="Option 12" value="12" />
+    </el-select>
+    <el-button v-copy="1234567" v-forbidden type="primary">点击复制内容</el-button>
+    <div style="width: 400px; height: 200px; background: greenyellow;" v-waves>
+
     </div>
 	</div>
 </template>
@@ -126,11 +147,16 @@ import { ref, reactive } from 'vue'
 import { useTime } from '@/hooks'
 import { useLoading, useConfirm } from '@/utils/useActions'
 import { svgLoading } from '@/utils/svgString'
+import List from './List.vue'
 const { month, day, hour, minute, second, week } = useTime()
 
 const itemList = reactive(['1', '2', '3'])
 const vnodeMounted = (vnode: any) => {
   console.log(vnode, 123)
+}
+const bindClassName = '.el-select-dropdown__wrap'
+const bottomOut = () => {
+  console.log(123)
 }
 const loadingTest = () => {
 	const loading = useLoading('加载中...')
