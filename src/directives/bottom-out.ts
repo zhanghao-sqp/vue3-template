@@ -1,18 +1,18 @@
 import type { ObjectDirective } from 'vue'
 
-let node: Element | null | undefined = null
+const NodesWeakMap = new WeakMap<Element, Element>()
 
 export const bottomOut: ObjectDirective = {
 	mounted(el, { arg, value }) {
     if (arg) {
       let element = el.querySelector(arg) || document.querySelector(arg)
-      node = element || el
+      NodesWeakMap.set(el, element || el)
     } else {
-      node = el
+      NodesWeakMap.set(el, el)
     }
-    if (!node) return
+    if (!NodesWeakMap.get(el)) return
 		if (typeof value !== 'function') return
-		el.$scroll = (e: MouseEvent) => {
+		el.__scroll__ = (e: MouseEvent) => {
 			const element: HTMLElement = e.target as HTMLElement
 			const isBottom =
 				element.scrollHeight - element.scrollTop <= element.clientHeight
@@ -21,9 +21,9 @@ export const bottomOut: ObjectDirective = {
 				value()
 			}
 		}
-		node.addEventListener('scroll', el.$scroll)
+		NodesWeakMap.get(el)!.addEventListener('scroll', el.__scroll__)
 	},
 	beforeUnmount(el) {
-		node && node.removeEventListener('scroll', el.$scroll)
+		NodesWeakMap.get(el)?.removeEventListener('scroll', el.__scroll__)
 	}
 }
